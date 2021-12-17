@@ -1,46 +1,29 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=BenchNine:300,400,700" />
-        <link rel="stylesheet" type="text/css" href="./css/screen.css" media="screen" />
-        <link rel="stylesheet" type="text/css" href="./css/handheld.css" media="handheld" />
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="./js/index.js"></script>
-    </head>
-    
-    <body>
-        <title>cvOS</title>
-
-        <audio controls autoplay loop>
-            <source src="./music/clubbed_to_death.mp3" type="audio/mpeg">
-        </audio>
-
-        <div id="welcome-login">
-            <h1>cvOS</h1>
-            <input id="login-input" type="text" placeholder="nickname">
-        </div>
-  
-        <div id="terminal">
-            <div>Loading...<span id="blinking">_</span></div>
-        </div>
-
-        <div id="root">></div>
-
-        <input id="input" type="text" placeholder="Enter your command here..." autofocus>
-
-        <div id="time">Trace time: 0:00</div>
-
-        <ol id="objectives">
-            Welcome to cvOS.<br><br>
-            <div id="won">Congratulations! You are going to receive all the important conversations from this phone relay.</div>
-            <div id="lost">You got tracked down. You better run while you can... Computer autodistruction process will clean up the rest...</div><br>
-            Objectives:
-            <li id="help">Type 'help' in the console, at the bottom of the screen.</li>
-            <li id="list">Check the list of the currently available applications.</li>
-            <li id="connect">Connect to the nearest phone relay (connect nearest.phone.relay).</li>
-            <li id="trojan">Send a trojan to the phone relay you just connected to (send trojan).</li>
-            <li id="disconnect">Disconnect from the phone relay before you are traced down.</li>
-        </ol>
-    </body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="public/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <title>3rd Party</title> 
+      <script src="https://biocertica-icons.s3.af-south-1.amazonaws.com/sign-in-with-biocertica/snippet.js" async defer></script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+      <div style="display: flex; align-items: center; padding: 20px; justify-content: center">
+        <button
+          id="sign-in-biocertica"
+          onclick="showAuthWindow({
+            path: 'http://dev-accounts.biocertica.com/o/oauth2/auth?workspaceUUID=751ae707-2618-4027-9751-148ad8a3ccc3',
+            // path: 'https://accounts.google.com/o/oauth2/auth?client_id=656984324806-sr0q9vq78tlna4hvhlmcgp2bs2ut8uj8.apps.googleusercontent.com&response_type=token&redirect_uri=https%3A%2F%2Fadodson.com%2Fhello.js%2Fredirect.html&state=%7B%22client_id%22%3A%22656984324806-sr0q9vq78tlna4hvhlmcgp2bs2ut8uj8.apps.googleusercontent.com%22%2C%22network%22%3A%22google%22%2C%22display%22%3A%22popup%22%2C%22callback%22%3A%22_hellojs_2u7fxpwv%22%2C%22state%22%3A%22%22%2C%22redirect_uri%22%3A%22https%3A%2F%2Fadodson.com%2Fhello.js%2Fredirect.html%22%2C%22scope%22%3A%22basic%22%7D&scope=https://www.googleapis.com/auth/plus.me%20profile',
+            callback: function () {
+              console.log('callback');
+            },
+          })"
+        >
+          Sign in in with
+          <img src="https://biocertica-icons.s3.af-south-1.amazonaws.com/biocertica-horizontal-logo.png" />
+        </button>
+      </div>
+  </body>
 </html>
