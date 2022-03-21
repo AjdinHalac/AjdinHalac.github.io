@@ -1,75 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="public/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <title>Login with BioCertica demo</title>
+    <meta
+      name="biocertica-signin-workspace-id"
+      content="d916027f-2f42-4b38-b2aa-b9eecb1dd50d"
+    />
+    <meta name="biocertica-signin-secret" content="wa1df9PrFglfJQ" />
+    <!---<script src="https://biocertica-icons.s3.af-south-1.amazonaws.com/snippet.js" async defer></script>-->
+    <script src="public/snippet.js" async defer></script>
+    <script>
+      function parseJwt(token) {
+        var base64Url = token.split(".")[1];
+        var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        var jsonPayload = decodeURIComponent(
+          atob(base64)
+            .split("")
+            .map(function (c) {
+              return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join("")
+        );
 
-<head>
-  <meta charset="utf-8" />
-  <link rel="icon" href="public/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <title>Login with BioCertica demo</title>
-  <meta name="biocertica-signin-workspace-id" content="d916027f-2f42-4b38-b2aa-b9eecb1dd50d">
- <meta name="biocertica-signin-secret" content="wa1df9PrFglfJQ" />
-  <script src="https://biocertica-icons.s3.af-south-1.amazonaws.com/snippet.js" async defer></script>
-  <script>
-    function parseJwt(token) {
-      var base64Url = token.split('.')[1];
-      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
-
-      return JSON.parse(jsonPayload);
-    };
-
-    setTimeout(async () => {
-      await window.bapi.getProfile()
-      if (window.bapi.userProfile === undefined) {
-        document.getElementById('btn').style.visibility = 'visible';
-        document.getElementById('user-profile').style.visibility = 'hidden';
-      } else {
-        document.getElementById('btn').style.visibility = 'hidden';
-        document.getElementById('user-profile').style.visibility = 'visible';
-        document.getElementById('firstName').innerText = "First name: " + window.bapi.userProfile.firstName;
-        document.getElementById('lastName').innerText = "Last name: " + window.bapi.userProfile.lastName;
-        document.getElementById('accessemail').innerText = "Email: "  + window.bapi.userProfile.email;
-        document.getElementById('phoneNumber').innerText = "Phone number: " + window.bapi.userProfile.phoneNumber;
-        document.getElementById('accessToken').innerText = "Access Token: " + localStorage.getItem("biocerticaAccessToken");
-        document.getElementById('refreshToken').innerText = "Refresh Token: " + localStorage.getItem("biocerticaRefreshToken");
-        document.getElementById('scope').innerText = "You agreed to share: " + parseJwt(localStorage.getItem("biocerticaAccessToken")).scope;
-        document.getElementById('email').innerText = "Email: " + parseJwt(localStorage.getItem("biocerticaAccessToken")).email;
+        return JSON.parse(jsonPayload);
       }
-    }, 2000)
-  </script>
-</head>
 
-<body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="btn" style="">
-    <div id="sign-in-biocertica" />
-  </div>
-  <div id="user-profile" style="">
-    <div id="accessToken" style="width: 100%;">
-    </div>
-    <br>
-    <div id="refreshToken" style="width: 100%;">
-    </div>
-    <br>
-    <div id="accessemail" style="width: 100%;">
-    </div>
-    <br>
-    <div id="scope" style="width: 100%;">
-    </div>
-    <br>
-    You are logged in as:
-    <div id="firstName" style="width: 100%;">
-    </div>
-    <div id="lastName" style="width: 100%;">
-    </div>
-    <div id="email" style="width: 100%;">
-    </div>
-    <div id="phoneNumber" style="width: 100%;">
-    </div>
-  </div>
-</body>
+      setTimeout(async () => {
+        await window.bapi.getProfile();
+        if (window.bapi.profile === undefined) {
+          document.getElementById("btn-kit").style.visibility = "visible";
+          document.getElementById("btn-email").style.visibility = "visible";
+          document.getElementById("btn-phone-number").style.visibility = "visible";
+          document.getElementById("btn-oauth").style.visibility = "visible";
+          document.getElementById("user-profile").style.visibility = "hidden";
+          document.getElementById("geneticBtn").style.visibility = "hidden";
+          document.getElementById("ancestryBtn").style.visibility = "hidden";
+          document.getElementById("nutritionBtn").style.visibility = "hidden";
+          document.getElementById("btn-logout").style.visibility = "hidden";
+        } else {
+          document.getElementById("btn-kit").style.visibility = "hidden";
+          document.getElementById("btn-email").style.visibility = "hidden";
+          document.getElementById("btn-phone-number").style.visibility = "hidden";
+          document.getElementById("btn-oauth").style.visibility = "hidden";
+          document.getElementById("btn-logout").style.visibility = "visible";
+          document.getElementById("user-profile").style.visibility = "visible";
+          document.getElementById("firstName").innerText =
+            "First name: " + window.bapi.profile.firstName;
+          document.getElementById("lastName").innerText =
+            "Last name: " + window.bapi.profile.lastName;
+          document.getElementById("accessemail").innerText =
+            "Email: " + window.bapi.profile.email;
+          document.getElementById("phoneNumber").innerText =
+            "Phone number: " + window.bapi.profile.phoneNumber;
+          document.getElementById("accessToken").innerText =
+            "Access Token: " + localStorage.getItem("biocerticaAccessToken");
+          document.getElementById("refreshToken").innerText =
+            "Refresh Token: " + localStorage.getItem("biocerticaRefreshToken");
+          document.getElementById("scope").innerText =
+            "You agreed to share: " +
+            parseJwt(localStorage.getItem("biocerticaAccessToken")).scope;
+          document.getElementById("email").innerText =
+            "Email: " +
+            parseJwt(localStorage.getItem("biocerticaAccessToken")).email;
 
+          document
+            .getElementById("geneticBtn")
+            .addEventListener("click", async function () {
+              await bapi.getGenetic();
+              document.getElementById("geneticBtn").style.visibility = "hidden";
+              document.getElementById("divGenetic").style.visibility =
+                "visible";
+              document.getElementById("divGenetic").innerText =
+                "Genetic results: " + JSON.stringify(window.bapi.genetic);
+            });
+
+          document
+            .getElementById("ancestryBtn")
+            .addEventListener("click", async function () {
+              await bapi.getAncestry();
+              document.getElementById("ancestryBtn").style.visibility =
+                "hidden";
+              document.getElementById("divAncestry").style.visibility =
+                "visible";
+              document.getElementById("divAncestry").innerText =
+                "Ancestry results: " + JSON.stringify(window.bapi.ancestry);
+            });
+
+          document
+            .getElementById("nutritionBtn")
+            .addEventListener("click", async function () {
+              await bapi.getNutrition();
+              document.getElementById("nutritionBtn").style.visibility =
+                "hidden";
+              document.getElementById("divNutrition").style.visibility =
+                "visible";
+              document.getElementById("divNutrition").innerText =
+                "Nutrition results: " + JSON.stringify(window.bapi.nutrition);
+            });
+        }
+      }, 1000);
+    </script>
+    <style>
+      .bio {
+        margin: 10px;
+        width: 100%;
+        display: inline;
+        align-items: center;
+        justify-content: center;
+        height: 44px;
+        background:white;
+        color: #212121;
+        border: 1px solid #E1E1E1;
+        border-radius: 6px;
+        font-family: inherit;
+        font-weight: 600;
+        font-size: 16px;
+        letter-spacing: -0.08px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="btn-oauth" >
+      <div id="bio-signin-biocertica" />
+    </div>
+    or
+    <div id="btn-email" style="">
+      <input id="bio-login-email" class="bio" style="width: 60%"/>
+      <button
+        style="width: 20%;"
+        class="bio"
+        id="bio-login-email-button"
+        onclick="bapi.loginWithEmail(document.getElementById('bio-login-email').value)"
+      >
+        Login with Email
+      </button>
+    </div>
+    or
+    <div id="btn-phone-number" style="">
+      <input id="bio-login-phone-number" class="bio" style="width: 60%"/>
+      <button
+        style="width: 20%;"
+        class="bio"
+        id="bio-login-phone-number-button"
+        onclick="bapi.loginWithPhoneNumber(document.getElementById('bio-login-phone-number').value)"
+      >
+        Login with Phone Number
+      </button>
+    </div>
+    or
+    <div id="btn-kit" style="">
+      <input id="bio-login-kit" class="bio" style="width: 60%"/>
+      <button
+        style="width: 20%;"
+        class="bio"
+        id="bio-login-kit-button"
+        onclick="bapi.loginWithKitID(document.getElementById('bio-login-kit').value)"
+      >
+        Login with BioCertica ID
+      </button>
+    </div>
+    <div id="btn-logout">
+      <button id="bio-logout" onclick="bapi.logout()">Logout</button>
+    </div>
+    <div id="user-profile" style="">
+      <div id="accessToken" style="width: 100%"></div>
+      <br />
+      <div id="refreshToken" style="width: 100%"></div>
+      <br />
+      <div id="accessemail" style="width: 100%"></div>
+      <br />
+      <div id="scope" style="width: 100%"></div>
+      <br />
+      You are logged in as:
+      <div id="firstName" style="width: 100%"></div>
+      <div id="lastName" style="width: 100%"></div>
+      <div id="email" style="width: 100%"></div>
+      <div id="phoneNumber" style="width: 100%"></div>
+      <button id="geneticBtn">Get Genetic</button>
+      <div id="divGenetic" style="width: 100%"></div>
+      <button id="ancestryBtn">Get Ancestry</button>
+      <div id="divAncestry" style="width: 100%"></div>
+      <button id="nutritionBtn">Get Nutrition</button>
+      <div id="divNutrition" style="width: 100%"></div>
+    </div>
+  </body>
 </html>
