@@ -1,17 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
     <meta charset="utf-8" />
     <link rel="icon" href="public/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <title>Login with BioCertica demo</title>
+
     <meta
       name="biocertica-signin-workspace-id"
       content="d916027f-2f42-4b38-b2aa-b9eecb1dd50d"
     />
     <meta name="biocertica-signin-secret" content="K6UgCphXgXEf66" />
-    <script src="https://biocertica-api.s3.af-south-1.amazonaws.com/js/integration-snippet-dev.js" async defer></script>
+    <script
+      src="https://biocertica-api.s3.af-south-1.amazonaws.com/js/integration-snippet-dev.js"
+      async
+      defer
+    ></script>
     <!--<script src="../../knowu-dna/integration-snippet/integration-snippet.js" async defer></script>-->
     <script>
       function parseJwt(token) {
@@ -29,12 +43,21 @@
         return JSON.parse(jsonPayload);
       }
 
+      async function loader() {
+        window.bapi.pollingInProgress
+          ? document.getElementById("loader").classList.remove("hide")
+          : document.getElementById("loader").classList.add("hide");
+        setTimeout(loader, 100);
+      }
+
       setTimeout(async () => {
         await window.bapi.getProfile();
+        loader();
         if (window.bapi.profile === undefined) {
           document.getElementById("btn-kit").style.visibility = "visible";
           document.getElementById("btn-email").style.visibility = "visible";
-          document.getElementById("btn-phone-number").style.visibility = "visible";
+          document.getElementById("btn-phone-number").style.visibility =
+            "visible";
           document.getElementById("btn-oauth").style.visibility = "visible";
           document.getElementById("user-profile").style.visibility = "hidden";
           document.getElementById("geneticBtn").style.visibility = "hidden";
@@ -44,7 +67,8 @@
         } else {
           document.getElementById("btn-kit").style.visibility = "hidden";
           document.getElementById("btn-email").style.visibility = "hidden";
-          document.getElementById("btn-phone-number").style.visibility = "hidden";
+          document.getElementById("btn-phone-number").style.visibility =
+            "hidden";
           document.getElementById("btn-oauth").style.visibility = "hidden";
           document.getElementById("btn-logout").style.visibility = "visible";
           document.getElementById("user-profile").style.visibility = "visible";
@@ -71,10 +95,7 @@
             .getElementById("geneticBtn")
             .addEventListener("click", async function () {
               await bapi.getGenetic();
-              document.getElementById("geneticBtn").style.visibility = "hidden";
-              document.getElementById("divGenetic").style.visibility =
-                "visible";
-              document.getElementById("divGenetic").innerText =
+              document.getElementById("field").innerText =
                 "Genetic results: " + JSON.stringify(window.bapi.genetic);
             });
 
@@ -82,11 +103,7 @@
             .getElementById("ancestryBtn")
             .addEventListener("click", async function () {
               await bapi.getAncestry();
-              document.getElementById("ancestryBtn").style.visibility =
-                "hidden";
-              document.getElementById("divAncestry").style.visibility =
-                "visible";
-              document.getElementById("divAncestry").innerText =
+              document.getElementById("field").innerText =
                 "Ancestry results: " + JSON.stringify(window.bapi.ancestry);
             });
 
@@ -94,101 +111,140 @@
             .getElementById("nutritionBtn")
             .addEventListener("click", async function () {
               await bapi.getNutrition();
-              document.getElementById("nutritionBtn").style.visibility =
-                "hidden";
-              document.getElementById("divNutrition").style.visibility =
-                "visible";
-              document.getElementById("divNutrition").innerText =
+              document.getElementById("field").innerText =
                 "Nutrition results: " + JSON.stringify(window.bapi.nutrition);
             });
         }
-      }, 1000);
+      }, 2000);
     </script>
-    <style>
-      .bio {
-        margin: 10px;
-        width: 100%;
-        display: inline;
-        align-items: center;
-        justify-content: center;
-        height: 44px;
-        background:white;
-        color: #212121;
-        border: 1px solid #E1E1E1;
-        border-radius: 6px;
-        font-family: inherit;
-        font-weight: 600;
-        font-size: 16px;
-        letter-spacing: -0.08px;
-        cursor: pointer;
-      }
-    </style>
   </head>
 
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="btn-oauth" >
-      <div id="bio-signin-biocertica" />
-    </div>
-    or
-    <div id="btn-email" style="">
-      <input id="bio-login-email" class="bio" style="width: 60%"/>
-      <button
-        style="width: 20%;"
-        class="bio"
-        id="bio-login-email-button"
-        onclick="bapi.loginWithEmail(document.getElementById('bio-login-email').value)"
-      >
-        Login with Email
-      </button>
-    </div>
-    or
-    <div id="btn-phone-number" style="">
-      <input id="bio-login-phone-number" class="bio" style="width: 60%"/>
-      <button
-        style="width: 20%;"
-        class="bio"
-        id="bio-login-phone-number-button"
-        onclick="bapi.loginWithPhoneNumber(document.getElementById('bio-login-phone-number').value)"
-      >
-        Login with Phone Number
-      </button>
-    </div>
-    or
-    <div id="btn-kit" style="">
-      <input id="bio-login-kit" class="bio" style="width: 60%"/>
-      <button
-        style="width: 20%;"
-        class="bio"
-        id="bio-login-kit-button"
-        onclick="bapi.loginWithKitID(document.getElementById('bio-login-kit').value)"
-      >
-        Login with BioCertica ID
-      </button>
-    </div>
-    <div id="btn-logout">
-      <button id="bio-logout" onclick="bapi.logout()">Logout</button>
-    </div>
-    <div id="user-profile" style="">
-      <div id="accessToken" style="width: 100%"></div>
-      <br />
-      <div id="refreshToken" style="width: 100%"></div>
-      <br />
-      <div id="accessemail" style="width: 100%"></div>
-      <br />
-      <div id="scope" style="width: 100%"></div>
-      <br />
-      You are logged in as:
-      <div id="firstName" style="width: 100%"></div>
-      <div id="lastName" style="width: 100%"></div>
-      <div id="email" style="width: 100%"></div>
-      <div id="phoneNumber" style="width: 100%"></div>
-      <button id="geneticBtn">Get Genetic</button>
-      <div id="divGenetic" style="width: 100%"></div>
-      <button id="ancestryBtn">Get Ancestry</button>
-      <div id="divAncestry" style="width: 100%"></div>
-      <button id="nutritionBtn">Get Nutrition</button>
-      <div id="divNutrition" style="width: 100%"></div>
+    <div class="container">
+      <noscript>You need to enable JavaScript to run this app.</noscript>
+      <div class="row">
+        <div id="btn-email" class="col s12">
+          <div class="section row">
+            <div class="input-field col s8">
+              <input id="bio-login-email" type="email" class="validate" />
+              <label for="bio-login-email">Email</label>
+            </div>
+            <button
+              class="waves-effect waves-light btn col s4"
+              id="bio-login-email-button"
+              onclick="bapi.loginWithEmail(document.getElementById('bio-login-email').value)"
+            >
+              Login with Email
+            </button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div id="btn-phone-number" class="col s12">
+          <div class="section row">
+            <div class="input-field col s8">
+              <input id="bio-login-phone-number" type="tel" class="validate" />
+              <label for="bio-login-phone-number">Phone</label>
+            </div>
+            <button
+              class="waves-effect waves-light btn col s4"
+              id="bio-login-phone-number-button"
+              onclick="bapi.loginWithPhoneNumber(document.getElementById('bio-login-phone-number').value)"
+            >
+              Login with Phone Number
+            </button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div id="btn-kit" class="col s12">
+          <div class="section row">
+            <div class="input-field col s8">
+              <input id="bio-login-kit" type="text" class="validate" />
+              <label for="bio-login-kit">BioCertica ID</label>
+            </div>
+            <button
+              class="waves-effect waves-light btn col s4"
+              id="bio-login-kit-button"
+              onclick="bapi.loginWithKitID(document.getElementById('bio-login-kit').value)"
+            >
+              Login with BioCertica ID
+            </button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div id="btn-oauth" class="col s12">
+          <div id="bio-signin-biocertica" />
+        </div>
+
+        <div class="divider"></div>
+
+        <div id="loader" class="progress">
+          <div class="indeterminate"></div>
+        </div>
+
+        <div id="user-profile" class="col s12">
+          <div class="section row">
+            <div class="col s12">
+              Token Information:
+              <div class="divider"></div>
+              <div id="accessToken" class="col s12"></div>
+              <div id="refreshToken" class="col s12"></div>
+              <div id="accessemail" class="col s12"></div>
+              <div id="scope" class="col s12"></div>
+              <div class="divider"></div>
+            </div>
+          </div>
+
+          <div class="section row">
+            <div class="col s12">
+              Profile Information:
+              <div class="divider"></div>
+              <div id="firstName" class="col s12"></div>
+              <div id="lastName" class="col s12"></div>
+              <div id="email" class="col s12"></div>
+              <div id="phoneNumber" class="col s12"></div>
+              <div class="divider"></div>
+            </div>
+          </div>
+
+          <div class="section row">
+            <div class="col s12">
+              <button
+                id="geneticBtn"
+                class="waves-effect waves-light btn col s2"
+              >
+                Get Genetic
+              </button>
+              <button
+                id="ancestryBtn"
+                class="waves-effect waves-light btn col s2"
+              >
+                Get Ancestry
+              </button>
+              <button
+                id="nutritionBtn"
+                class="waves-effect waves-light btn col s2"
+              >
+                Get Nutrition
+              </button>
+              <button
+                id="btn-logout"
+                class="waves-effect waves-light btn col s2"
+                onclick="bapi.logout()"
+              >
+                Logout
+              </button>
+              <div id="field" class="col s12"></div>
+            </div>
+          </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      </div>
     </div>
   </body>
 </html>
