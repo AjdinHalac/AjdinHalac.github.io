@@ -114,6 +114,29 @@
               document.getElementById("field").innerText =
                 "Nutrition results: " + JSON.stringify(window.bapi.nutrition);
             });
+          document
+            .getElementById("recommendation")
+            .addEventListener("click", async function () {
+              await bapi.getGenetic();
+              document.getElementById("field").innerText =
+                "Genetic results: " + JSON.stringify(window.bapi.genetic);
+              document.getElementById("img-id").src =
+                window.bapi.genetic[0].scoreCategory == 0
+                  ? "./public/low.png"
+                  : window.bapi.genetic[0].scoreCategory == 1
+                  ? "./public/normal.png"
+                  : window.bapi.genetic[0].scoreCategory == 2
+                  ? "./public/high.png"
+                  : "No Vitamin A Results";
+              document.getElementById("vitaminA").innerText =
+                window.bapi.genetic[0].scoreCategory == 0
+                  ? "Shake with high levels of Vitamin A"
+                  : window.bapi.genetic[0].scoreCategory == 1
+                  ? "Shake with average levels of Vitamin A"
+                  : window.bapi.genetic[0].scoreCategory == 2
+                  ? "Shake with low levels of Vitamin A"
+                  : "No Vitamin A Results";
+            });
         }
       }, 2000);
     </script>
@@ -210,6 +233,22 @@
               <div id="phoneNumber" class="col s12"></div>
               <div class="divider"></div>
             </div>
+          </div>
+
+          <div class="section row">
+            <button
+              id="recommendation"
+              class="waves-effect waves-light btn col s2"
+            >
+              Recommend
+            </button>
+
+            <div class="col s12">
+              Based on your Vitamin A results we can recommend this smoothie:
+            </div>
+
+            <div id="vitaminA" class="col s12"></div>
+            <img id="img-id" src="" height="400" />
           </div>
 
           <div class="section row">
