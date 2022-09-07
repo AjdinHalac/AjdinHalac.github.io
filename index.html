@@ -60,9 +60,9 @@
             "visible";
           document.getElementById("btn-oauth").style.visibility = "visible";
           document.getElementById("user-profile").style.visibility = "hidden";
-          document.getElementById("geneticBtn").style.visibility = "hidden";
-          document.getElementById("ancestryBtn").style.visibility = "hidden";
-          document.getElementById("nutritionBtn").style.visibility = "hidden";
+          // document.getElementById("geneticBtn").style.visibility = "hidden";
+          // document.getElementById("ancestryBtn").style.visibility = "hidden";
+          // document.getElementById("nutritionBtn").style.visibility = "hidden";
           document.getElementById("btn-logout").style.visibility = "hidden";
         } else {
           document.getElementById("btn-kit").style.visibility = "hidden";
@@ -84,9 +84,9 @@
             "Access Token: " + localStorage.getItem("biocerticaAccessToken");
           document.getElementById("refreshToken").innerText =
             "Refresh Token: " + localStorage.getItem("biocerticaRefreshToken");
-          document.getElementById("scope").innerText =
-            "You agreed to share: " +
-            parseJwt(localStorage.getItem("biocerticaAccessToken")).scope;
+          // document.getElementById("scope").innerText =
+          //   "You agreed to share: " +
+          //   parseJwt(localStorage.getItem("biocerticaAccessToken")).scope;
           document.getElementById("email").innerText =
             "Email: " +
             parseJwt(localStorage.getItem("biocerticaAccessToken")).email;
@@ -216,7 +216,7 @@
               <div id="accessToken" class="col s12"></div>
               <div id="refreshToken" class="col s12"></div>
               <div id="accessemail" class="col s12"></div>
-              <div id="scope" class="col s12"></div>
+              <!-- <div id="scope" class="col s12"></div> -->
               <div class="divider"></div>
             </div>
           </div>
