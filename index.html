@@ -91,35 +91,33 @@
             "Email: " +
             parseJwt(localStorage.getItem("biocerticaAccessToken")).email;
 
-          document
-            .getElementById("geneticBtn")
-            .addEventListener("click", async function () {
-              await bapi.getGenetic();
-              document.getElementById("field").innerText =
-                "Genetic results: " + JSON.stringify(window.bapi.genetic);
-            });
+          // document
+          //   .getElementById("geneticBtn")
+          //   .addEventListener("click", async function () {
+          //     await bapi.getGenetic();
+          //     document.getElementById("field").innerText =
+          //       "Genetic results: " + JSON.stringify(window.bapi.genetic);
+          //   });
 
-          document
-            .getElementById("ancestryBtn")
-            .addEventListener("click", async function () {
-              await bapi.getAncestry();
-              document.getElementById("field").innerText =
-                "Ancestry results: " + JSON.stringify(window.bapi.ancestry);
-            });
+          // document
+          //   .getElementById("ancestryBtn")
+          //   .addEventListener("click", async function () {
+          //     await bapi.getAncestry();
+          //     document.getElementById("field").innerText =
+          //       "Ancestry results: " + JSON.stringify(window.bapi.ancestry);
+          //   });
 
-          document
-            .getElementById("nutritionBtn")
-            .addEventListener("click", async function () {
-              await bapi.getNutrition();
-              document.getElementById("field").innerText =
-                "Nutrition results: " + JSON.stringify(window.bapi.nutrition);
-            });
+          // document
+          //   .getElementById("nutritionBtn")
+          //   .addEventListener("click", async function () {
+          //     await bapi.getNutrition();
+          //     document.getElementById("field").innerText =
+          //       "Nutrition results: " + JSON.stringify(window.bapi.nutrition);
+          //   });
           document
             .getElementById("recommendation")
             .addEventListener("click", async function () {
               await bapi.getGenetic();
-              document.getElementById("field").innerText =
-                "Genetic results: " + JSON.stringify(window.bapi.genetic);
               document.getElementById("img-id").src =
                 window.bapi.genetic[0].scoreCategory == 0
                   ? "./public/low.png"
