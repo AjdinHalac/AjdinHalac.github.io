@@ -23,8 +23,6 @@
     <meta name="biocertica-signin-secret" content="K6UgCphXgXEf66" />
     <script
       src="https://biocertica-api.s3.af-south-1.amazonaws.com/js/integration-snippet-dev.js"
-      async
-      defer
     ></script>
     <!--<script src="../../knowu-dna/integration-snippet/integration-snippet.js" async defer></script>-->
     <script>
@@ -117,23 +115,8 @@
           document
             .getElementById("recommendation")
             .addEventListener("click", async function () {
-              await bapi.getGenetic();
-              document.getElementById("img-id").src =
-                window.bapi.genetic[0].scoreCategory == 0
-                  ? "./public/low.png"
-                  : window.bapi.genetic[0].scoreCategory == 1
-                  ? "./public/normal.png"
-                  : window.bapi.genetic[0].scoreCategory == 2
-                  ? "./public/high.png"
-                  : "No Vitamin A Results";
-              document.getElementById("vitaminA").innerText =
-                window.bapi.genetic[0].scoreCategory == 0
-                  ? "Shake with high levels of Vitamin A"
-                  : window.bapi.genetic[0].scoreCategory == 1
-                  ? "Shake with average levels of Vitamin A"
-                  : window.bapi.genetic[0].scoreCategory == 2
-                  ? "Shake with low levels of Vitamin A"
-                  : "No Vitamin A Results";
+              await bapi.getProducts();
+              document.getElementById("vitaminA").innerText = "Product recommendation based on DNA Results: " + JSON.stringify(window.bapi.products);
             });
         }
       }, 2000);
@@ -240,13 +223,7 @@
             >
               Recommend
             </button>
-
-            <div class="col s12">
-              Based on your Vitamin A results we can recommend this smoothie:
-            </div>
-
             <div id="vitaminA" class="col s12"></div>
-            <img id="img-id" src="" height="400" />
           </div>
 <!--
           <div class="section row">
