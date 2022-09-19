@@ -52,10 +52,6 @@
         await window.bapi.getProfile();
         loader();
         if (window.bapi.profile === undefined) {
-          document.getElementById("btn-kit").style.visibility = "visible";
-          document.getElementById("btn-email").style.visibility = "visible";
-          document.getElementById("btn-phone-number").style.visibility =
-            "visible";
           document.getElementById("btn-oauth").style.visibility = "visible";
           document.getElementById("user-profile").style.visibility = "hidden";
           // document.getElementById("geneticBtn").style.visibility = "hidden";
@@ -63,10 +59,6 @@
           // document.getElementById("nutritionBtn").style.visibility = "hidden";
           document.getElementById("btn-logout").style.visibility = "hidden";
         } else {
-          document.getElementById("btn-kit").style.visibility = "hidden";
-          document.getElementById("btn-email").style.visibility = "hidden";
-          document.getElementById("btn-phone-number").style.visibility =
-            "hidden";
           document.getElementById("btn-oauth").style.visibility = "hidden";
           document.getElementById("btn-logout").style.visibility = "visible";
           document.getElementById("user-profile").style.visibility = "visible";
