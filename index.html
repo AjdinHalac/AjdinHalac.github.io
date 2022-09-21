@@ -20,7 +20,6 @@
       name="biocertica-signin-workspace-id"
       content="d916027f-2f42-4b38-b2aa-b9eecb1dd50d"
     />
-    <meta name="biocertica-signin-secret" content="K6UgCphXgXEf66" />
     <script
       src="https://biocertica-api.s3.af-south-1.amazonaws.com/js/integration-snippet-dev.js"
     ></script>
@@ -41,16 +40,9 @@
         return JSON.parse(jsonPayload);
       }
 
-      async function loader() {
-        window.bapi.pollingInProgress
-          ? document.getElementById("loader").classList.remove("hide")
-          : document.getElementById("loader").classList.add("hide");
-        setTimeout(loader, 100);
-      }
-
+      window.bapi.init('d916027f-2f42-4b38-b2aa-b9eecb1dd50d', 'https://ajdinhalac.github.io')
       setTimeout(async () => {
         await window.bapi.getProfile();
-        loader();
         if (window.bapi.profile === undefined) {
           document.getElementById("btn-oauth").style.visibility = "visible";
           document.getElementById("user-profile").style.visibility = "hidden";
@@ -127,10 +119,6 @@
         </div>
 
         <div class="divider"></div>
-
-        <div id="loader" class="progress">
-          <div class="indeterminate"></div>
-        </div>
 
         <div id="user-profile" class="col s12">
           <div class="section row">
