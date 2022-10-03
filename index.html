@@ -144,7 +144,7 @@
           document.getElementById("email").innerText =
             "Email: " + profile.email;
           document.getElementById("phoneNumber").innerText =
-            "Phone number: " + profile.phone_number;
+            "Phone number: " + profile.phone;
           document.getElementById("accessToken").innerText =
             "Access Token: " + localStorage.getItem("biocerticaAccessToken");
           document.getElementById("refreshToken").innerText =
@@ -152,10 +152,6 @@
           // document.getElementById("scope").innerText =
           //   "You agreed to share: " +
           //   parseJwt(localStorage.getItem("biocerticaAccessToken")).scope;
-          document.getElementById("accessemail").innerText =
-            "Email: " +
-            parseJwt(localStorage.getItem("biocerticaAccessToken")).email;
-
           // document
           //   .getElementById("geneticBtn")
           //   .addEventListener("click", async function () {
