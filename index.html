@@ -21,7 +21,7 @@
       content="d916027f-2f42-4b38-b2aa-b9eecb1dd50d"
     />
     <script
-      src="https://biocertica-api.s3.af-south-1.amazonaws.com/js/integration-snippet-dev.js"
+      src="https://biocertica-api.s3.af-south-1.amazonaws.com/js/integration-snippet-dev.js" async defer
     ></script>
     <!--<script src="../../knowu-dna/integration-snippet/integration-snippet.js" async defer></script>-->
     <script>
@@ -41,9 +41,7 @@
       }
 
       window.bapi.init('d916027f-2f42-4b38-b2aa-b9eecb1dd50d', 'https://ajdinhalac.github.io')
-      setTimeout(async () => {
-        await window.bapi.getProfile();
-        if (window.bapi.profile === undefined) {
+        if (!localStorage.hasItem("biocerticaIDToken")) {
           document.getElementById("btn-oauth").style.visibility = "visible";
           document.getElementById("user-profile").style.visibility = "hidden";
           // document.getElementById("geneticBtn").style.visibility = "hidden";
@@ -51,17 +49,18 @@
           // document.getElementById("nutritionBtn").style.visibility = "hidden";
           document.getElementById("btn-logout").style.visibility = "hidden";
         } else {
+          const profile = parseJwt(localStorage.getItem("biocerticaIDToken"));
           document.getElementById("btn-oauth").style.visibility = "hidden";
           document.getElementById("btn-logout").style.visibility = "visible";
           document.getElementById("user-profile").style.visibility = "visible";
           document.getElementById("firstName").innerText =
-            "First name: " + window.bapi.profile.firstName;
+            "First name: " + profile.first_name;
           document.getElementById("lastName").innerText =
-            "Last name: " + window.bapi.profile.lastName;
-          document.getElementById("accessemail").innerText =
-            "Email: " + window.bapi.profile.email;
+            "Last name: " + profile.last_name;
+          document.getElementById("email").innerText =
+            "Email: " + profile.email;
           document.getElementById("phoneNumber").innerText =
-            "Phone number: " + window.bapi.profile.phoneNumber;
+            "Phone number: " + profile.phone_number;
           document.getElementById("accessToken").innerText =
             "Access Token: " + localStorage.getItem("biocerticaAccessToken");
           document.getElementById("refreshToken").innerText =
@@ -69,7 +68,7 @@
           // document.getElementById("scope").innerText =
           //   "You agreed to share: " +
           //   parseJwt(localStorage.getItem("biocerticaAccessToken")).scope;
-          document.getElementById("email").innerText =
+          document.getElementById("accessemail").innerText =
             "Email: " +
             parseJwt(localStorage.getItem("biocerticaAccessToken")).email;
 
@@ -103,7 +102,6 @@
               document.getElementById("vitaminA").innerText = "Product recommendation based on DNA Results: " + JSON.stringify(window.bapi.products);
             });
         }
-      }, 2000);
     </script>
   </head>
 
@@ -127,7 +125,6 @@
               <div class="divider"></div>
               <div id="accessToken" class="col s12"></div>
               <div id="refreshToken" class="col s12"></div>
-              <div id="accessemail" class="col s12"></div>
               <!-- <div id="scope" class="col s12"></div> -->
               <div class="divider"></div>
             </div>
