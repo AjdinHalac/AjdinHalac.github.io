@@ -41,7 +41,6 @@
       }
 
       window.bapi.init('d916027f-2f42-4b38-b2aa-b9eecb1dd50d', 'https://ajdinhalac.github.io')
-      setTimeout(async () => {
         await window.bapi.getProfile();
         if (window.bapi.profile === undefined) {
           document.getElementById("btn-oauth").style.visibility = "visible";
@@ -103,7 +102,6 @@
               document.getElementById("vitaminA").innerText = "Product recommendation based on DNA Results: " + JSON.stringify(window.bapi.products);
             });
         }
-      }, 2000);
     </script>
   </head>
 
