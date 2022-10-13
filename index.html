@@ -75,17 +75,17 @@
         class="absolute"
         style="background-color: #555588"
       >
-        <div id="user-profile" class="col s12">
-          <div class="section row">
+        <div id="user-profile">
+          <div class="row">
             <div class="col s12">
               <h2>Token Information:</h2>
               <div class="divider"></div>
-              <div id="accessToken" class="col s12"></div>
-              <div id="refreshToken" class="col s12"></div>
+              <div id="accessToken" class="col s12" style="margin: 0.5em;"></div>
+              <div id="refreshToken" class="col s12" style="margin: 0.5em;"></div>
             </div>
           </div>
 
-          <div class="section row">
+          <div class="row">
             <div class="col s12">
               <h2>Profile Information:</h2>
               <div class="divider"></div>
@@ -96,21 +96,24 @@
             </div>
           </div>
 
-          <div class="section row">
-            <button
-              id="recommendation"
-              class="waves-effect waves-light btn col s2"
-            >
-              Recommend
-            </button>
-            <div id="vitaminA" class="col s12"></div>
+          <div class="row">
+            <div class="col s12">
+              <button
+                id="recommendation"
+                class="waves-effect waves-light btn col s2"
+              >
+                Recommend
+              </button>
+              <div class="col s12"></div>
+              <button
+                id="btn-logout-implicit"
+                class="waves-effect waves-light btn col s2"
+              >
+                Logout
+              </button>
+              <div id="vitaminA" class="col s12" style="margin: 0.5em;"></div>
+            </div>
           </div>
-          <button
-            id="btn-logout-implicit"
-            class="waves-effect waves-light btn col s2"
-          >
-            Logout
-          </button>
         </div>
       </div>
 
@@ -127,8 +130,8 @@
               Using authorization code grant type you receive a code which is
               then exchanged over backend channels to ensure secure
               communication for all parties involved. You can exchange this code
-              using your Console generated client credentials and any RFC 6749 compliant OAuth2.0
-              client library.
+              using your Console generated client credentials and any RFC 6749
+              compliant OAuth2.0 client library.
             </h3>
             <button
               id="btn-logout-code"

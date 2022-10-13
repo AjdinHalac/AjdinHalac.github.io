@@ -1,4 +1,4 @@
-body { margin: 0; padding: 0; }
+body { align-items: center; justify-content: center; margin: 0; padding: 0; color: white; line-break: anywhere;}
 
 .absolute {
   position: absolute;
@@ -18,6 +18,10 @@ body { margin: 0; padding: 0; }
   justify-content: center;
   left: 30%;
   top: 40%;
+}
+
+.divider {
+  margin: 1em;
 }
 
 .usage {
