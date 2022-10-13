@@ -44,14 +44,14 @@ function parseJwt(token) {
 //   });
 // });
 
-if (window.sessionStorage.getItem("biocerticaAuthorizationCode") !== null) {
+if (window.localStorage.getItem("biocerticaAuthorizationCode") !== null) {
   document.getElementById("page-choose").style.zIndex = 0;
   document.getElementById("page-implicit-login").style.zIndex = 0;
   document.getElementById("page-authorization-code-login").style.zIndex = 0;
   document.getElementById("page-implicit-logged-in").style.zIndex = 0;
   document.getElementById("page-authorization-logged-in").style.zIndex = 1;
   document.getElementById("btn-oauth").style.zIndex = 0;
-  const code = sessionStorage.getItem("biocerticaAuthorizationCode");
+  const code = localStorage.getItem("biocerticaAuthorizationCode");
   document.getElementById("code").innerText =
     "Your authorization code: " + code;
 } else if (window.localStorage.getItem("biocerticaIDToken") !== null) {
@@ -145,5 +145,5 @@ document
     document.getElementById("page-implicit-logged-in").style.zIndex = 0;
     document.getElementById("page-authorization-logged-in").style.zIndex = 0;
     document.getElementById("btn-oauth").style.zIndex = 0;
-    sessionStorage.clear();
+    localStorage.clear();
   });
