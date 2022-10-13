@@ -9,57 +9,90 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="icon" href="public/favicon.ico" />
 
     <meta charset="utf-8" />
-    <link rel="icon" href="public/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <title>Login with BioCertica demo</title>
+    <title>ajdinhalac.github.io</title>
 
     <meta
       name="biocertica-signin-workspace-id"
       content="d916027f-2f42-4b38-b2aa-b9eecb1dd50d"
     />
     <script
-      src="https://biocertica-api.s3.af-south-1.amazonaws.com/js/integration-snippet-dev.js" async defer
+      src="https://biocertica-api.s3.af-south-1.amazonaws.com/js/integration-snippet-dev.js"
+      async
+      defer
     ></script>
     <!--<script src="../../knowu-dna/integration-snippet/integration-snippet.js" async defer></script>-->
   </head>
 
   <body>
-    <div class="container">
-      <noscript>You need to enable JavaScript to run this app.</noscript>
-      <div class="row">
-
-        <div class="divider"></div>
-
-        <div id="btn-oauth" class="col s12">
-          <div id="bio-signin-biocertica" />
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div>
+      <div id="btn-oauth" class="" style="margin: 1em">
+        <div id="bio-signin-biocertica"></div>
+      </div>
+      <div id="page-choose" class="absolute" style="background-color: #38a8cc">
+        <div class="row">
+          <button
+            id="btn-implicit"
+            class="waves-effect waves-light btn col s12"
+            style="margin: 1em"
+          >
+            I want to see Implicit Grant Type
+          </button>
+          <button
+            id="btn-code"
+            class="waves-effect waves-light btn col s12"
+            style="margin: 1em"
+          >
+            I want to see Authorization Code Grant Type
+          </button>
         </div>
+      </div>
 
-        <div class="divider"></div>
+      <div
+        id="page-implicit-login"
+        class="absolute"
+        style="background-color: #004444"
+      >
+        <h1>BioCertica Login via Implicit grant type</h1>
+      </div>
 
+      <div
+        id="page-authorization-code-login"
+        class="absolute"
+        style="background-color: #884444"
+      >
+        <h1>BioCertica Login via Authorization Code grant type</h1>
+      </div>
+
+      <div
+        id="page-implicit-logged-in"
+        class="absolute"
+        style="background-color: #555588"
+      >
         <div id="user-profile" class="col s12">
           <div class="section row">
             <div class="col s12">
-              Token Information:
+              <h2>Token Information:</h2>
               <div class="divider"></div>
               <div id="accessToken" class="col s12"></div>
               <div id="refreshToken" class="col s12"></div>
-              <!-- <div id="scope" class="col s12"></div> -->
-              <div class="divider"></div>
             </div>
           </div>
 
           <div class="section row">
             <div class="col s12">
-              Profile Information:
+              <h2>Profile Information:</h2>
               <div class="divider"></div>
               <div id="firstName" class="col s12"></div>
               <div id="lastName" class="col s12"></div>
               <div id="email" class="col s12"></div>
               <div id="phoneNumber" class="col s12"></div>
-              <div class="divider"></div>
             </div>
           </div>
 
@@ -72,116 +105,42 @@
             </button>
             <div id="vitaminA" class="col s12"></div>
           </div>
-<!--
-          <div class="section row">
-            <div class="col s12">
-              <button
-                id="geneticBtn"
-                class="waves-effect waves-light btn col s2"
-              >
-                Get Genetic
-              </button>
-              <button
-                id="ancestryBtn"
-                class="waves-effect waves-light btn col s2"
-              >
-                Get Ancestry
-              </button>
-              <button
-                id="nutritionBtn"
-                class="waves-effect waves-light btn col s2"
-              >
-                Get Nutrition
-              </button>
--->
-              <button
-                id="btn-logout"
-                class="waves-effect waves-light btn col s2"
-                onclick="bapi.logout()"
-              >
-                Logout
-              </button>
-              <div id="field" class="col s12"></div>
-            </div>
+          <button
+            id="btn-logout-implicit"
+            class="waves-effect waves-light btn col s2"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="page-authorization-logged-in"
+        class="absolute"
+        style="background-color: #888558"
+      >
+        <div class="section row">
+          <div class="col s12">
+            <h2 id="code" class="col s12"></h2>
+            <div class="divider"></div>
+            <h3>
+              Using authorization code grant type you receive a code which is
+              then exchanged over backend channels to ensure secure
+              communication for all parties involved. You can exchange this code
+              using your Console generated client credentials and any RFC 6749 compliant OAuth2.0
+              client library.
+            </h3>
+            <button
+              id="btn-logout-code"
+              class="waves-effect waves-light btn col s2"
+            >
+              Logout
+            </button>
           </div>
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
       </div>
     </div>
-
-    <script>
-      function parseJwt(token) {
-        var base64Url = token.split(".")[1];
-        var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        var jsonPayload = decodeURIComponent(
-          atob(base64)
-            .split("")
-            .map(function (c) {
-              return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-            })
-            .join("")
-        );
-
-        return JSON.parse(jsonPayload);
-      }
-
-        if (!window.localStorage.getItem("biocerticaIDToken")) {
-          document.getElementById("btn-oauth").style.visibility = "visible";
-          document.getElementById("user-profile").style.visibility = "hidden";
-          // document.getElementById("geneticBtn").style.visibility = "hidden";
-          // document.getElementById("ancestryBtn").style.visibility = "hidden";
-          // document.getElementById("nutritionBtn").style.visibility = "hidden";
-          document.getElementById("btn-logout").style.visibility = "hidden";
-        } else {
-          const profile = parseJwt(localStorage.getItem("biocerticaIDToken"));
-          document.getElementById("btn-oauth").style.visibility = "hidden";
-          document.getElementById("btn-logout").style.visibility = "visible";
-          document.getElementById("user-profile").style.visibility = "visible";
-          document.getElementById("firstName").innerText =
-            "First name: " + profile.first_name;
-          document.getElementById("lastName").innerText =
-            "Last name: " + profile.last_name;
-          document.getElementById("email").innerText =
-            "Email: " + profile.email;
-          document.getElementById("phoneNumber").innerText =
-            "Phone number: " + profile.phone;
-          document.getElementById("accessToken").innerText =
-            "Access Token: " + localStorage.getItem("biocerticaAccessToken");
-          document.getElementById("refreshToken").innerText =
-            "Refresh Token: " + localStorage.getItem("biocerticaRefreshToken");
-          // document.getElementById("scope").innerText =
-          //   "You agreed to share: " +
-          //   parseJwt(localStorage.getItem("biocerticaAccessToken")).scope;
-          // document
-          //   .getElementById("geneticBtn")
-          //   .addEventListener("click", async function () {
-          //     await bapi.getGenetic();
-          //     document.getElementById("field").innerText =
-          //       "Genetic results: " + JSON.stringify(window.bapi.genetic);
-          //   });
-
-          // document
-          //   .getElementById("ancestryBtn")
-          //   .addEventListener("click", async function () {
-          //     await bapi.getAncestry();
-          //     document.getElementById("field").innerText =
-          //       "Ancestry results: " + JSON.stringify(window.bapi.ancestry);
-          //   });
-
-          // document
-          //   .getElementById("nutritionBtn")
-          //   .addEventListener("click", async function () {
-          //     await bapi.getNutrition();
-          //     document.getElementById("field").innerText =
-          //       "Nutrition results: " + JSON.stringify(window.bapi.nutrition);
-          //   });
-          document
-            .getElementById("recommendation")
-            .addEventListener("click", async function () {
-              await bapi.getProducts();
-              document.getElementById("vitaminA").innerText = "Product recommendation based on DNA Results: " + JSON.stringify(window.bapi.products);
-            });
-        }
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>

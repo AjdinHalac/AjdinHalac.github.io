@@ -1,0 +1,40 @@
+body { margin: 0; padding: 0; }
+
+.absolute {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#btn-oauth {
+  position: absolute;
+  width: 40vw;
+  height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 30%;
+  top: 40%;
+}
+
+.usage {
+  position: absolute;
+  top: 40px;
+  line-height: 50px;
+  z-index: 1000;
+  color: white;
+  font-size: 20px;
+  width: 100%;
+  text-align: center;
+  font-family: "Arial Black", Gadget, sans-serif;
+  pointer-events: none;
+}
+
+h1, h2, h3, h4, h5{
+  color: white;
+  font-family: arial;
+  font-weight: bold;
+}
