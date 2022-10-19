@@ -21,7 +21,7 @@ if (
   document.getElementById("page-implicit-login").style.zIndex = 0;
   document.getElementById("page-authorization-code-login").style.zIndex = 0;
   document.getElementById("page-implicit-logged-in").style.zIndex = 0;
-  document.getElementById("page-authorization-logged-in").style.zIndex = 0;
+  document.getElementById("page-authorization-logged-in").style.zIndex = -1;
   document.getElementById("page-pkce-login").style.zIndex = 0;
   document.getElementById("page-pkce-logged-in").style.zIndex = 1;
   document.getElementById("btn-oauth").style.zIndex = 0;
@@ -57,6 +57,7 @@ if (
   document.getElementById("page-implicit-logged-in").style.zIndex = 0;
   document.getElementById("page-authorization-logged-in").style.zIndex = 1;
   document.getElementById("page-pkce-login").style.zIndex = 0;
+  document.getElementById("page-pkce-logged-in").style.zIndex = 0;
   document.getElementById("btn-oauth").style.zIndex = 0;
   const code = localStorage.getItem("biocerticaAuthorizationCode");
   document.getElementById("code").innerText =
