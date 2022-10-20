@@ -96,6 +96,17 @@
             <div class="divider"></div>
             <div id="accessToken" class="col s12" style="margin: 0.5em"></div>
             <div id="refreshToken" class="col s12" style="margin: 0.5em"></div>
+            <h3>
+              Due to the insecure nature of Implicit grant type RFC Standard
+              proposes Access Tokens should be short lived with no Refresh Token
+              shared to extend them. To get the refresh token use PKCE or
+              authorization code grant type. PKCE use is recommended to receive
+              the tokens on the Frontend Channels while Authorization Code is
+              used to receive them on the Backend Channels. PKCE (Proof Key for
+              Code Exchange) uses hashing and code verifier while exchanging the
+              code for tokens while Authorization Code grant type will require
+              your BioCertica Console issued secret to exchange to code.
+            </h3>
           </div>
         </div>
 
