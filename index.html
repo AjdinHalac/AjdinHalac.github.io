@@ -122,6 +122,7 @@
             <button
               id="btn-logout-implicit"
               class="waves-effect waves-light btn col s2"
+              onclick="logout()"
             >
               Logout
             </button>
@@ -142,6 +143,16 @@
             <h2>Verifier Information:</h2>
             <div class="divider"></div>
             <div id="verifier-pkce" class="col s12" style="margin: 0.5em"></div>
+            <h3>
+              Verifier is used to create a S256 hash called code_challenge.
+              Afterwards the code_challenge gets sent towards the authorization
+              server to issue a code. While exchanging your code for access,
+              refresh and id tokens an application will send the code_verifier
+              used to create a challenge, if the hash generated from code
+              verifier matches the Authorization Server will issue new tokens.
+              This is done to ensure that only the same application (public
+              domain) that prompted a login can receive the tokens.
+            </h3>
           </div>
         </div>
 
@@ -186,9 +197,11 @@
               <button
                 id="btn-logout-pkce"
                 class="waves-effect waves-light btn col s2"
+                onclick="logout()"
               >
                 Logout
               </button>
+
               <div
                 id="vitaminA-pkce"
                 class="col s12"
@@ -219,6 +232,7 @@
           <button
             id="btn-logout-code"
             class="waves-effect waves-light btn col s2"
+            onclick="logout()"
           >
             Logout
           </button>

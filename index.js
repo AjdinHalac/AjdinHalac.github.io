@@ -17,14 +17,14 @@ if (
   window.localStorage.getItem("biocerticaIDToken") !== null &&
   window.localStorage.getItem("biocerticaCodeVerifier") !== null
 ) {
-  document.getElementById("page-choose").style.zIndex = 0;
-  document.getElementById("page-implicit-login").style.zIndex = 0;
-  document.getElementById("page-authorization-code-login").style.zIndex = 0;
-  document.getElementById("page-implicit-logged-in").style.zIndex = 0;
+  document.getElementById("page-choose").style.zIndex = -1;
+  document.getElementById("page-implicit-login").style.zIndex = -1;
+  document.getElementById("page-authorization-code-login").style.zIndex = -1;
+  document.getElementById("page-implicit-logged-in").style.zIndex = -1;
   document.getElementById("page-authorization-logged-in").style.zIndex = -1;
-  document.getElementById("page-pkce-login").style.zIndex = 0;
+  document.getElementById("page-pkce-login").style.zIndex = -1;
   document.getElementById("page-pkce-logged-in").style.zIndex = 1;
-  document.getElementById("btn-oauth").style.zIndex = 0;
+  document.getElementById("btn-oauth").style.zIndex = -1;
   const profile = parseJwt(localStorage.getItem("biocerticaIDToken"));
   document.getElementById("verifier-pkce").innerText = localStorage.getItem(
     "biocerticaCodeVerifier"
@@ -51,26 +51,26 @@ if (
 } else if (
   window.localStorage.getItem("biocerticaAuthorizationCode") !== null
 ) {
-  document.getElementById("page-choose").style.zIndex = 0;
-  document.getElementById("page-implicit-login").style.zIndex = 0;
-  document.getElementById("page-authorization-code-login").style.zIndex = 0;
-  document.getElementById("page-implicit-logged-in").style.zIndex = 0;
+  document.getElementById("page-choose").style.zIndex = -1;
+  document.getElementById("page-implicit-login").style.zIndex = -1;
+  document.getElementById("page-authorization-code-login").style.zIndex = -1;
+  document.getElementById("page-implicit-logged-in").style.zIndex = -1;
   document.getElementById("page-authorization-logged-in").style.zIndex = 1;
-  document.getElementById("page-pkce-login").style.zIndex = 0;
-  document.getElementById("page-pkce-logged-in").style.zIndex = 0;
-  document.getElementById("btn-oauth").style.zIndex = 0;
+  document.getElementById("page-pkce-login").style.zIndex = -1;
+  document.getElementById("page-pkce-logged-in").style.zIndex = -1;
+  document.getElementById("btn-oauth").style.zIndex = -1;
   const code = localStorage.getItem("biocerticaAuthorizationCode");
   document.getElementById("code").innerText =
     "Your authorization code: " + code;
 } else if (window.localStorage.getItem("biocerticaIDToken") !== null) {
-  document.getElementById("page-choose").style.zIndex = 0;
-  document.getElementById("page-implicit-login").style.zIndex = 0;
-  document.getElementById("page-authorization-code-login").style.zIndex = 0;
+  document.getElementById("page-choose").style.zIndex = -1;
+  document.getElementById("page-implicit-login").style.zIndex = -1;
+  document.getElementById("page-authorization-code-login").style.zIndex = -1;
   document.getElementById("page-implicit-logged-in").style.zIndex = 1;
-  document.getElementById("page-authorization-logged-in").style.zIndex = 0;
-  document.getElementById("page-pkce-login").style.zIndex = 0;
-  document.getElementById("page-pkce-logged-in").style.zIndex = 0;
-  document.getElementById("btn-oauth").style.zIndex = 0;
+  document.getElementById("page-authorization-logged-in").style.zIndex = -1;
+  document.getElementById("page-pkce-login").style.zIndex = -1;
+  document.getElementById("page-pkce-logged-in").style.zIndex = -1;
+  document.getElementById("btn-oauth").style.zIndex = -1;
   const profile = parseJwt(localStorage.getItem("biocerticaIDToken"));
   document.getElementById("firstName").innerText =
     "First name: " + profile.first_name;
@@ -93,13 +93,13 @@ if (
     });
 } else {
   document.getElementById("page-choose").style.zIndex = 1;
-  document.getElementById("page-implicit-login").style.zIndex = 0;
-  document.getElementById("page-authorization-code-login").style.zIndex = 0;
-  document.getElementById("page-implicit-logged-in").style.zIndex = 0;
-  document.getElementById("page-authorization-logged-in").style.zIndex = 0;
-  document.getElementById("page-pkce-login").style.zIndex = 0;
-  document.getElementById("page-pkce-logged-in").style.zIndex = 0;
-  document.getElementById("btn-oauth").style.zIndex = 0;
+  document.getElementById("page-implicit-login").style.zIndex = -1;
+  document.getElementById("page-authorization-code-login").style.zIndex = -1;
+  document.getElementById("page-implicit-logged-in").style.zIndex = -1;
+  document.getElementById("page-authorization-logged-in").style.zIndex = -1;
+  document.getElementById("page-pkce-login").style.zIndex = -1;
+  document.getElementById("page-pkce-logged-in").style.zIndex = -1;
+  document.getElementById("btn-oauth").style.zIndex = -1;
 }
 
 document
@@ -111,13 +111,13 @@ document
       "implicit",
       "token"
     );
-    document.getElementById("page-choose").style.zIndex = 0;
+    document.getElementById("page-choose").style.zIndex = -1;
     document.getElementById("page-implicit-login").style.zIndex = 1;
-    document.getElementById("page-authorization-code-login").style.zIndex = 0;
-    document.getElementById("page-implicit-logged-in").style.zIndex = 0;
-    document.getElementById("page-authorization-logged-in").style.zIndex = 0;
-    document.getElementById("page-pkce-login").style.zIndex = 0;
-    document.getElementById("page-pkce-logged-in").style.zIndex = 0;
+    document.getElementById("page-authorization-code-login").style.zIndex = -1;
+    document.getElementById("page-implicit-logged-in").style.zIndex = -1;
+    document.getElementById("page-authorization-logged-in").style.zIndex = -1;
+    document.getElementById("page-pkce-login").style.zIndex = -1;
+    document.getElementById("page-pkce-logged-in").style.zIndex = -1;
     document.getElementById("btn-oauth").style.zIndex = 2;
   });
 
@@ -130,13 +130,13 @@ document
       "authorization_code",
       "code"
     );
-    document.getElementById("page-choose").style.zIndex = 0;
-    document.getElementById("page-implicit-login").style.zIndex = 0;
+    document.getElementById("page-choose").style.zIndex = -1;
+    document.getElementById("page-implicit-login").style.zIndex = -1;
     document.getElementById("page-authorization-code-login").style.zIndex = 1;
-    document.getElementById("page-implicit-logged-in").style.zIndex = 0;
-    document.getElementById("page-authorization-logged-in").style.zIndex = 0;
-    document.getElementById("page-pkce-login").style.zIndex = 0;
-    document.getElementById("page-pkce-logged-in").style.zIndex = 0;
+    document.getElementById("page-implicit-logged-in").style.zIndex = -1;
+    document.getElementById("page-authorization-logged-in").style.zIndex = -1;
+    document.getElementById("page-pkce-login").style.zIndex = -1;
+    document.getElementById("page-pkce-logged-in").style.zIndex = -1;
     document.getElementById("btn-oauth").style.zIndex = 2;
   });
 
@@ -149,54 +149,24 @@ document
       "pkce",
       "code"
     );
-    document.getElementById("page-choose").style.zIndex = 0;
-    document.getElementById("page-implicit-login").style.zIndex = 0;
-    document.getElementById("page-authorization-code-login").style.zIndex = 0;
-    document.getElementById("page-implicit-logged-in").style.zIndex = 0;
-    document.getElementById("page-authorization-logged-in").style.zIndex = 0;
+    document.getElementById("page-choose").style.zIndex = -1;
+    document.getElementById("page-implicit-login").style.zIndex = -1;
+    document.getElementById("page-authorization-code-login").style.zIndex = -1;
+    document.getElementById("page-implicit-logged-in").style.zIndex = -1;
+    document.getElementById("page-authorization-logged-in").style.zIndex = -1;
     document.getElementById("page-pkce-login").style.zIndex = 1;
-    document.getElementById("page-pkce-logged-in").style.zIndex = 0;
+    document.getElementById("page-pkce-logged-in").style.zIndex = -1;
     document.getElementById("btn-oauth").style.zIndex = 2;
   });
 
-document
-  .getElementById("btn-logout-implicit")
-  .addEventListener("click", async function () {
-    document.getElementById("page-choose").style.zIndex = 1;
-    document.getElementById("page-implicit-login").style.zIndex = 0;
-    document.getElementById("page-authorization-code-login").style.zIndex = 0;
-    document.getElementById("page-implicit-logged-in").style.zIndex = 0;
-    document.getElementById("page-authorization-logged-in").style.zIndex = 0;
-    document.getElementById("page-pkce-login").style.zIndex = 0;
-    document.getElementById("page-pkce-logged-in").style.zIndex = 0;
-    document.getElementById("btn-oauth").style.zIndex = 0;
-    localStorage.clear();
-  });
-
-document
-  .getElementById("btn-logout-code")
-  .addEventListener("click", async function () {
-    document.getElementById("page-choose").style.zIndex = 1;
-    document.getElementById("page-implicit-login").style.zIndex = 0;
-    document.getElementById("page-authorization-code-login").style.zIndex = 0;
-    document.getElementById("page-implicit-logged-in").style.zIndex = 0;
-    document.getElementById("page-authorization-logged-in").style.zIndex = 0;
-    document.getElementById("page-pkce-login").style.zIndex = 0;
-    document.getElementById("page-pkce-logged-in").style.zIndex = 0;
-    document.getElementById("btn-oauth").style.zIndex = 0;
-    localStorage.clear();
-  });
-
-document
-  .getElementById("btn-logout-pkce")
-  .addEventListener("click", async function () {
-    document.getElementById("page-choose").style.zIndex = 1;
-    document.getElementById("page-implicit-login").style.zIndex = 0;
-    document.getElementById("page-authorization-code-login").style.zIndex = 0;
-    document.getElementById("page-implicit-logged-in").style.zIndex = 0;
-    document.getElementById("page-authorization-logged-in").style.zIndex = 0;
-    document.getElementById("page-pkce-login").style.zIndex = 0;
-    document.getElementById("page-pkce-logged-in").style.zIndex = 0;
-    document.getElementById("btn-oauth").style.zIndex = 0;
-    localStorage.clear();
-  });
+function logout() {
+  document.getElementById("page-choose").style.zIndex = 1;
+  document.getElementById("page-implicit-login").style.zIndex = -1;
+  document.getElementById("page-authorization-code-login").style.zIndex = -1;
+  document.getElementById("page-implicit-logged-in").style.zIndex = -1;
+  document.getElementById("page-authorization-logged-in").style.zIndex = -1;
+  document.getElementById("page-pkce-login").style.zIndex = -1;
+  document.getElementById("page-pkce-logged-in").style.zIndex = -1;
+  document.getElementById("btn-oauth").style.zIndex = -1;
+  localStorage.clear();
+}
