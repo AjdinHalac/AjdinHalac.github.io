@@ -1,0 +1,100 @@
+{
+  "name": "biocertica-admin",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@coreui/coreui": "^3.4.0",
+    "@coreui/icons-react": "^2.1.0",
+    "@coreui/react": "^3.3.0",
+    "@coreui/react-chartjs": "^2.0.3",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/core-js": "^2.5.4",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.0",
+    "@types/papaparse": "^5.3.2",
+    "@types/react": "^16.9.0",
+    "@types/react-cookies": "^0.1.0",
+    "@types/react-csv": "^1.1.1",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-places-autocomplete": "^7.2.9",
+    "@types/react-redux": "^7.1.9",
+    "@types/react-router-dom": "^5.1.6",
+    "@types/react-toastify": "^4.1.0",
+    "@types/showdown": "^1.9.4",
+    "@types/styled-components": "^5.1.7",
+    "amplitude-js": "^7.4.2",
+    "axios": "^0.20.0",
+    "core-js": "^3.8.3",
+    "jwt-decode": "^3.1.2",
+    "node-sass": "^4.14.1",
+    "npm-run-all": "^4.1.5",
+    "papaparse": "^5.3.2",
+    "querystring": "^0.2.0",
+    "react": "^16.13.1",
+    "react-bootstrap-sweetalert": "^5.2.0",
+    "react-cookies": "^0.1.1",
+    "react-csv": "^2.0.3",
+    "react-dom": "^16.13.1",
+    "react-infinite-scroll-component": "^5.1.0",
+    "react-intl": "^5.18.1",
+    "react-mde": "^11.5.0",
+    "react-places-autocomplete": "^7.3.0",
+    "react-redux": "^7.2.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "react-toastify": "^7.0.3",
+    "redux-thunk": "^2.3.0",
+    "showdown": "^1.9.1",
+    "styled-components": "^5.2.1",
+    "typescript": "~3.7.2"
+  },
+  "scripts": {
+    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+    "start-js": "cross-env PORT=3003 react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "start:local": "REACT_APP_BUILD_TARGET=LOCAL npm run start -p watch-css start-js",
+    "start:production": "REACT_APP_BUILD_TARGET=PRODUCTION npm run start -p watch-css start-js",
+    "build": "npm run build-css && react-scripts build",
+    "build:local": "REACT_APP_BUILD_TARGET=LOCAL npm run build",
+    "prebuild:production": "rm -rf build && rm -rf dist/production && mkdir -p dist/production",
+    "build:production": "REACT_APP_BUILD_TARGET=PRODUCTION npm run build",
+    "postbuild:production": "mv -v build/* dist/production/",
+    "build:all": "npm run build:local && yarn build:production",
+    "lint": "eslint ./src --ext .ts --ext .tsx --fix",
+    "test": "react-scripts test"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/parser": "^4.2.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.1",
+    "node-sass-chokidar": "^1.4.0",
+    "npm-run-all": "^4.1.5",
+    "pre-commit": "^1.2.2",
+    "prettier": "^2.1.2"
+  }
+}

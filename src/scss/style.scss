@@ -1,0 +1,10 @@
+// Import CoreUI styles
+@import "./node_modules/@coreui/coreui/scss/coreui";
+
+@import "app";
+
+// If you want to override variables do it here
+@import "variables";
+
+// If you want to add something do it here
+@import "custom";
