@@ -14,6 +14,11 @@ import {
   PopoverBody,
   Box,
   useColorModeValue,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { cookieService } from "../../services/CookieService";
@@ -36,7 +41,6 @@ const LandingHeader = () => {
   return (
     <Box as="nav" role="navigation">
       <Flex
-      hidden={!hidden}
         position="fixed"
         align="center"
         bg={useColorModeValue("gray.100", "gray.900")}
@@ -74,7 +78,13 @@ const LandingHeader = () => {
             </NavLink>
 
             <NavLink to="/terminal" end>
-              <Button as="a" variant="ghost" aria-label="Terminal" my={5} w="100%">
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="Terminal"
+                my={5}
+                w="100%"
+              >
                 Terminal
               </Button>
             </NavLink>
@@ -180,55 +190,103 @@ const LandingHeader = () => {
           {/* Mobile */}
           <Show breakpoint="(max-width: 991px)">
             <IconButton
-              hidden={!hidden}
+              ml={2}
               aria-label="Open Menu"
               size="lg"
-              mr={2}
               icon={<HamburgerIcon />}
               onClick={() => setHidden(false)}
             />
+
+            <Drawer
+              onClose={() => setHidden(true)}
+              isOpen={!hidden}
+              size={"full"}
+            >
+              <DrawerOverlay />
+              <DrawerContent>
+                <DrawerHeader>
+                  <Flex justifyContent={"space-between"}>
+                    <Link to="/">
+                      <Logo color={"teal.500"} />
+                    </Link>
+                    <IconButton
+                      ml={2}
+                      aria-label="Close Menu"
+                      size="lg"
+                      icon={<CloseIcon />}
+                      onClick={() => setHidden(true)}
+                    />
+                  </Flex>
+                </DrawerHeader>
+                <DrawerBody>
+                  <Flex flexDir="column" align="center">
+                    <NavLink to="/" end>
+                      <Button
+                        as="a"
+                        variant="ghost"
+                        aria-label="Home"
+                        my={5}
+                        w="100%"
+                      >
+                        Home
+                      </Button>
+                    </NavLink>
+
+                    <NavLink to="/about" end>
+                      <Button
+                        as="a"
+                        variant="ghost"
+                        aria-label="About"
+                        my={5}
+                        w="100%"
+                      >
+                        About
+                      </Button>
+                    </NavLink>
+
+                    <NavLink to="/blog" end>
+                      <Button
+                        as="a"
+                        variant="ghost"
+                        aria-label="Blog"
+                        my={5}
+                        w="100%"
+                      >
+                        Blog
+                      </Button>
+                    </NavLink>
+
+                    <NavLink to="/terminal" end>
+                      <Button
+                        as="a"
+                        variant="ghost"
+                        aria-label="Terminal"
+                        my={5}
+                        w="100%"
+                      >
+                        Terminal
+                      </Button>
+                    </NavLink>
+
+                    <NavLink to="/contact" end>
+                      <Button
+                        as="a"
+                        variant="ghost"
+                        aria-label="Contact"
+                        my={5}
+                        w="100%"
+                      >
+                        Contact
+                      </Button>
+                    </NavLink>
+                  </Flex>
+                </DrawerBody>
+              </DrawerContent>
+            </Drawer>
           </Show>
         </Flex>
       </Flex>
       {/* Mobile Content */}
-      <Flex hidden={hidden} overflowY="auto" flexDir="column" w="100vw">
-        <Flex justify="flex-end">
-          <IconButton
-            mt={2}
-            mr={6}
-            aria-label="Close Menu"
-            size="lg"
-            icon={<CloseIcon />}
-            onClick={() => setHidden(true)}
-          />
-        </Flex>
-
-        <Flex flexDir="column" align="center">
-          <NavLink to="/" end>
-            <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
-              Home
-            </Button>
-          </NavLink>
-
-          <NavLink to="/about" end>
-            <Button as="a" variant="ghost" aria-label="About" my={5} w="100%">
-              About
-            </Button>
-          </NavLink>
-
-          <NavLink to="/blog" end>
-            <Button as="a" variant="ghost" aria-label="Blog" my={5} w="100%">
-              Blog
-            </Button>
-          </NavLink>
-
-          <NavLink to="/contact" end>
-            <Button as="a" variant="ghost" aria-label="Contact" my={5} w="100%">
-              Contact
-            </Button>
-          </NavLink>
-        </Flex>
-      </Flex>
     </Box>
   );
 };
