@@ -20,7 +20,6 @@ class CookieService {
                 expires: d,
                 domain: `${COOKIE_DOMAIN}`,
                 secure: true,
-                httpOnly: true,
             });
         }
     }
