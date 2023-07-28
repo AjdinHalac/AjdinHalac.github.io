@@ -5,7 +5,7 @@ type cookieNameType = 'localhost-frontend' | 'frontend';
 
 export const COOKIE_NAME: cookieNameType = window.location.hostname === 'localhost' ? 'localhost-frontend' : 'frontend';
 
-const COOKIE_DOMAIN = 'ajdinhalac.github.com';
+const COOKIE_DOMAIN = 'ajdinhalac.github.io';
 
 class CookieService {
     setCookie(cValue: string, durationDays: number) {
@@ -20,6 +20,7 @@ class CookieService {
                 expires: d,
                 domain: `${COOKIE_DOMAIN}`,
                 secure: true,
+                httpOnly: true,
             });
         }
     }
