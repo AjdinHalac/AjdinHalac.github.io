@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/95.040edacf.chunk.js","mappings":"kJAMA,UAJc,WACZ,OAAOA,EAAAA,EAAAA,KAAAC,EAAAA,SAAA,CAAAC,SAAE,SACX,C","sources":["views/landing/About.tsx"],"sourcesContent":["import { ReactElement } from \"react\";\n\nconst About = (): ReactElement => {\n  return <>About</>;\n};\n\nexport default About;\n"],"names":["_jsx","_Fragment","children"],"sourceRoot":""}

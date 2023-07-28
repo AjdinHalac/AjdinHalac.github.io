@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkajdinhalac_github_io=self.webpackChunkajdinhalac_github_io||[]).push([[574],{7574:function(i,a,e){e.r(a);var n=e(7447),t=e(184);a.default=function(){return n._.isAuthenticated()||window.location.replace("/"),(0,t.jsx)(t.Fragment,{children:"Profile"})}}}]);
+//# sourceMappingURL=574.f2b7b2b2.chunk.js.map

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkajdinhalac_github_io=self.webpackChunkajdinhalac_github_io||[]).push([[95],{95:function(a,n,u){u.r(n);var i=u(184);n.default=function(){return(0,i.jsx)(i.Fragment,{children:"About"})}}}]);
+//# sourceMappingURL=95.040edacf.chunk.js.map
