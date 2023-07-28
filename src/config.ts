@@ -1,12 +1,12 @@
 // eslint-disable-next-line
 const local: any = {
-    API_BASE_URL: 'http://localhost:5050',
+    API_BASE_URL: 'http://localhost:5000',
     ADMIN_APP_URL: 'http://localhost:3003',
 };
 
 // eslint-disable-next-line
 const production: any = {
-    API_BASE_URL: 'https://ajdinhalac.xyz',
+    API_BASE_URL: 'http://backend.ajdinhalac.online',
     ADMIN_APP_URL: 'https://ajdinhalac.github.com',
 };
 

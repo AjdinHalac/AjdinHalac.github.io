@@ -1,9 +1,9 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-import ApiCalls from '../pods/auth/api/ApiCalls';
 import { cookieService } from './CookieService';
 
 import config from '../config';
+import ApiCalls from '../domain/landing/api/ApiCalls';
 
 export interface IInvokeOptions {
     noAuthentication?: boolean;
@@ -56,7 +56,7 @@ export default class AjaxService {
 
     init(): void {
         const cookieData = cookieService.getCookie();
-        this.accessToken = cookieData?.accessToken;
+        this.setAuthToken(cookieData?.accessToken, cookieData?.refreshToken);
     }
 
     setAuthToken(newAccessToken: string | null, newRefreshToken: string | null): void {
@@ -90,10 +90,6 @@ export default class AjaxService {
     // eslint-disable-next-line
     private invoke<T>(method: string, url: string, data?: any, options?: IInvokeOptions) {
         let defaultHeaders = this.defaultHeaders;
-
-        if (options && options.noAuthentication) {
-            delete defaultHeaders['Authorization'];
-        }
 
         if (options && options.headers) {
             defaultHeaders = { ...defaultHeaders, ...options.headers };

@@ -21,25 +21,22 @@ export const truncate = (str: string, n: number, ellipsis: string) => {
 export const parseError = (error: any, fallbackErrorMessage = '') => {
     const errorData = error?.response?.data?.error;
 
-    if (errorData) {
-        if (errorData.code) {
-            return `Error occured with code ${errorData.code}`;
-        }
-
-        if (errorData.message) {
-            return errorData.message;
-        }
+    if (errorData === undefined) {
+        return 'Unexpected error occurred...'
     }
 
-    return fallbackErrorMessage;
-};
-
-export const toTitleCase = (phrase: string) => {
-    return phrase
-        .toLowerCase()
-        .split(' ')
-        .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
+    switch (errorData.code) {
+        case '0':
+            return errorData.message;
+        case 'TOKEN.020':
+            return 'Token does not exist.'
+        case 'TOKEN.030':
+            return 'Token could not be verified.'
+        case 'TOKEN.040':
+            return 'Token could not be deleted.'
+        default:
+            return fallbackErrorMessage;
+    }
 };
 
 export const isNullOrUndefined = (value?: unknown): boolean => {
@@ -53,22 +50,4 @@ export const isEmailValid = (email: string) => {
 
 export const isEventKeyEnter = (event: any) => {
     return event.key === 'Enter';
-};
-
-export const removeLeadingZeros = (str: string) => {
-    let alpha;
-    let numeric;
-    if (str.slice(0, 2) === 'KU' || str.slice(0, 2) === 'KX') {
-        alpha = 'KU-KX';
-        numeric = str.slice(2, str.length);
-    } else {
-        alpha = 'BCRT';
-        numeric = str.slice(4, str.length);
-    }
-    numeric = numeric.replace(/^0+/, '');
-    return alpha + numeric;
-};
-
-export const formatDateTime = (value: string) => {
-    return value.substring(0, 16).replace(/[TZ]/, ' ');
 };

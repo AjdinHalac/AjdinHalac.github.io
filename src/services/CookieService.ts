@@ -1,10 +1,9 @@
 import jwt_decode from 'jwt-decode';
 import cookie from 'react-cookies';
 
-type cookieNameType = 'localhost-biocertica' | 'biocertica';
+type cookieNameType = 'localhost-frontend' | 'frontend';
 
-export const COOKIE_NAME: cookieNameType =
-    window.location.hostname === 'localhost' ? 'localhost-biocertica' : 'biocertica';
+export const COOKIE_NAME: cookieNameType = window.location.hostname === 'localhost' ? 'localhost-frontend' : 'frontend';
 
 const COOKIE_DOMAIN = 'ajdinhalac.github.com';
 
@@ -21,6 +20,7 @@ class CookieService {
                 expires: d,
                 domain: `${COOKIE_DOMAIN}`,
                 secure: true,
+                httpOnly: true,
             });
         }
     }
@@ -50,7 +50,7 @@ class CookieService {
     }
 
     public isAuthenticated() {
-        return !!this.getCookie();
+        return !!this.getCookie()?.accessToken;
     }
 }
 
