@@ -11,7 +11,7 @@ import {
     IResetPasswordRequestDTO,
 } from './RequestDtos';
 import { IUploadResponseDTO, IAuthResponseDTO, IArticlesResponseDTO } from './ResponseDtos';
-import { IRequest, IResponse } from '../interfaces';
+import { IRequest, IResponse } from '../../common/interfaces';
 
 export default class ApiCalls {
     public static getSignedUrlForUpload(request: IRequest<IUploadRequestDTO>) {

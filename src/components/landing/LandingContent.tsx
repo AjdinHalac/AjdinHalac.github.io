@@ -41,6 +41,7 @@ const LandingContent = () => {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/terminal" element={<Terminal />} />
           <Route path="/signin" element={<SignIn />} />

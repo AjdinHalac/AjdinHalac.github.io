@@ -4,8 +4,10 @@ import * as ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import * as serviceWorker from "./serviceWorker";
 import theme from "./theme";
-import './css/style.css'
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./css/style.css";
+import { HashRouter, Route, Routes } from "react-router-dom";
+
+const AdminLayout = React.lazy(() => import("./components/admin/AdminLayout"));
 
 const LandingLayout = React.lazy(
   () => import("./components/landing/LandingLayout")
@@ -19,13 +21,14 @@ root.render(
   <ChakraProvider theme={theme}>
     <React.StrictMode>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <BrowserRouter>
+      <HashRouter>
         <React.Suspense fallback={<Spinner />}>
           <Routes>
             <Route path={"/*"} element={<LandingLayout />} />
+            <Route path="/admin/*" element={<AdminLayout />} />
           </Routes>
         </React.Suspense>
-      </BrowserRouter>
+      </HashRouter>
     </React.StrictMode>
   </ChakraProvider>
 );

@@ -18,7 +18,7 @@ import { ReactElement, useEffect, useState } from "react";
 import ApiCalls from "../../domain/landing/api/ApiCalls";
 import { parseError, truncate } from "../../utils/helpers";
 import { Link } from "react-router-dom";
-import { IArticle, ITag } from "../../domain/landing/interfaces";
+import { IArticle, ITag } from "../../domain/common/interfaces";
 
 const Blog = (): ReactElement => {
   const toast = useToast();

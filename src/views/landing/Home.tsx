@@ -27,7 +27,8 @@ import {
 import React, { ReactElement, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ApiCalls from "../../domain/landing/api/ApiCalls";
-import { IArticle, IExperience, ITag } from "../../domain/landing/interfaces";
+import { IExperience } from "../../domain/landing/interfaces";
+import { IArticle, ITag } from "../../domain/common/interfaces";
 import { parseError, truncate } from "../../utils/helpers";
 import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
 import { ChevronRightIcon } from "@chakra-ui/icons";

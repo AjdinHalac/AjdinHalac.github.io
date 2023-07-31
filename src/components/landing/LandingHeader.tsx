@@ -147,7 +147,7 @@ const LandingHeader = () => {
                   {cookieService.isAuthenticated() && (
                     <>
                       {cookieService.isAdmin() && (
-                        <NavLink to="/admin/">
+                        <NavLink to="/admin/dashboard">
                           <Button
                             as="a"
                             variant="ghost"

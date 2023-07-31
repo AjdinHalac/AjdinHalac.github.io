@@ -1,4 +1,4 @@
-import { IArticle, IPaginator } from "../interfaces";
+import { IArticle, IPaginator } from "../../common/interfaces";
 
 export interface IUploadResponseDTO {
     accessURL: string;

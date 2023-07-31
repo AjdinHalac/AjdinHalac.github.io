@@ -1,0 +1,7 @@
+import React from "react";
+
+const AdminSidebar = () => {
+  return <></>;
+};
+
+export default React.memo(AdminSidebar);
