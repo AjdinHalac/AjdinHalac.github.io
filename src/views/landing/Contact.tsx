@@ -35,7 +35,7 @@ const Contact = (): ReactElement => {
               <FaLinkedin
                 onClick={() => {
                   window.open(
-                    "https://www.linkedin.com/in/ajdin-hala%C4%87-019549121/",
+                    "https://www.linkedin.com/in/ajdin-halac/",
                     "_blank",
                     "noreferrer,noopener"
                   );

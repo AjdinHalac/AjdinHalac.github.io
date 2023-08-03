@@ -13,14 +13,14 @@ const About = (): ReactElement => {
 
   return (
     <>
-      <Container minW={"sm"} maxW={"4xl"} id="about">
+      <Container maxW={"3xl"} id="about">
         <Stack
           as={Box}
           textAlign={"center"}
           spacing={{ base: 8, md: 14 }}
           pb={{ base: 20, md: 36 }}
         >
-          <Stack align="center" direction="row" px={4}>
+          <Stack align="center" direction="row" p={4}>
             <HStack mx={4}>
               <Text fontWeight={800}>About</Text>
             </HStack>
@@ -40,14 +40,14 @@ const About = (): ReactElement => {
           </Text>
         </Stack>
       </Container>
-      <Container minW={"sm"} maxW={"4xl"} id="experience">
+      <Container maxW={"3xl"} id="experience">
         <Stack
           as={Box}
           textAlign={"center"}
           spacing={{ base: 8, md: 14 }}
           pb={{ base: 20, md: 36 }}
         >
-          <Stack align="center" direction="row" px={4}>
+          <Stack align="center" direction="row" p={4}>
             <HStack mx={4}>
               <Text fontWeight={800}>Experience</Text>
             </HStack>
@@ -73,10 +73,7 @@ const About = (): ReactElement => {
                 <CardHeader>
                   <Flex justifyContent="space-between">
                     <HStack>
-                      <Image
-                        boxSize={"40px"}
-                        src={require(`../../images/${selected.image}`)}
-                      />
+                      <Image h={"auto"} w={"50px"} src={require(`../../images/${selected.image}`)} />
                       <Box px={2}>
                         <Text fontWeight={600}>{selected.company}</Text>
                         <Text>{selected.position}</Text>

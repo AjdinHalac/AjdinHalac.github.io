@@ -4,42 +4,62 @@ import { SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
-  Flex,
+  Container,
+  Heading,
   Input,
   InputGroup,
   InputLeftElement,
   InputRightElement,
   Stack,
+  Text,
 } from "@chakra-ui/react";
+import { Logo } from "../../components/common/Logo";
 
 const Page404 = (): ReactElement => {
   return (
-    <Flex alignItems={"center"}>
-      <Stack direction={"row"} spacing={7}>
-        <Box maxW="sm">
-          <div className="clearfix">
-            <h1 className="float-left display-3 mr-4">404</h1>
-            <h4 className="pt-3">Oops! You{"'"}re lost.</h4>
-            <p className="text-muted float-left">
-              The page you are looking for was not found.
-            </p>
-          </div>
-          <InputGroup>
-            <InputLeftElement pointerEvents="none">
-              <SearchIcon name="cil-magnifying-glass" />
-            </InputLeftElement>
-            <Input
-              size="16"
-              type="text"
-              placeholder="What are you looking for?"
-            />
-            <InputRightElement>
-              <Button colorScheme="blue">Search</Button>
-            </InputRightElement>
-          </InputGroup>
+    <Container
+      maxW="lg"
+      py={{ base: "12", md: "24" }}
+      px={{ base: "0", sm: "8" }}
+    >
+      <Stack spacing="8">
+        <Stack spacing="6">
+          <Logo color={"teal.500"} />
+          <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
+            <Heading as="h1" size={{ base: "sm", md: "sm" }}>
+              404
+            </Heading>
+            <Heading as="h2">Oops! You{"'"}re lost.</Heading>
+            <Text>The page you are looking for was not found.</Text>
+          </Stack>
+        </Stack>
+        <Box
+          py={{ base: "0", sm: "8" }}
+          px={{ base: "4", sm: "10" }}
+          bg={{ base: "transparent", sm: "bg.surface" }}
+          boxShadow={{ base: "none", sm: "md" }}
+          borderRadius={{ base: "none", sm: "xl" }}
+        >
+          <Stack spacing="6">
+            <Stack spacing="5">
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <SearchIcon name="cil-magnifying-glass" />
+                </InputLeftElement>
+                <Input
+                  size="16"
+                  type="text"
+                  placeholder="What are you looking for?"
+                />
+                <InputRightElement width={"4.5em"}>
+                  <Button colorScheme="teal">Search</Button>
+                </InputRightElement>
+              </InputGroup>
+            </Stack>
+          </Stack>
         </Box>
       </Stack>
-    </Flex>
+    </Container>
   );
 };
 

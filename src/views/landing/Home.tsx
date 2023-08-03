@@ -111,7 +111,7 @@ const Home = (): ReactElement => {
               }}
               onClick={() => {
                 window.open(
-                  "https://www.linkedin.com/in/ajdin-hala%C4%87-019549121/",
+                  "https://www.linkedin.com/in/ajdin-halac/",
                   "_blank",
                   "noreferrer,noopener"
                 );
@@ -150,14 +150,14 @@ const Home = (): ReactElement => {
           </Stack>
         </Stack>
       </Container>
-      <Container minW={"sm"} maxW={"4xl"} id="about">
+      <Container maxW={"3xl"} id="about">
         <Stack
           as={Box}
           textAlign={"center"}
           spacing={{ base: 8, md: 14 }}
           pb={{ base: 20, md: 36 }}
         >
-          <Stack align="center" direction="row" px={4}>
+          <Stack align="center" direction="row" p={4}>
             <HStack mx={4}>
               <Text color={"teal.400"} fontWeight={800}>
                 01
@@ -180,14 +180,14 @@ const Home = (): ReactElement => {
           </Text>
         </Stack>
       </Container>
-      <Container minW={"sm"} maxW={"4xl"} id="experience">
+      <Container maxW={"3xl"} id="experience">
         <Stack
           as={Box}
           textAlign={"center"}
           spacing={{ base: 8, md: 14 }}
           pb={{ base: 20, md: 36 }}
         >
-          <Stack align="center" direction="row" px={4}>
+          <Stack align="center" direction="row" p={4}>
             <HStack mx={4}>
               <Text color={"teal.400"} fontWeight={800}>
                 02
@@ -216,7 +216,7 @@ const Home = (): ReactElement => {
                 <CardHeader>
                   <Flex justifyContent="space-between">
                     <HStack>
-                      <Image boxSize={"40px"} src={require(`../../images/${selected.image}`)} />
+                      <Image h={"auto"} w={"50px"} src={require(`../../images/${selected.image}`)} />
                       <Box px={2}>
                         <Text fontWeight={600}>{selected.company}</Text>
                         <Text>{selected.position}</Text>
@@ -347,7 +347,7 @@ const Home = (): ReactElement => {
                 <FaLinkedin
                   onClick={() => {
                     window.open(
-                      "https://www.linkedin.com/in/ajdin-hala%C4%87-019549121/",
+                      "https://www.linkedin.com/in/ajdin-halac/",
                       "_blank",
                       "noreferrer,noopener"
                     );

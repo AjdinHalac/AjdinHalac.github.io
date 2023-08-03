@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { Container, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 const Home = React.lazy(() => import("../../views/landing/Home"));
 const About = React.lazy(() => import("../../views/landing/About"));
@@ -36,7 +36,6 @@ const LandingContent = () => {
       py="16"
       minHeight={"94vh"}
     >
-      <Container flex="1">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -54,7 +53,6 @@ const LandingContent = () => {
           <Route path={"/unauthorized"} element={<Page403 />} />
           <Route path={"*"} element={<Page404 />} />
         </Routes>
-      </Container>
     </Flex>
   );
 };
