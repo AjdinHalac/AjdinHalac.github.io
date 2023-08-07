@@ -9,4 +9,8 @@ export default class ApiCalls {
     public static updateMe(request: IRequest<Partial<IUser>>) {
         return ajaxService.put<IResponse<IUser>>(`/me/`, request.payload);
     }
+
+    public static submitFlag(flag: string) {
+        return ajaxService.post<IResponse<any>>(`/me/submit-flag/${flag}`);
+    }
 }

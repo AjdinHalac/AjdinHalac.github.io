@@ -1,10 +1,12 @@
 interface UnixFile {
   name: string;
+  path: string;
   content: string;
 }
 
 interface Directory {
   name: string;
+  path: string;
   files: UnixFile[];
   subdirectories: Directory[];
 }
@@ -14,7 +16,7 @@ export class UnixFileSystem {
   private currentDirectory: Directory;
 
   constructor() {
-    this.root = { name: "/", files: [], subdirectories: [] };
+    this.root = { name: "/", path: "/", files: [], subdirectories: [] };
     this.currentDirectory = this.root;
   }
 
@@ -23,11 +25,21 @@ export class UnixFileSystem {
   }
 
   private findDirectory(path: string): Directory | null {
-    const directories = path.split("/").filter((part) => part !== "");
+    let directories: string[];
+    if (path === "..") {
+      directories = this.currentDirectory.path
+        .split("/")
+        .filter((part) => part !== "");
+      directories.pop();
+    } else {
+      directories = path.split("/").filter((part) => part !== "");
+    }
 
     let currentDir = this.root;
     for (const dir of directories) {
-      const foundDir = currentDir.subdirectories.find((subdir) => subdir.name === dir);
+      const foundDir = currentDir.subdirectories.find(
+        (subdir) => subdir.name === dir
+      );
       if (foundDir) {
         currentDir = foundDir;
       } else {
@@ -45,9 +57,11 @@ export class UnixFileSystem {
       return null;
     }
 
-    const dir = this.findDirectory(directoriesAndFile.join("/"));
+    let dir = this.findDirectory(directoriesAndFile.join("/"));
     if (!dir) {
       return null;
+    } else {
+      dir = this.currentDirectory;
     }
 
     return dir.files.find((file) => file.name === fileName) || null;
@@ -60,7 +74,14 @@ export class UnixFileSystem {
       }
       this.currentDirectory = this.findDirectory("..") || this.root;
     } else {
-      const targetDir = this.findDirectory(path);
+      let targetDir: Directory | undefined | null;
+      if (path.startsWith("/")) {
+        targetDir = this.findDirectory(path);
+      } else {
+        targetDir = this.currentDirectory.subdirectories.find(
+          (subdir) => subdir.name === path
+        );
+      }
       if (targetDir) {
         this.currentDirectory = targetDir;
       } else {
@@ -72,54 +93,133 @@ export class UnixFileSystem {
   }
 
   public pwd(): string {
-    const pathParts: string[] = [];
-    let currentDir = this.currentDirectory;
-
-    while (currentDir !== this.root) {
-      pathParts.unshift(currentDir.name);
-      currentDir = this.findDirectory("..") || this.root;
-    }
-
-    return "/" + pathParts.join("/");
+    return this.currentDirectory.path;
   }
 
-  public ls(): string[] {
-    const files = this.currentDirectory.files.map((file) => file.name);
-    const directories = this.currentDirectory.subdirectories.map(
-      (dir) => dir.name
-    );
+  public ls(path: string): string[] {
+    let targetDir: Directory | null | undefined;
+    if (!path || path === "") {
+      targetDir = this.currentDirectory;
+    } else {
+      if (path.startsWith("/") || path.startsWith("..")) {
+        targetDir = this.findDirectory(path);
+      } else {
+        targetDir = this.currentDirectory.subdirectories.find((dir) => dir.name === path)
+      }
+    }
+
+    if (!targetDir) {
+      return [`Error: Path to directory "${path}" not found`];
+    }
+
+    const files = targetDir.files.map((file) => file.name);
+    const directories = targetDir.subdirectories.map((dir) => dir.name);
     return [...files, ...directories];
   }
 
-  public mkdir(name: string): string {
-    if (this.currentDirectory.subdirectories.some((dir) => dir.name === name)) {
-      return `Error: Directory "${name}" already exists`;
+  public mkdir(path: string): string {
+    if (!path || path === "") {
+      return `Error: Directory name must be provided`;
     }
 
-    this.currentDirectory.subdirectories.push({
-      name,
+    let targetDir: Directory | null;
+    let name: string | undefined;
+    if (path.startsWith("/") || path.startsWith("..")) {
+      const directoriesAndFile = path.split("/").filter((part) => part !== "");
+      name = directoriesAndFile.pop();
+      if (!name) {
+        return `Error: File name must be provided`;
+      }
+
+      targetDir = this.findDirectory(directoriesAndFile.join("/"));
+    } else {
+      name = path;
+      targetDir = this.currentDirectory;
+    }
+
+    if (targetDir === null) {
+      return `Error: Path to directory "${path}" not found`;
+    }
+
+    if (targetDir.subdirectories.some((dir) => dir.name === name)) {
+      return `Error: Directory "${path}" already exists`;
+    }
+
+    targetDir.subdirectories.push({
+      name: name,
+      path: targetDir.path + name + "/",
       files: [],
       subdirectories: [],
     });
     return "";
   }
 
-  public touch(name: string, content: string = ""): string {
-    if (this.currentDirectory.files.some((file) => file.name === name)) {
-      return `Error: File "${name}" already exists`;
+  public touch(path: string, content: string = ""): string {
+    if (!path || path === "") {
+      return `Error: File name must be provided`;
     }
 
-    this.currentDirectory.files.push({ name, content: content });
+    let targetDir: Directory | null;
+    let name: string | undefined;
+    if (path.startsWith("/") || path.startsWith("..")) {
+      const directoriesAndFile = path.split("/").filter((part) => part !== "");
+      name = directoriesAndFile.pop();
+      if (!name) {
+        return `Error: File name must be provided`;
+      }
+
+      targetDir = this.findDirectory(directoriesAndFile.join("/"));
+    } else {
+      name = path;
+      targetDir = this.currentDirectory;
+    }
+
+    if (targetDir === null) {
+      return `Error: Path to directory "${path}" not found`;
+    }
+
+    if (targetDir.files.some((file) => file.name === name)) {
+      return `Error: File "${path}" already exists`;
+    }
+
+    targetDir.files.push({
+      name: name,
+      path: targetDir.path + name + "/",
+      content: content,
+    });
     return "";
   }
 
   public cat(path: string): string {
-    const file = this.findUnixFile(path);
-    if (file) {
-      return file.content;
-    } else {
-      return `Error: File "${path}" not found`;
+    if (!path || path === "") {
+      return `Error: File name must be provided`;
     }
+
+    let targetDir: Directory | null;
+    let name: string | undefined;
+    if (path.startsWith("/") || path.startsWith("..")) {
+      const directoriesAndFile = path.split("/").filter((part) => part !== "");
+      name = directoriesAndFile.pop();
+      if (!name) {
+        return `Error: File name must be provided`;
+      }
+
+      targetDir = this.findDirectory(directoriesAndFile.join("/"));
+    } else {
+      name = path;
+      targetDir = this.currentDirectory;
+    }
+
+    if (targetDir === null) {
+      return `Error: Path to file "${path}" not found`;
+    }
+
+    let targetFile = targetDir.files.find((file) => file.name === name);
+    if (targetFile) {
+      return targetFile.content;
+    }
+
+    return `Error: File "${path}" not found`;
   }
 
   public rm(path: string): string {

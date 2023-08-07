@@ -32,6 +32,11 @@ const items = [
     description: "redirects towards my profile",
   },
   {
+    command: "submit",
+    pipe: "|",
+    description: "submits a CTF flag you found",
+  },
+  {
     command: "cd",
     pipe: "|",
     description: "changes current directory",

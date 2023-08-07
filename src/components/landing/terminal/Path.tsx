@@ -15,7 +15,7 @@ const Path = ({ user, path }: Props) => {
       <Box mr={"0.3em"} as="span">
         in
       </Box>
-      <Box color={"yellow"} mr={"0.3em"} as="span">
+      <Box color={"blue.400"} mr={"0.3em"} as="span">
         {path}
       </Box>
     </Flex>

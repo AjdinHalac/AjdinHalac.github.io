@@ -1,5 +1,4 @@
 import {
-  Box,
   Flex,
   Input,
   InputGroup,
@@ -17,9 +16,10 @@ interface Props {
 const CommandInput = React.forwardRef<HTMLInputElement, Props>(
   ({ inputValue, changeHandler, submitHandler }, ref) => {
     return (
-      <Flex>
-        <form onSubmit={(e) => submitHandler(e)} data-testid="terminalForm">
-          <InputGroup>
+      <Flex >
+        <form style={{width: "100%"}} onSubmit={(e) => submitHandler(e)} data-testid="terminalForm">
+          <InputGroup
+                      >
             <InputLeftElement pointerEvents="none">
               <HiArrowNarrowRight size={23} />
             </InputLeftElement>
@@ -33,6 +33,7 @@ const CommandInput = React.forwardRef<HTMLInputElement, Props>(
               onChange={(e) => changeHandler(e)}
               borderColor={"transparent"}
               focusBorderColor="transparent"
+              _hover={{borderColor: "transparent"}}
             />
           </InputGroup>
         </form>

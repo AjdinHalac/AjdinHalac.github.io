@@ -9,30 +9,29 @@ import Path from "../../components/landing/terminal/Path";
 import CommandInput from "../../components/landing/terminal/CommandInput";
 import { cookieService } from "../../services/CookieService";
 import ApiCalls from "../../domain/common/api/ApiCalls";
-import SubmitFlag from "../../components/landing/terminal/commands/SubmitFlag";
 import { UnixFileSystem } from "../../components/landing/terminal/Filesystem";
+import Submit from "../../components/landing/terminal/commands/Submit";
 
 const Terminal = (): ReactElement => {
+  const triggered = useRef<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
   const [commandsHistory, setCommandsHistory] = useState<string[]>([]);
 
-  const [user, setUser] = useState<string>("");
-  const fileSystem = new UnixFileSystem();
-  fileSystem.mkdir("bin");
-  fileSystem.mkdir("boot");
-  fileSystem.mkdir("boot");
-  fileSystem.mkdir("etc");
-  fileSystem.mkdir("tmp");
-  fileSystem.mkdir("mnt");
-  fileSystem.mkdir("usr");
-  fileSystem.mkdir("home");
+  const [user, setUser] = useState("");
+  const [fileSystem, setFileSystem] = useState<UnixFileSystem>(
+    new UnixFileSystem()
+  );
+
   const getUser = async () => {
-    if (cookieService.isAuthenticated()) {
-      const user = await ApiCalls.getMe();
-      setUser(user.data.email.split("@")[0]);
-    } else {
-      setUser("Anon");
+    if (!triggered.current) {
+      if (cookieService.isAuthenticated()) {
+        const user = await ApiCalls.getMe();
+        setUser(user.data.email.split("@")[0]);
+      } else {
+        setUser("Anon");
+      }
+      triggered.current = true;
     }
   };
 
@@ -40,6 +39,27 @@ const Terminal = (): ReactElement => {
     getUser();
     inputRef.current?.focus();
   }, []);
+
+  useEffect(() => {
+    if (triggered.current) {
+      fileSystem.mkdir("bin");
+      fileSystem.mkdir("boot");
+      fileSystem.mkdir("dev");
+      fileSystem.mkdir("etc");
+      fileSystem.mkdir("lib");
+      fileSystem.mkdir("tmp");
+      fileSystem.mkdir("mnt");
+      fileSystem.mkdir("usr");
+      fileSystem.mkdir("home");
+      fileSystem.mkdir("/home/ahalac");
+      fileSystem.touch(
+        "/home/ahalac/help.txt",
+        "Flag might not be within the terminal, have you tried console?"
+      );
+      fileSystem.mkdir("/home/" + user);
+      fileSystem.cd("/home/" + user);
+    }
+  }, [user, triggered]);
 
   const processInputString = (command: string): string[] => {
     let input = command.split(" ");
@@ -84,7 +104,7 @@ const Terminal = (): ReactElement => {
         return <Echo message={fileSystem.pwd()} />;
 
       case "ls":
-        return <Echo message={fileSystem.ls().join()} />;
+        return fileSystem.ls(argument).map((item) => <Echo message={item} />);
 
       case "mkdir":
         return <Echo message={fileSystem.mkdir(argument)} />;
@@ -101,8 +121,11 @@ const Terminal = (): ReactElement => {
       case "mv":
         return <Echo message={fileSystem.mv(argument, argumentAnother)} />;
 
-      /*case "submit-flag":
-        return <SubmitFlag flag={argument} />;*/
+      case "submit":
+        return <Submit argument={argument} />;
+
+      case "":
+        return <Echo message={""} />;
 
       default:
         return <Echo message={`Error: Command "${key}" not found`} />;
