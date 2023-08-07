@@ -1,5 +1,4 @@
-import { ChevronRightIcon } from "@chakra-ui/icons";
-import { Box, Button, ButtonGroup, Card, CardBody, CardHeader, Center, Container, Divider, Fade, Flex, HStack, Image, List, ListIcon, ListItem, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Card, CardHeader, Center, Container, Divider, Fade, Flex, HStack, Image, Stack, Text } from "@chakra-ui/react";
 import { ReactElement, useState } from "react";
 import { IExperience } from "../../domain/landing/interfaces";
 import experience from "../../experience";
@@ -84,22 +83,6 @@ const About = (): ReactElement => {
                     </Text>
                   </Flex>
                 </CardHeader>
-                <CardBody>
-                  <Flex>
-                    <List spacing={3}>
-                      {selected.listItems.map((item, index) => (
-                        <ListItem key={index}>
-                          <ListIcon
-                            boxSize={6}
-                            as={ChevronRightIcon}
-                            color={"teal.500"}
-                          />
-                          {item}
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Flex>
-                </CardBody>
               </Card>
             </Fade>
           </Stack>

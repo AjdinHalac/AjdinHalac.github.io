@@ -29,7 +29,7 @@ const Terminal = (): ReactElement => {
         const user = await ApiCalls.getMe();
         setUser(user.data.email.split("@")[0]);
       } else {
-        setUser("Anon");
+        setUser("anon");
       }
       triggered.current = true;
     }

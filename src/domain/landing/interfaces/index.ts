@@ -4,5 +4,4 @@ export interface IExperience {
     company: string;
     duration: string;
     image: string;
-    listItems: string[];
 }

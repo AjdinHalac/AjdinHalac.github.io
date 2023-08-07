@@ -19,19 +19,15 @@ import {
   Center,
   Badge,
   CardHeader,
-  List,
-  ListItem,
-  ListIcon,
   Fade,
 } from "@chakra-ui/react";
-import React, { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ApiCalls from "../../domain/landing/api/ApiCalls";
 import { IExperience } from "../../domain/landing/interfaces";
 import { IArticle, ITag } from "../../domain/common/interfaces";
 import { parseError, truncate } from "../../utils/helpers";
 import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
-import { ChevronRightIcon } from "@chakra-ui/icons";
 import experience from "../../experience";
 
 const Home = (): ReactElement => {
@@ -92,7 +88,15 @@ const Home = (): ReactElement => {
             color={"gray.500"}
             fontSize={{ base: "lg", sm: "xl", md: "2xl" }}
           >
-            Test
+            Welcome to my delightful playground website, where imagination
+            knows no bounds and laughter echoes through the air! Step into a
+            world of endless fun and adventure, designed to captivate the hearts
+            of the young and the young at heart. Let your curiosity guide you as
+            you discover a treasure trove of interactive games, captivating
+            stories, and exciting activities. So, come on in and experience the
+            joy of play as you embark on a journey filled with wonder and
+            discovery. Unleash your inner child and immerse yourself in the
+            magic that awaits—explore to your heart's content!
           </Text>
           <Stack
             direction={"column"}
@@ -210,13 +214,17 @@ const Home = (): ReactElement => {
               ))}
             </ButtonGroup>
           </Center>
-          <Stack >
+          <Stack>
             <Fade in={!!selected}>
               <Card key={selected.company} size="lg">
                 <CardHeader>
                   <Flex justifyContent="space-between">
                     <HStack>
-                      <Image h={"auto"} w={"50px"} src={require(`../../images/${selected.image}`)} />
+                      <Image
+                        h={"auto"}
+                        w={"50px"}
+                        src={require(`../../images/${selected.image}`)}
+                      />
                       <Box px={2}>
                         <Text fontWeight={600}>{selected.company}</Text>
                         <Text>{selected.position}</Text>
@@ -227,22 +235,6 @@ const Home = (): ReactElement => {
                     </Text>
                   </Flex>
                 </CardHeader>
-                <CardBody>
-                  <Flex>
-                    <List spacing={3}>
-                      {selected.listItems.map((item, index) => (
-                        <ListItem key={index}>
-                          <ListIcon
-                            boxSize={6}
-                            as={ChevronRightIcon}
-                            color={"teal.500"}
-                          />
-                          {item}
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Flex>
-                </CardBody>
               </Card>
             </Fade>
           </Stack>
