@@ -6,7 +6,7 @@ const local: any = {
 
 // eslint-disable-next-line
 const production: any = {
-    API_BASE_URL: 'http://backend.ajdinhalac.dev',
+    API_BASE_URL: 'https://backend.ajdinhalac.dev',
     ADMIN_APP_URL: 'https://ajdinhalac.github.com',
 };
 
