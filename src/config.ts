@@ -10,7 +10,7 @@ const production: any = {
     ADMIN_APP_URL: 'https://ajdinhalac.github.com',
 };
 
-const config = process.env.REACT_APP_BUILD_TARGET === 'PRODUCTION' ? production : local;
+const config = process.env.REACT_APP_BUILD_TARGET === 'LOCAL' ? local : production;
 
 export default {
     DEFAULT_LANGUNAGE: 'en',
