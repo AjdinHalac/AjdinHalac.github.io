@@ -65,12 +65,13 @@ export interface IArticle {
     id: number;
     slug: string;
     title: string;
+    description: string;
     content: string;
     image: string;
     userID: number;
-    createdAt: string | Date;
-    updatedAt: string | Date;
-    publishedAt: string | Date;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
     tags: ITag[];
 }
 

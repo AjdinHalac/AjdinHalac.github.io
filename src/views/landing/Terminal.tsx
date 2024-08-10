@@ -154,7 +154,7 @@ const Terminal = (): ReactElement => {
   };
 
   return (
-    <Container maxW={"3xl"} id="terminal">
+    <Container maxW={"4xl"} id="terminal">
       <Stack
         as={Box}
         textAlign={"center"}

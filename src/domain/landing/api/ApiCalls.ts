@@ -11,7 +11,7 @@ import {
     IResetPasswordRequestDTO,
 } from './RequestDtos';
 import { IUploadResponseDTO, IAuthResponseDTO, IArticlesResponseDTO } from './ResponseDtos';
-import { IRequest, IResponse } from '../../common/interfaces';
+import { IArticle, IRequest, IResponse } from '../../common/interfaces';
 
 export default class ApiCalls {
     public static getSignedUrlForUpload(request: IRequest<IUploadRequestDTO>) {
@@ -66,5 +66,9 @@ export default class ApiCalls {
 
     public static getArticles(queryParams?: string) {
         return ajaxService.get<IResponse<IArticlesResponseDTO>>(`/articles/` + (queryParams ? `?${queryParams}` : ''));
+    }
+
+    public static getArticle(slug: string) {
+        return ajaxService.get<IResponse<IArticle>>(`/articles/${slug}`);
     }
 }

@@ -51,3 +51,39 @@ export const isEmailValid = (email: string) => {
 export const isEventKeyEnter = (event: any) => {
     return event.key === 'Enter';
 };
+
+export const scrollToHero = () => {
+    scrollTo("#hero")
+};
+
+export const scrollToAbout = () => {
+    scrollTo("#about")
+};
+
+export const scrollToExperience = () => {
+    scrollTo("#experience")
+};
+
+export const scrollToSkills = () => {
+    scrollTo("#skills")
+};
+
+export const scrollToBlog = () => {
+    scrollTo("#blog")
+};
+
+export const scrollToTerminal = () => {
+    scrollTo("#terminal")
+};
+
+export const scrollToContact = () => {
+    scrollTo("#contact")
+};
+
+export const scrollTo = (sectionID: string) => {
+    const yOffset = -75;
+    const section = document.querySelector(sectionID);
+    const y = section ? section.getBoundingClientRect().top + window.scrollY + yOffset : 0
+
+    window.scrollTo({ top: y, behavior: 'smooth' });
+}

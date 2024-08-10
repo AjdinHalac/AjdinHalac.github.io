@@ -26,6 +26,7 @@ import { authService } from "../../services/AuthService";
 import { ColorModeSwitcher } from "../../ColorModeSwitcher";
 import { MdAccountCircle } from "react-icons/md";
 import { Logo } from "../common/Logo";
+import { scrollToAbout, scrollToBlog, scrollToContact, scrollToExperience, scrollToHero, scrollToSkills, scrollToTerminal } from "../../utils/helpers";
 
 const LandingHeader = () => {
   const [hidden, setHidden] = useState(true);
@@ -59,25 +60,37 @@ const LandingHeader = () => {
 
         <Flex alignItems={"center"}>
           <Show breakpoint="(min-width: 992px)">
-            <NavLink to="/" end>
+            <NavLink to="/" onClick={scrollToHero} end>
               <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
                 Home
               </Button>
             </NavLink>
 
-            <NavLink to="/about" end>
+            <NavLink to="/" onClick={scrollToAbout} end>
               <Button as="a" variant="ghost" aria-label="About" my={5} w="100%">
                 About
               </Button>
             </NavLink>
 
-            <NavLink to="/blog" end>
+            <NavLink to="/" onClick={scrollToExperience} end>
+              <Button as="a" variant="ghost" aria-label="Experience" my={5} w="100%">
+                Experience
+              </Button>
+            </NavLink>
+
+            <NavLink to="/" onClick={scrollToSkills} end>
+              <Button as="a" variant="ghost" aria-label="Skills" my={5} w="100%">
+                Skills
+              </Button>
+            </NavLink>
+
+            <NavLink to="/" onClick={scrollToBlog} end>
               <Button as="a" variant="ghost" aria-label="Blog" my={5} w="100%">
                 Blog
               </Button>
             </NavLink>
 
-            <NavLink to="/terminal" end>
+            <NavLink to="/" onClick={scrollToTerminal} end>
               <Button
                 as="a"
                 variant="ghost"
@@ -89,7 +102,7 @@ const LandingHeader = () => {
               </Button>
             </NavLink>
 
-            <NavLink to="/contact" end>
+            <NavLink to="/" onClick={scrollToContact} end>
               <Button
                 as="a"
                 variant="ghost"
@@ -220,7 +233,7 @@ const LandingHeader = () => {
                 </DrawerHeader>
                 <DrawerBody>
                   <Flex flexDir="column" align="center">
-                    <NavLink to="/" end>
+                    <NavLink to="/" onClick={scrollToHero} end>
                       <Button
                         as="a"
                         variant="ghost"
@@ -232,7 +245,7 @@ const LandingHeader = () => {
                       </Button>
                     </NavLink>
 
-                    <NavLink to="/about" end>
+                    <NavLink to="/" onClick={scrollToAbout} end>
                       <Button
                         as="a"
                         variant="ghost"
@@ -244,7 +257,31 @@ const LandingHeader = () => {
                       </Button>
                     </NavLink>
 
-                    <NavLink to="/blog" end>
+                    <NavLink to="/" onClick={scrollToExperience} end>
+                      <Button
+                        as="a"
+                        variant="ghost"
+                        aria-label="Experience"
+                        my={5}
+                        w="100%"
+                      >
+                        Experience
+                      </Button>
+                    </NavLink>
+
+                    <NavLink to="/" onClick={scrollToSkills} end>
+                      <Button
+                        as="a"
+                        variant="ghost"
+                        aria-label="Skills"
+                        my={5}
+                        w="100%"
+                      >
+                        Skills
+                      </Button>
+                    </NavLink>
+
+                    <NavLink to="/" onClick={scrollToBlog} end>
                       <Button
                         as="a"
                         variant="ghost"
@@ -256,7 +293,7 @@ const LandingHeader = () => {
                       </Button>
                     </NavLink>
 
-                    <NavLink to="/terminal" end>
+                    <NavLink to="/" onClick={scrollToTerminal} end>
                       <Button
                         as="a"
                         variant="ghost"
@@ -268,7 +305,7 @@ const LandingHeader = () => {
                       </Button>
                     </NavLink>
 
-                    <NavLink to="/contact" end>
+                    <NavLink to="/" onClick={scrollToContact} end>
                       <Button
                         as="a"
                         variant="ghost"

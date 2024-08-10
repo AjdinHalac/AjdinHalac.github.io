@@ -20,15 +20,25 @@ import {
   Badge,
   CardHeader,
   Fade,
+  CardFooter,
+  SimpleGrid,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverBody,
 } from "@chakra-ui/react";
 import { ReactElement, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ApiCalls from "../../domain/landing/api/ApiCalls";
 import { IExperience } from "../../domain/landing/interfaces";
 import { IArticle, ITag } from "../../domain/common/interfaces";
-import { parseError, truncate } from "../../utils/helpers";
+import { parseError, scrollToContact, truncate } from "../../utils/helpers";
 import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
 import experience from "../../experience";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 const Home = (): ReactElement => {
   const toast = useToast();
@@ -36,11 +46,6 @@ const Home = (): ReactElement => {
 
   const handleSelected = (value: IExperience) => {
     setSelected(value);
-  };
-
-  const scrollToContact = () => {
-    const contactSection = document.querySelector("#contact");
-    contactSection?.scrollIntoView({ behavior: "smooth" });
   };
 
   const [articles, setArticles] = useState<IArticle[]>([]);
@@ -65,8 +70,8 @@ const Home = (): ReactElement => {
   }, []);
 
   return (
-    <Flex alignItems={"center"} direction={"column"}>
-      <Container maxW={"3xl"} id="hero">
+    <Flex direction={"column"}>
+      <Container maxW={"4xl"} id="hero">
         <Stack
           as={Box}
           textAlign={"center"}
@@ -179,7 +184,7 @@ const Home = (): ReactElement => {
             Continuously exploring Optimization and Software Architecture.
             Previous domains include Gambling, AI, Biotech, Identity, and
             Marketplace, but open to exploring other options. Currently working
-            with GoLang and Java. Hobbies include creating Robots using Arduino
+            with GoLang, JavaScript, and Java. Hobbies include creating Robots using Arduino
             and Raspberry.
           </Text>
         </Stack>
@@ -240,7 +245,7 @@ const Home = (): ReactElement => {
           </Stack>
         </Stack>
       </Container>
-      <Container maxW={"3xl"} id="articles">
+      <Container maxW={"3xl"} id="skills">
         <Stack
           as={Box}
           textAlign={"center"}
@@ -252,44 +257,104 @@ const Home = (): ReactElement => {
               <Text color={"teal.400"} fontWeight={800}>
                 03
               </Text>
-              <Text fontWeight={800}>Articles</Text>
+              <Text fontWeight={800}>Super&nbsp;Powers</Text>
             </HStack>
             <Divider orientation="horizontal" />
           </Stack>
-          <Stack px={4} spacing={4}>
+          <Stack>
+
+            <Center px={4}>
+              <ButtonGroup variant="outline">
+                <Popover trigger="hover" colorScheme={"gray"} placement={"left"} isLazy>
+                  <PopoverTrigger>
+                    <Button colorScheme={"teal"}>Frontend</Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverBody>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                      tempor incididunt ut labore et dolore.
+                    </PopoverBody>
+                  </PopoverContent>
+                </Popover>
+
+                <Popover trigger="hover" colorScheme={"gray"} placement={"bottom"} isLazy>
+                  <PopoverTrigger>
+                    <Button colorScheme={"teal"}>Backend</Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverBody>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                      tempor incididunt ut labore et dolore.
+                    </PopoverBody>
+                  </PopoverContent>
+                </Popover>
+
+                <Popover trigger="hover" colorScheme={"gray"} placement={"right"} isLazy>
+                  <PopoverTrigger>
+                    <Button colorScheme={"teal"}>Miscend</Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverBody>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                      tempor incididunt ut labore et dolore.
+                    </PopoverBody>
+                  </PopoverContent>
+                </Popover>
+              </ButtonGroup>
+            </Center>
+          </Stack>
+        </Stack>
+      </Container>
+      <Container maxW={"3xl"} id="blog">
+        <Stack
+          as={Box}
+          spacing={{ base: 8, md: 14 }}
+          pb={{ base: 20, md: 36 }}
+        >
+          <Stack align="center" direction="row" p={4}>
+            <HStack mx={4}>
+              <Text color={"teal.400"} fontWeight={800}>
+                04
+              </Text>
+              <Text fontWeight={800}>Blog</Text>
+            </HStack>
+            <Divider orientation="horizontal" />
+          </Stack>
+          <SimpleGrid px={4} spacing={4} columns={{ base: 1, lg: 2 }}>
             {articles.length ? (
               articles.map((article: IArticle) => (
-                <Fade>
-                  <Card
-                    key={article.title}
-                    direction={{
-                      base: "column",
-                    }}
-                    overflow="hidden"
-                  >
+                <Card
+                  key={article.title}
+                  overflow="hidden"
+                >
+                  <CardHeader>
                     <Image objectFit="cover" src={article.image} />
-                    <Stack>
-                      <CardBody>
-                        <Heading size="md">{article.title}</Heading>
-                        <Text py={2}>
-                          {truncate(article.content, 200, "...")}
-                        </Text>
-                        <HStack py={2}>
-                          <Link to={`/articles/${article.id}`}>
-                            <Button color={"teal.400"}>Read more</Button>
-                          </Link>
-                        </HStack>
-                        <HStack pt={4} spacing={2}>
-                          {article.tags.map((tag: ITag) => (
-                            <Badge key={tag.tag} colorScheme={"teal"}>
-                              {tag.tag}
-                            </Badge>
-                          ))}
-                        </HStack>
-                      </CardBody>
-                    </Stack>
-                  </Card>
-                </Fade>
+                    <HStack pt={4} spacing={2}>
+                      {article.tags ? article.tags.map((tag: ITag) => (
+                        <Badge key={tag.tag} colorScheme={"teal"}>
+                          {tag.tag}
+                        </Badge>
+                      )) : null}
+                    </HStack>
+                  </CardHeader>
+                  <CardBody>
+                    <Heading size="md">{article.title}</Heading>
+                    <Text py={2}>
+                      {truncate(article.description, 200, "...")}
+                    </Text>
+                  </CardBody>
+                  <CardFooter>
+                    <Center width={"100%"}
+                    >
+                      <Link to={`/blog/${article.slug}`}>
+                        <Button rightIcon={<ArrowForwardIcon />} color={"teal.400"}>Read more</Button>
+                      </Link>
+                    </Center>
+                  </CardFooter>
+                </Card>
               ))
             ) : (
               <Stack justifyContent="center" alignItems="center">
@@ -302,6 +367,35 @@ const Home = (): ReactElement => {
                 </Text>
               </Stack>
             )}
+          </SimpleGrid>
+        </Stack>
+      </Container>
+      <Container maxW={"3xl"} id="terminal">
+        <Stack
+          as={Box}
+          textAlign={"center"}
+          spacing={{ base: 8, md: 14 }}
+          pb={{ base: 20, md: 36 }}
+        >
+          <Stack align="center" direction="row" p={4}>
+            <HStack mx={4}>
+              <Text color={"teal.400"} fontWeight={800}>
+                05
+              </Text>
+              <Text fontWeight={800}>Terminal</Text>
+            </HStack>
+            <Divider orientation="horizontal" />
+          </Stack>
+          <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
+            <Text color={"gray.600"} fontSize={"l"} px={2}>
+              Explore the interactive Linux terminal... Who knows, you might even {" "}
+              <Box as="span" color={"teal.500"}>
+                <Link to="/terminal">Capture The Flag</Link>
+              </Box>
+              .
+            </Text>
+            <Text color={"gray.600"} fontSize={"xl"} px={4}>
+            </Text>
           </Stack>
         </Stack>
       </Container>
@@ -315,7 +409,7 @@ const Home = (): ReactElement => {
           <Stack align="center" direction="row" p={4}>
             <HStack mx={4}>
               <Text color={"teal.400"} fontWeight={800}>
-                04
+                06
               </Text>
               <Text fontWeight={800}>Contact</Text>
             </HStack>
@@ -371,7 +465,7 @@ const Home = (): ReactElement => {
           </Stack>
         </Stack>
       </Container>
-    </Flex>
+    </Flex >
   );
 };
 

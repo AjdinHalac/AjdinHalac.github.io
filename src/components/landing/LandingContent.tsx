@@ -3,12 +3,10 @@ import { Route, Routes } from "react-router-dom";
 import { Flex } from "@chakra-ui/react";
 
 const Home = React.lazy(() => import("../../views/landing/Home"));
-const About = React.lazy(() => import("../../views/landing/About"));
-const Blog = React.lazy(() => import("../../views/landing/Blog"));
+const BlogDetails = React.lazy(() => import("../../views/landing/BlogDetails"));
 const SignIn = React.lazy(() => import("../../views/landing/SignIn"));
 const SignUp = React.lazy(() => import("../../views/landing/SignUp"));
 const Profile = React.lazy(() => import("../../views/landing/Profile"));
-const Contact = React.lazy(() => import("../../views/landing/Contact"));
 const Terminal = React.lazy(() => import("../../views/landing/Terminal"));
 
 const AcceptInvite = React.lazy(
@@ -38,10 +36,7 @@ const LandingContent = () => {
     >
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:id" element={<Blog />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/blog/:slug" element={<BlogDetails />} />
           <Route path="/terminal" element={<Terminal />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
