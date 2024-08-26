@@ -1,30 +1,33 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-import { createQueryString, parseError } from "../../utils/helpers";
-import { IUserMetrics } from "../../domain/admin/interfaces";
-import { IPaginator } from "../../domain/common/interfaces";
+import { parseError } from "../../utils/helpers";
 import ApiCalls from "../../domain/admin/api/ApiCalls";
-import { useToast } from "@chakra-ui/react";
+import { Box, Heading, HStack, Stat, StatHelpText, StatLabel, StatNumber, useToast } from "@chakra-ui/react";
 
 const Dashboard = () => {
   const toast = useToast();
-  const date = new Date();
-  const fromDate = new Date();
-  fromDate.setDate(fromDate.getDate() - 7);
+  const [articles, setArticles] = useState<number>(0);
+  const [users, setUsers] = useState<number>(0);
 
-  const [userMetrics, setUserMetrics] = useState<IUserMetrics[]>([]);
-  const [paginator] = useState<Partial<IPaginator>>({
-    perPage: 5000,
-    groupBy: "day",
-    fromDate: fromDate.toISOString(),
-    toDate: date.toISOString(),
-  });
-  const getMetrics = async () => {
+  const getArticles = async () => {
     try {
-      const userResponse = await ApiCalls.getUserMetrics(
-        createQueryString({ ...paginator })
-      );
-      setUserMetrics(userResponse.data.results || []);
+      const response = await ApiCalls.getArticles('');
+      setArticles(response.data.paginator.totalEntriesSize || 0);
+    } catch (err) {
+      toast({
+        title: parseError(err),
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+        status: "error",
+      });
+    }
+  };
+
+  const getUsers = async () => {
+    try {
+      const response = await ApiCalls.getUsers('');
+      setUsers(response.data.paginator.totalEntriesSize || 0);
     } catch (err) {
       toast({
         title: parseError(err),
@@ -37,11 +40,29 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    getMetrics();
+    getArticles();
+    getUsers();
     // eslint-disable-next-line
   }, []);
 
-  return <>Dashboard</>;
+  return (
+    <Box>
+
+      <Heading mb="4">Dashboard</Heading>
+      <HStack>
+        <Stat>
+          <StatLabel>Total Users</StatLabel>
+          <StatNumber>{users}</StatNumber>
+          <StatHelpText>Today</StatHelpText>
+        </Stat>
+        <Stat>
+          <StatLabel>Total Articles</StatLabel>
+          <StatNumber>{articles}</StatNumber>
+          <StatHelpText>Today</StatHelpText>
+        </Stat>
+      </HStack>
+    </Box>
+  );
 };
 
 export default Dashboard;

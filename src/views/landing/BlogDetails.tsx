@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box, Button, ButtonGroup, Card, CardHeader, Center, Container, Divider, Fade, Flex, HStack, Heading, Icon, Image, SimpleGrid, Stack, Text, textDecoration, useToast } from "@chakra-ui/react";
+import { Avatar, Badge, Box, Container, Flex, HStack, Heading, Icon, Image, SimpleGrid, Stack, Text, Wrap, WrapItem, useToast } from "@chakra-ui/react";
 import { ReactElement, useEffect, useState } from "react";
 import { IArticle, ITag } from "../../domain/common/interfaces";
 import { parseError } from "../../utils/helpers";
@@ -27,13 +27,13 @@ const BlogDetails = (): ReactElement => {
         isClosable: true,
         status: "error",
       });
-      return window.location.replace("/not-found");
+      return window.location.replace("/#/not-found");
     }
   };
 
   useEffect(() => {
     if (!params.slug) {
-      return window.location.replace("/not-found");
+      return window.location.replace("/#/not-found");
     }
     getArticle(params.slug);
   }, []);
@@ -59,9 +59,9 @@ const BlogDetails = (): ReactElement => {
       <Container maxW={"4xl"} id="blog-details">
         <Stack
           as={Box}
-          spacing={{ base: 4, md: 8 }}
+          spacing={{ base: 4, md: 6 }}
           pt={{ base: 10 }}
-          pb={{ base: 20, md: 16 }}
+          pb={{ base: 10 }}
         >
           <Heading fontWeight={600}>{article?.title}</Heading>
           <Text color={"gray.600"} fontSize={"lg"} px={4}>
@@ -86,19 +86,22 @@ const BlogDetails = (): ReactElement => {
         <Stack
           as={Box}
           spacing={{ base: 8, md: 14 }}
-          pb={{ base: 20, md: 36 }}
+          pb={{ base: 10, md: 36 }}
         >
           <Markdown components={ChakraUIRenderer()} children={article?.content} />;
-
         </Stack>
 
-        <HStack pt={4} spacing={2}>
+        <Heading size='md'>Tags</Heading>
+        <Wrap py={2} spacing={2}>
           {article?.tags ? article.tags.map((tag: ITag) => (
-            <Badge key={tag.tag} colorScheme={"teal"}>
-              {tag.tag}
-            </Badge>
-          )) : null}
-        </HStack>
+            <WrapItem>
+              <Badge key={tag.tag} colorScheme={"teal"}>
+                {tag.tag}
+              </Badge>
+            </WrapItem>
+          )) : null
+          }
+        </Wrap>
       </Container>
     </Flex >
   );

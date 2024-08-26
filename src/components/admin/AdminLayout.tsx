@@ -3,7 +3,6 @@ import React, { useLayoutEffect } from "react";
 import { cookieService } from "../../services/CookieService";
 
 import AdminSidebar from "./AdminSidebar";
-import AdminHeader from "./AdminHeader";
 import AdminContent from "./AdminContent";
 import { Flex } from "@chakra-ui/react";
 
@@ -16,9 +15,8 @@ const AdminLayout = () => {
   }, []);
 
   return (
-    <Flex direction="column" flex="1">
+    <Flex>
       <AdminSidebar />
-      <AdminHeader />
       <AdminContent />
     </Flex>
   );

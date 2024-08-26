@@ -13,4 +13,23 @@ export default class ApiCalls {
     public static submitFlag(flag: string) {
         return ajaxService.post<IResponse<any>>(`/me/submit-flag/${flag}`);
     }
+
+    public static deleteMe(token: string) {
+        return ajaxService.delete<IResponse<any>>(`/me/`, {
+            token: token,
+        });
+    }
+
+    public static changePassword(token: string, newPassword: string) {
+        return ajaxService.post<IResponse<any>>(`/me/change-password`, {
+            token: token,
+            password: newPassword
+        });
+    }
+
+    public static sudoPassword(currentPassword: string) {
+        return ajaxService.post<IResponse<string>>(`/me/sudo-password`, {
+            password: currentPassword
+        });
+    }
 }

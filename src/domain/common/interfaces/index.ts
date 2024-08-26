@@ -41,6 +41,8 @@ export interface IUser {
     invitedByUserID: number;
     tosAccepted: boolean;
     active: boolean;
+    flagSubmitted: boolean;
+    receiveNotifications: boolean;
     createdAt: string;
     updatedAt: string;
     deletedAt: string;
@@ -48,8 +50,8 @@ export interface IUser {
 
 export interface IRole {
     id: number;
-    createdAt: Date | string;
-    updatedAt: Date | string;
+    createdAt: Date;
+    updatedAt: Date;
     description: string;
     name: string;
 }
@@ -57,8 +59,8 @@ export interface IRole {
 export interface ITos {
     id: number;
     tosURI: string;
-    createdAt: string | Date;
-    updatedAt: string | Date;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface IArticle {
@@ -79,7 +81,7 @@ export interface ITag {
     id: number;
     slug: string;
     tag: string;
-    createdAt: string | Date;
-    updatedAt: string | Date;
+    createdAt: string;
+    updatedAt: string;
     articles: IArticle[];
 }

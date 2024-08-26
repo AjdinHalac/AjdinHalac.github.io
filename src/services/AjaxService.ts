@@ -129,8 +129,8 @@ export default class AjaxService {
     }
 
     // eslint-disable-next-line
-    public delete<T = any>(url: string, options?: IInvokeOptions): Promise<T> {
-        return this.invoke('DELETE', url, null, options);
+    public delete<T = any>(url: string, data?: any, options?: IInvokeOptions): Promise<T> {
+        return this.invoke('DELETE', url, data, options);
     }
 }
 

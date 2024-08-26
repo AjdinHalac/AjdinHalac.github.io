@@ -1,6 +1,13 @@
 This project was bootstrapped with
 [Create React App](https://github.com/facebook/create-react-app).
 
+# TODO
+
+- Add articles
+- Add search article on 404 by tag
+- Shadow on user profile
+
+
 ## Available Scripts
 
 In the project directory, you can run:

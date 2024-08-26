@@ -19,9 +19,9 @@ export interface ITosRequestDTO {
 
 export interface IArticleRequestDTO {
     title: string;
-    content: string;
-    categoryID: number;
+    description: string;
     image: string;
+    content: string;
     tags: number[];
 }
 

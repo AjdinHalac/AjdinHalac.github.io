@@ -25,9 +25,7 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  PopoverHeader,
   PopoverArrow,
-  PopoverCloseButton,
   PopoverBody,
 } from "@chakra-ui/react";
 import { ReactElement, useEffect, useState } from "react";
@@ -77,7 +75,7 @@ const Home = (): ReactElement => {
           textAlign={"center"}
           spacing={{ base: 8, md: 14 }}
           pb={{ base: 20, md: 36 }}
-          pt={{ base: 36, md: 52 }}
+          pt={{ base: 8, md: 52 }}
         >
           <Heading
             fontWeight={600}
@@ -159,7 +157,7 @@ const Home = (): ReactElement => {
           </Stack>
         </Stack>
       </Container>
-      <Container maxW={"3xl"} id="about">
+      <Container maxW={"4xl"} id="about">
         <Stack
           as={Box}
           textAlign={"center"}
@@ -189,7 +187,7 @@ const Home = (): ReactElement => {
           </Text>
         </Stack>
       </Container>
-      <Container maxW={"3xl"} id="experience">
+      <Container maxW={"4xl"} id="experience">
         <Stack
           as={Box}
           textAlign={"center"}
@@ -245,7 +243,7 @@ const Home = (): ReactElement => {
           </Stack>
         </Stack>
       </Container>
-      <Container maxW={"3xl"} id="skills">
+      <Container maxW={"4xl"} id="skills">
         <Stack
           as={Box}
           textAlign={"center"}
@@ -265,41 +263,64 @@ const Home = (): ReactElement => {
 
             <Center px={4}>
               <ButtonGroup variant="outline">
-                <Popover trigger="hover" colorScheme={"gray"} placement={"left"} isLazy>
+                <Popover trigger="hover" colorScheme={"gray"} placement={"bottom-start"}>
                   <PopoverTrigger>
                     <Button colorScheme={"teal"}>Frontend</Button>
                   </PopoverTrigger>
                   <PopoverContent>
                     <PopoverArrow />
                     <PopoverBody>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore.
+                      <Button m="1" colorScheme={"teal"}>HTML</Button>
+                      <Button m="1" colorScheme={"teal"}>CSS</Button>
+                      <Button m="1" colorScheme={"teal"}>Javascript</Button>
+                      <Button m="1" colorScheme={"teal"}>Typescript</Button>
+                      <Button m="1" colorScheme={"teal"}>React</Button>
+                      <Button m="1" colorScheme={"teal"}>Chakra</Button>
                     </PopoverBody>
                   </PopoverContent>
                 </Popover>
 
-                <Popover trigger="hover" colorScheme={"gray"} placement={"bottom"} isLazy>
+                <Popover trigger="hover" colorScheme={"gray"} placement={"bottom"}>
                   <PopoverTrigger>
                     <Button colorScheme={"teal"}>Backend</Button>
                   </PopoverTrigger>
                   <PopoverContent>
                     <PopoverArrow />
-                    <PopoverBody>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore.
+                    <PopoverBody flex={"left"}>
+                      <Button m="1" colorScheme={"teal"}>Golang</Button>
+                      <Button m="1" colorScheme={"teal"}>Gorm</Button>
+                      <Button m="1" colorScheme={"teal"}>NodeJS</Button>
+                      <Button m="1" colorScheme={"teal"}>Express</Button>
+                      <Button m="1" colorScheme={"teal"}>Java</Button>
+                      <Button m="1" colorScheme={"teal"}>Spring</Button>
+                      <Button m="1" colorScheme={"teal"}>PHP</Button>
+                      <Button m="1" colorScheme={"teal"}>Symfony</Button>
+                      <Button m="1" colorScheme={"teal"}>PostgreSQL</Button>
+                      <Button m="1" colorScheme={"teal"}>MySQL</Button>
+                      <Button m="1" colorScheme={"teal"}>JWT/OAuth</Button>
+                      <Button m="1" colorScheme={"teal"}>Payment Processing</Button>
                     </PopoverBody>
                   </PopoverContent>
                 </Popover>
 
-                <Popover trigger="hover" colorScheme={"gray"} placement={"right"} isLazy>
+                <Popover trigger="hover" colorScheme={"gray"} placement={"bottom-end"}>
                   <PopoverTrigger>
                     <Button colorScheme={"teal"}>Miscend</Button>
                   </PopoverTrigger>
                   <PopoverContent>
                     <PopoverArrow />
                     <PopoverBody>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore.
+                      <Button m="1" colorScheme={"teal"}>Git</Button>
+                      <Button m="1" colorScheme={"teal"}>Linux</Button>
+                      <Button m="1" colorScheme={"teal"}>Python</Button>
+                      <Button m="1" colorScheme={"teal"}>Digitalocean</Button>
+                      <Button m="1" colorScheme={"teal"}>Namecheap</Button>
+                      <Button m="1" colorScheme={"teal"}>Github Actions</Button>
+                      <Button m="1" colorScheme={"teal"}>Kubernetes</Button>
+                      <Button m="1" colorScheme={"teal"}>Docker</Button>
+                      <Button m="1" colorScheme={"teal"}>Domain Driven Design</Button>
+                      <Button m="1" colorScheme={"teal"}>Test Driven Design</Button>
+                      <Button m="1" colorScheme={"teal"}>Software Architecture</Button>
                     </PopoverBody>
                   </PopoverContent>
                 </Popover>
@@ -308,7 +329,7 @@ const Home = (): ReactElement => {
           </Stack>
         </Stack>
       </Container>
-      <Container maxW={"3xl"} id="blog">
+      <Container maxW={"4xl"} id="blog">
         <Stack
           as={Box}
           spacing={{ base: 8, md: 14 }}
@@ -370,7 +391,7 @@ const Home = (): ReactElement => {
           </SimpleGrid>
         </Stack>
       </Container>
-      <Container maxW={"3xl"} id="terminal">
+      <Container maxW={"4xl"} id="terminal">
         <Stack
           as={Box}
           textAlign={"center"}
@@ -386,7 +407,7 @@ const Home = (): ReactElement => {
             </HStack>
             <Divider orientation="horizontal" />
           </Stack>
-          <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
+          <Stack spacing={4} as={Container} maxW={"4xl"} textAlign={"center"}>
             <Text color={"gray.600"} fontSize={"l"} px={2}>
               Explore the interactive Linux terminal... Who knows, you might even {" "}
               <Box as="span" color={"teal.500"}>
@@ -399,7 +420,7 @@ const Home = (): ReactElement => {
           </Stack>
         </Stack>
       </Container>
-      <Container maxW={"3xl"} id="contact">
+      <Container maxW={"4xl"} id="contact">
         <Stack
           as={Box}
           textAlign={"center"}
@@ -415,8 +436,8 @@ const Home = (): ReactElement => {
             </HStack>
             <Divider orientation="horizontal" />
           </Stack>
-          <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
-            <Heading fontSize={"3xl"}>Let's stay in touch!</Heading>
+          <Stack spacing={4} as={Container} maxW={"4xl"} textAlign={"center"}>
+            <Heading fontSize={"4xl"}>Let's stay in touch!</Heading>
             <Text color={"gray.600"} fontSize={"xl"} px={4}>
               I'd love to hear from you! Whether you have questions about my
               products and services, want to discuss a collaboration, or simply
