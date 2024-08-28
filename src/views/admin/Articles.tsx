@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { createQueryString, parseError } from "../../utils/helpers";
 import { IArticle, IPaginator } from "../../domain/common/interfaces";
 import ApiCalls from "../../domain/admin/api/ApiCalls";
-import { Box, Button, FormControl, FormLabel, Heading, HStack, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Table, Tbody, Td, Text, Textarea, Th, Thead, Tr, useDisclosure, useToast } from "@chakra-ui/react";
+import { Box, Button, FormControl, FormLabel, Heading, HStack, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Table, Tbody, Td, Textarea, Th, Thead, Tr, useDisclosure, useToast } from "@chakra-ui/react";
 
 const Articles = () => {
   const navigate = useNavigate();

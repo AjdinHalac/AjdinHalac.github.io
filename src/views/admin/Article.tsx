@@ -5,10 +5,9 @@ import { Link, useParams } from "react-router-dom";
 import { parseError } from "../../utils/helpers";
 import ApiCalls from "../../domain/admin/api/ApiCalls";
 import { IArticle, ITag } from "../../domain/common/interfaces";
-import { Avatar, Badge, Box, Button, Flex, FormControl, FormLabel, Grid, Heading, HStack, Icon, Image, Input, SimpleGrid, Stack, Text, Textarea, useBreakpointValue, useToast, VStack, Wrap, WrapItem } from "@chakra-ui/react";
-import Markdown from 'react-markdown'
-import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+import { Avatar, Badge, Box, Button, FormControl, FormLabel, Grid, Heading, HStack, Icon, Image, Input, SimpleGrid, Stack, Text, Textarea, useToast, VStack, Wrap, WrapItem } from "@chakra-ui/react";
 import { CalendarIcon } from "@chakra-ui/icons";
+import Markdown from "../../components/common/Markdown";
 
 const Article = () => {
   const toast = useToast();
@@ -286,7 +285,7 @@ const Article = () => {
             pb={{ base: 10 }}
           >
             <Heading fontWeight={600}>{article?.title}</Heading>
-            <Text color={"gray.600"} fontSize={"lg"} px={4}>
+            <Text color={"gray.500"} fontSize={"lg"} px={4}>
               {article?.description}
             </Text>
             <Image maxHeight={"40vh"} width={"100%"} objectFit="cover" src={article?.image} />
@@ -307,10 +306,9 @@ const Article = () => {
           </Stack>
           <Stack
             as={Box}
-            spacing={{ base: 8, md: 14 }}
-            pb={{ base: 10, md: 36 }}
+            pb={{ base: 6 }}
           >
-            <Markdown components={ChakraUIRenderer()} children={article?.content} />;
+            <Markdown markdown={article?.content} />;
           </Stack>
 
           <Heading size='md'>Tags</Heading>

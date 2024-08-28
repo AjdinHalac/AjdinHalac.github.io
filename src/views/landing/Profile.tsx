@@ -1,5 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { ReactElement, useEffect, useState } from "react";
 
 import ApiCalls from "../../domain/common/api/ApiCalls";
 import { parseError } from "../../utils/helpers";
@@ -186,6 +185,7 @@ const Profile = (): ReactElement => {
 
   useEffect(() => {
     getUser();
+    // eslint-disable-next-line
   }, []);
 
   return (

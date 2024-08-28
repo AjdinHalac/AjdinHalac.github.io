@@ -65,6 +65,7 @@ const Home = (): ReactElement => {
 
   useEffect(() => {
     getArticles();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -173,7 +174,7 @@ const Home = (): ReactElement => {
             </HStack>
             <Divider orientation="horizontal" />
           </Stack>
-          <Text color={"gray.600"} fontSize={"xl"} px={4}>
+          <Text color={"gray.500"} fontSize={"xl"} px={4}>
             A product-focused Software Developer with experience in Startups,
             Scaleups, and Enterprise. Looking for constant improvement with
             anything related to code, able to contribute to Frontend and DevOps
@@ -408,14 +409,12 @@ const Home = (): ReactElement => {
             <Divider orientation="horizontal" />
           </Stack>
           <Stack spacing={4} as={Container} maxW={"4xl"} textAlign={"center"}>
-            <Text color={"gray.600"} fontSize={"l"} px={2}>
+            <Text color={"gray.500"} fontSize={"xl"} px={2}>
               Explore the interactive Linux terminal... Who knows, you might even {" "}
               <Box as="span" color={"teal.500"}>
                 <Link to="/terminal">Capture The Flag</Link>
               </Box>
               .
-            </Text>
-            <Text color={"gray.600"} fontSize={"xl"} px={4}>
             </Text>
           </Stack>
         </Stack>
@@ -438,7 +437,7 @@ const Home = (): ReactElement => {
           </Stack>
           <Stack spacing={4} as={Container} maxW={"4xl"} textAlign={"center"}>
             <Heading fontSize={"4xl"}>Let's stay in touch!</Heading>
-            <Text color={"gray.600"} fontSize={"xl"} px={4}>
+            <Text color={"gray.500"} fontSize={"xl"} px={4}>
               I'd love to hear from you! Whether you have questions about my
               products and services, want to discuss a collaboration, or simply
               want to say hello, don't hesitate to reach out. I am eager to

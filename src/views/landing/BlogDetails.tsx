@@ -4,9 +4,8 @@ import { IArticle, ITag } from "../../domain/common/interfaces";
 import { parseError } from "../../utils/helpers";
 import ApiCalls from "../../domain/landing/api/ApiCalls";
 import { Link, useParams } from "react-router-dom";
-import Markdown from 'react-markdown'
-import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import { CalendarIcon } from "@chakra-ui/icons";
+import Markdown from "../../components/common/Markdown";
 
 
 const BlogDetails = (): ReactElement => {
@@ -36,6 +35,7 @@ const BlogDetails = (): ReactElement => {
       return window.location.replace("/#/not-found");
     }
     getArticle(params.slug);
+    // eslint-disable-next-line
   }, []);
 
   function getLocale() {
@@ -64,7 +64,7 @@ const BlogDetails = (): ReactElement => {
           pb={{ base: 10 }}
         >
           <Heading fontWeight={600}>{article?.title}</Heading>
-          <Text color={"gray.600"} fontSize={"lg"} px={4}>
+          <Text color={"gray.500"} fontSize={"lg"} px={4}>
             {article?.description}
           </Text>
           <Image maxHeight={"40vh"} width={"100%"} objectFit="cover" src={article?.image} />
@@ -85,10 +85,9 @@ const BlogDetails = (): ReactElement => {
         </Stack>
         <Stack
           as={Box}
-          spacing={{ base: 8, md: 14 }}
-          pb={{ base: 10, md: 36 }}
+          pb={{ base: 6 }}
         >
-          <Markdown components={ChakraUIRenderer()} children={article?.content} />;
+          <Markdown markdown={article?.content} />;
         </Stack>
 
         <Heading size='md'>Tags</Heading>
