@@ -3,9 +3,7 @@ This project was bootstrapped with
 
 # TODO
 
-- Add articles
 - Add search article on 404 by tag
-- Shadow on user profile
 
 
 ## Available Scripts

@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 
 import { SearchIcon } from "@chakra-ui/icons";
 import {
@@ -16,6 +16,7 @@ import {
 import { Logo } from "../../components/common/Logo";
 
 const Page404 = (): ReactElement => {
+  const [search, setSearch] = useState("");
   return (
     <Container
       maxW="lg"
@@ -50,9 +51,10 @@ const Page404 = (): ReactElement => {
                   size="16"
                   type="text"
                   placeholder="What are you looking for?"
+                  onChange={(e) => setSearch(e.target.value)}
                 />
                 <InputRightElement width={"4.5em"}>
-                  <Button colorScheme="teal">Search</Button>
+                  <Button colorScheme="teal" onClick={() => window.location.replace(`http://www.google.com/search?q=${encodeURIComponent(search)}+site%3Aajdinhalac.github.io`)}>Search</Button>
                 </InputRightElement>
               </InputGroup>
             </Stack>
