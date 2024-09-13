@@ -242,6 +242,13 @@ const Home = (): ReactElement => {
               </Card>
             </Fade>
           </Stack>
+
+          <Text color={"gray.500"} fontSize={"xl"} px={2}>
+            If you wish to know more about my experience you can check out my{" "}
+            <Box as="span" color={"teal.500"}>
+              <Link to="https://img-strg.fra1.cdn.digitaloceanspaces.com/ajdinhalac.dev/Ajdin%20Halac%20CV.pdf" download={"https://img-strg.fra1.cdn.digitaloceanspaces.com/ajdinhalac.dev/Ajdin%20Halac%20CV.pdf"} target='_blank'>Resume</Link>
+            </Box>.
+          </Text>
         </Stack>
       </Container>
       <Container maxW={"4xl"} id="skills">
