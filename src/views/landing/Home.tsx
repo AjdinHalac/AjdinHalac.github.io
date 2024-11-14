@@ -27,6 +27,12 @@ import {
   PopoverContent,
   PopoverArrow,
   PopoverBody,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalBody,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { ReactElement, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -37,10 +43,12 @@ import { parseError, scrollToContact, truncate } from "../../utils/helpers";
 import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
 import experience from "../../experience";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
+import Dino from "../../components/landing/dino/Dino";
 
 const Home = (): ReactElement => {
   const toast = useToast();
   const [selected, setSelected] = useState<IExperience>(experience[0]);
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleSelected = (value: IExperience) => {
     setSelected(value);
@@ -396,6 +404,23 @@ const Home = (): ReactElement => {
                 </Text>
               </Stack>
             )}
+            {articles.length % 2 === 1 ?
+              <Card
+                overflow="hidden"
+              >
+                <CardBody>
+                  <Button onClick={onOpen}>Play the game!</Button>
+                  <Modal isOpen={isOpen} onClose={onClose} size={"xl"} isCentered scrollBehavior="inside">
+                    <ModalOverlay />
+                    <ModalContent>
+                      <ModalCloseButton />
+                      <ModalBody>
+                        <Dino />
+                      </ModalBody>
+                    </ModalContent>
+                  </Modal>
+                </CardBody>
+              </Card> : null}
           </SimpleGrid>
         </Stack>
       </Container>
