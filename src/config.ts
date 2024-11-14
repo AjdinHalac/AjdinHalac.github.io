@@ -7,7 +7,7 @@ const local: any = {
 // eslint-disable-next-line
 const production: any = {
     API_BASE_URL: 'https://backend.ajdinhalac.dev',
-    ADMIN_APP_URL: 'https://ajdinhalac.github.com',
+    ADMIN_APP_URL: 'https://ajdinhalac.dev',
 };
 
 const config = process.env.REACT_APP_BUILD_TARGET === 'LOCAL' ? local : production;
