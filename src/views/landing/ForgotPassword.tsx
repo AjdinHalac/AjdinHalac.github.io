@@ -64,11 +64,9 @@ const ForgotPassword = (): ReactElement => {
           <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
             <Heading size={{ base: "xs", md: "sm" }}>Account recovery</Heading>
             <Text color="fg.muted">
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <Box as="span" color={"teal.500"}>
-                <Link to="/signup">
-                  Sign up
-                </Link>
+                <Link to="/signin">Sign in</Link>
               </Box>
             </Text>
           </Stack>

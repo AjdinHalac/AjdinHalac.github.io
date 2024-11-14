@@ -4,6 +4,7 @@ import { cookieService } from './CookieService';
 
 import config from '../config';
 import ApiCalls from '../domain/landing/api/ApiCalls';
+import { authService } from './AuthService';
 
 export interface IInvokeOptions {
     noAuthentication?: boolean;
@@ -30,6 +31,7 @@ export default class AjaxService {
                     originalRequest._retry = true;
                     const cookieData = cookieService.getCookie();
 
+                    try {
                     const newCredentials = await ApiCalls.refreshToken({
                         payload: { token: cookieData?.refreshToken },
                     });
@@ -42,6 +44,9 @@ export default class AjaxService {
 
                     self.setAuthToken(newCredentials?.data?.accessToken, newCredentials?.data?.refreshToken);
                     return axios(originalRequest);
+                    } catch (err) {
+                        authService.logout();
+                    }
                 }
 
                 if (error?.response?.status === 401) {

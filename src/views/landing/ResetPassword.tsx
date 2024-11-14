@@ -38,7 +38,7 @@ const ResetPassword = (): ReactElement => {
       });
       setSuccess(true);
       toast({
-        title: "Email sent",
+        title: "Password reset",
         position: "top-right",
         duration: 5000,
         isClosable: true,
@@ -102,7 +102,7 @@ const ResetPassword = (): ReactElement => {
                 </Heading>
                 <Text color="fg.muted">
                   <Box as="span" color={"teal.500"}>
-                    <Link to="/signup">
+                    <Link to="/signin">
                       Sign in now 
                     </Link>
                   </Box>
