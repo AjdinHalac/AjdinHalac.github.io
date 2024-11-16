@@ -4,6 +4,12 @@ import { Flex } from "@chakra-ui/react";
 
 const Home = React.lazy(() => import("../../views/landing/Home"));
 const BlogDetails = React.lazy(() => import("../../views/landing/BlogDetails"));
+const Blog = React.lazy(() => import("../../views/landing/Blog"));
+const ToolsJSONFormatter = React.lazy(() => import("../../views/landing/ToolsJSONFormatter"));
+const ToolsJWTParser = React.lazy(() => import("../../views/landing/ToolsJWTParser"));
+const ToolsBase64 = React.lazy(() => import("../../views/landing/ToolsBase64"));
+const ToolsStringDiff = React.lazy(() => import("../../views/landing/ToolsStringDiff"));
+const ToolsStringCount = React.lazy(() => import("../../views/landing/ToolsStringCount"));
 const SignIn = React.lazy(() => import("../../views/landing/SignIn"));
 const SignUp = React.lazy(() => import("../../views/landing/SignUp"));
 const Profile = React.lazy(() => import("../../views/landing/Profile"));
@@ -36,6 +42,12 @@ const LandingContent = () => {
     >
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/tools/json-formatter" element={<ToolsJSONFormatter />} />
+          <Route path="/tools/jwt-parser" element={<ToolsJWTParser />} />
+          <Route path="/tools/base64" element={<ToolsBase64 />} />
+          <Route path="/tools/stringcount" element={<ToolsStringCount />} />
+          <Route path="/tools/stringdiff" element={<ToolsStringDiff />} />
           <Route path="/blog/:slug" element={<BlogDetails />} />
           <Route path="/terminal" element={<Terminal />} />
           <Route path="/signin" element={<SignIn />} />

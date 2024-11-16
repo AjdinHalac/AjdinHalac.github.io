@@ -76,6 +76,10 @@ export const scrollToTerminal = () => {
     scrollTo("#terminal")
 };
 
+export const scrollToTools = () => {
+    scrollTo("#tools")
+};
+
 export const scrollToContact = () => {
     scrollTo("#contact")
 };

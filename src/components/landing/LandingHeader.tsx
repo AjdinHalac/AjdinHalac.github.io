@@ -26,7 +26,7 @@ import { authService } from "../../services/AuthService";
 import { ColorModeSwitcher } from "../../ColorModeSwitcher";
 import { MdAccountCircle } from "react-icons/md";
 import { Logo } from "../common/Logo";
-import { scrollToAbout, scrollToBlog, scrollToContact, scrollToExperience, scrollToHero, scrollToSkills, scrollToTerminal } from "../../utils/helpers";
+import { scrollToAbout, scrollToBlog, scrollToContact, scrollToExperience, scrollToHero, scrollToSkills, scrollToTerminal, scrollToTools } from "../../utils/helpers";
 
 const LandingHeader = () => {
   const [hidden, setHidden] = useState(true);
@@ -99,6 +99,18 @@ const LandingHeader = () => {
                 w="100%"
               >
                 Terminal
+              </Button>
+            </NavLink>
+
+            <NavLink to="/" onClick={scrollToTools} end>
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="Tools"
+                my={5}
+                w="100%"
+              >
+                Tools
               </Button>
             </NavLink>
 
@@ -302,6 +314,18 @@ const LandingHeader = () => {
                         w="100%"
                       >
                         Terminal
+                      </Button>
+                    </NavLink>
+
+                    <NavLink to="/" onClick={scrollToTools} end>
+                      <Button
+                        as="a"
+                        variant="ghost"
+                        aria-label="Tools"
+                        my={5}
+                        w="100%"
+                      >
+                        Tools
                       </Button>
                     </NavLink>
 

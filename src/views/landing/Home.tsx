@@ -35,10 +35,10 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { ReactElement, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ApiCalls from "../../domain/landing/api/ApiCalls";
 import { IExperience } from "../../domain/landing/interfaces";
-import { IArticle, ITag } from "../../domain/common/interfaces";
+import { IArticle, IPaginator, ITag } from "../../domain/common/interfaces";
 import { parseError, scrollToContact, truncate } from "../../utils/helpers";
 import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
 import experience from "../../experience";
@@ -47,6 +47,7 @@ import Dino from "../../components/landing/dino/Dino";
 
 const Home = (): ReactElement => {
   const toast = useToast();
+  const navigate = useNavigate();
   const [selected, setSelected] = useState<IExperience>(experience[0]);
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -55,11 +56,13 @@ const Home = (): ReactElement => {
   };
 
   const [articles, setArticles] = useState<IArticle[]>([]);
+  const [paginator, setPaginator] = useState<IPaginator>();
 
   const getArticles = async () => {
     try {
-      const response = await ApiCalls.getArticles();
+      const response = await ApiCalls.getArticles("perPage=9");
       setArticles(response.data.results);
+      setPaginator(response.data.paginator);
     } catch (err) {
       toast({
         title: parseError(err),
@@ -422,6 +425,13 @@ const Home = (): ReactElement => {
                 </CardBody>
               </Card> : null}
           </SimpleGrid>
+          {(paginator?.totalPages ? paginator?.totalPages > 1 : false) ?
+            <Center width={"100%"}>
+              <Link to={`/blog`}>
+                <Button colorScheme={"teal"}>See All Posts</Button>
+              </Link>
+            </Center> : null
+          }
         </Stack>
       </Container>
       <Container maxW={"4xl"} id="terminal">
@@ -451,7 +461,7 @@ const Home = (): ReactElement => {
           </Stack>
         </Stack>
       </Container>
-      <Container maxW={"4xl"} id="contact">
+      <Container maxW={"4xl"} id="tools">
         <Stack
           as={Box}
           textAlign={"center"}
@@ -462,6 +472,49 @@ const Home = (): ReactElement => {
             <HStack mx={4}>
               <Text color={"teal.400"} fontWeight={800}>
                 06
+              </Text>
+              <Text fontWeight={800}>Tools</Text>
+            </HStack>
+            <Divider orientation="horizontal" />
+          </Stack>
+          <Stack spacing={4} as={Container} maxW={"4xl"} textAlign={"center"}>
+            <Text color={"gray.500"} fontSize={"xl"} px={4}>
+              I've compiled a list of tools I use (or have used) daily and decided to streamline them into one place, tailored to my preferences. I hope that at least one of these tools can make your daily work a bit easier and more efficient!
+            </Text>
+            <Center py={4}>
+              <Stack direction={{ base: 'column', md: 'row' }} spacing={4} mb={10}>
+                <Button
+                  colorScheme="teal" onClick={() => navigate('/tools/json-formatter')}>
+                  JSON Formatter
+                </Button>
+                <Button colorScheme="purple" onClick={() => navigate('/tools/jwt-parser')}>
+                  JWT Parser
+                </Button>
+                <Button colorScheme="blue" onClick={() => navigate('/tools/base64')}>
+                  Base64
+                </Button>
+                <Button colorScheme="orange" onClick={() => navigate('/tools/stringcount')}>
+                  String Counter
+                </Button>
+                <Button colorScheme="green" onClick={() => navigate('/tools/stringdiff')}>
+                  String Difference
+                </Button>
+              </Stack>
+            </Center>
+          </Stack>
+        </Stack>
+      </Container>
+      <Container maxW={"4xl"} id="contact">
+        <Stack
+          as={Box}
+          textAlign={"center"}
+          spacing={{ base: 8, md: 14 }}
+          pb={{ base: 20, md: 36 }}
+        >
+          <Stack align="center" direction="row" p={4}>
+            <HStack mx={4}>
+              <Text color={"teal.400"} fontWeight={800}>
+                07
               </Text>
               <Text fontWeight={800}>Contact</Text>
             </HStack>
