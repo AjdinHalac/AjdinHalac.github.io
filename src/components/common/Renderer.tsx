@@ -24,6 +24,8 @@ import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
 import go from 'react-syntax-highlighter/dist/cjs/languages/prism/go';
 import rangeParser from 'parse-numeric-range';
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { IconButton } from '@chakra-ui/react';
+import { CopyIcon } from '@chakra-ui/icons';
 
 //import theme from "../../theme";
 
@@ -54,6 +56,10 @@ interface Defaults extends Components {
   heading5?: Components['h5'];
   heading6?: Components['h6'];
 }
+
+const copyToClipboard = (text: string) => {
+  navigator.clipboard.writeText(text);
+};
 
 const syntaxTheme = oneDark;
 
@@ -86,18 +92,32 @@ export const defaults: Defaults = {
     };
 
     return hasLang ? (
-      <SyntaxHighlighter
-        style={syntaxTheme}
-        language={hasLang[1]}
-        PreTag="div"
-        className="codeStyle"
-        showLineNumbers={true}
-        wrapLines={hasMeta}
-        useInlineStyles={true}
-        lineProps={applyHighlights}
-      >
-        {props.children}
-      </SyntaxHighlighter>
+      <div style={{ position: 'relative' }}>
+        <SyntaxHighlighter
+          style={syntaxTheme}
+          language={hasLang[1]}
+          PreTag="div"
+          className="codeStyle"
+          showLineNumbers={true}
+          wrapLines={hasMeta}
+          useInlineStyles={true}
+          lineProps={applyHighlights}
+        >
+          {props.children}
+        </SyntaxHighlighter>
+        <IconButton
+          aria-label="Copy"
+          size="sm"
+          position="absolute"
+          top="8px"
+          right="8px"
+          icon={<CopyIcon />}
+          colorScheme="teal"
+          onClick={() => {
+            copyToClipboard(props.children as string);
+          }}
+        />
+      </div>
     ) : (
       <code className={className} {...props} />
     )
