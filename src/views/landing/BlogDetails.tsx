@@ -67,7 +67,7 @@ const BlogDetails = (): ReactElement => {
           <Text color={"gray.500"} fontSize={"lg"} px={4}>
             {article?.description}
           </Text>
-          <Image maxHeight={"40vh"} width={"100%"} objectFit="cover" src={article?.image} />
+          <Image maxHeight={"40vh"} width={"100%"} objectFit="cover" src={article?.image} alt={article?.slug}/>
           <SimpleGrid px={4} spacing={4} columns={{ base: 1, md: 2 }}>
             <HStack>
               <Avatar boxSize={10} name='Ajdin Halac' src='https://media.licdn.com/dms/image/v2/D4D03AQEAdT2dha2OJQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1721716686255?e=2147483647&v=beta&t=yqvil96C3YIDJyVQOU7QvnwqWOL6BFiC66Hvoy70-zM' />

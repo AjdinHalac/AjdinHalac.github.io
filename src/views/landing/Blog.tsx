@@ -104,7 +104,7 @@ const Blog = (): ReactElement => {
                                     overflow="hidden"
                                 >
                                     <CardHeader>
-                                        <Image objectFit="cover" src={article.image} />
+                                        <Image objectFit="cover" src={article.image} alt={article.slug} />
                                         <HStack pt={4} spacing={2}>
                                             {article.tags ? article.tags.map((tag: ITag) => (
                                                 <Badge key={tag.tag} colorScheme={"teal"}>
