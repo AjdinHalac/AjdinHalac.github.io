@@ -163,7 +163,6 @@ const DinoGame: React.FC = () => {
       align="center"
       justify="center"
       height="60vh"
-      width={"xl"}
     >
       {status === "start" && (
         <Button onClick={startGame} colorScheme="teal">
@@ -175,7 +174,7 @@ const DinoGame: React.FC = () => {
         <Box
           onClick={jump}
           position="relative"
-          w="80%"
+          w="90%"
           h="60vh"
           bg="transparent"
           borderColor={dinoColor}

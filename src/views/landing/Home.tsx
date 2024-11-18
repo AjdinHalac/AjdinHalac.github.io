@@ -413,11 +413,11 @@ const Home = (): ReactElement => {
               <Card
                 overflow="hidden"
               >
-                <CardBody>
+                <CardBody minH={"300px"}>
                   <AbsoluteCenter>
                     <Button onClick={onOpen}>Play the game!</Button>
                   </AbsoluteCenter>
-                  <Modal isOpen={isOpen} onClose={onClose} size={"xl"} isCentered scrollBehavior="inside">
+                  <Modal isOpen={isOpen} onClose={onClose} size={['sm', 'md', 'lg']} isCentered scrollBehavior="inside">
                     <ModalOverlay />
                     <ModalContent>
                       <ModalCloseButton />
