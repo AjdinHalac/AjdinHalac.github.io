@@ -33,6 +33,7 @@ import {
   ModalCloseButton,
   ModalBody,
   useDisclosure,
+  AbsoluteCenter,
 } from "@chakra-ui/react";
 import { ReactElement, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -413,7 +414,9 @@ const Home = (): ReactElement => {
                 overflow="hidden"
               >
                 <CardBody>
-                  <Button onClick={onOpen}>Play the game!</Button>
+                  <AbsoluteCenter>
+                    <Button onClick={onOpen}>Play the game!</Button>
+                  </AbsoluteCenter>
                   <Modal isOpen={isOpen} onClose={onClose} size={"xl"} isCentered scrollBehavior="inside">
                     <ModalOverlay />
                     <ModalContent>
