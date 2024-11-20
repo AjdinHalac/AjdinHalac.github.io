@@ -15,20 +15,19 @@ import {
 import { CopyIcon, RepeatIcon } from "@chakra-ui/icons";
 import Navigation from "../../components/landing/tools/Navigation";
 
-const ToolsJSONFormatter = (): ReactElement => {
+const ToolsJSONToGo = (): ReactElement => {
   const toast = useToast();
-
   const [jsonInput, setJsonInput] = useState('');
-  const [formattedOutput, setFormattedOutput] = useState('');
+  const [goOutput, setGoOutput] = useState('');
   const outputTextareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const handleFormatJson = () => {
+  // Function to handle JSON-to-Go conversion
+  const convertJsonToGo = () => {
     try {
-      const parsedJson = JSON.parse(jsonInput);
-      const formattedJson = JSON.stringify(parsedJson, null, 2);
-      setFormattedOutput(formattedJson);
-    } catch (err) {
-      setFormattedOutput('');
+      const json = JSON.parse(jsonInput);
+      const goCode = jsonToGo(json);
+      setGoOutput(goCode);
+    } catch (error) {
+      setGoOutput('');
       toast({
         title: 'Invalid JSON input',
         description: 'Please check your JSON syntax and try again.',
@@ -62,7 +61,68 @@ const ToolsJSONFormatter = (): ReactElement => {
 
   useEffect(() => {
     autoResizeTextarea(outputTextareaRef.current);
-  }, [formattedOutput]);
+  }, [goOutput]);
+
+  const jsonToGo = (json: any, typeName: string = 'GeneratedStruct'): string => {
+    if (typeof json !== 'object' || json === null) {
+      return '';
+    }
+
+    if (Array.isArray(json)) {
+      const elementType = inferArrayElementType(json);
+      return `[]${elementType}`;
+    }
+
+    const fields = Object.entries(json)
+      .map(([key, value]) => {
+        const fieldName = capitalizeFirstLetter(key);
+        const fieldType = getGoType(value, capitalizeFirstLetter(key));
+        return `\t${fieldName} ${fieldType} \`json:"${key}"\``;
+      })
+      .join('\n');
+
+    return `type ${typeName} struct {\n${fields}\n}`;
+  };
+
+  // Infer Go type
+  const getGoType = (value: any, typeName: string): string => {
+    if (value === null) {
+      return 'interface{}';
+    }
+
+    switch (typeof value) {
+      case 'string':
+        return 'string';
+      case 'number':
+        return 'float64';
+      case 'boolean':
+        return 'bool';
+      case 'object':
+        if (Array.isArray(value)) {
+          return inferArrayElementType(value);
+        }
+        return jsonToGo(value, `${typeName}Type`);
+      default:
+        return 'interface{}';
+    }
+  };
+
+  // Infer the type of elements in an array
+  const inferArrayElementType = (arr: any[]): string => {
+    const uniqueTypes = Array.from(
+      new Set(arr.map((element) => getGoType(element, 'Element')))
+    );
+
+    if (uniqueTypes.length === 1) {
+      return `[]${uniqueTypes[0]}`;
+    }
+    return '[]interface{}'; // Mixed types
+  };
+
+  // Capitalize the first letter
+  const capitalizeFirstLetter = (str: string) =>
+    str.charAt(0).toUpperCase() + str.slice(1);
+
 
   return (
     <Container maxW="3xl" py={10}>
@@ -70,7 +130,7 @@ const ToolsJSONFormatter = (): ReactElement => {
       <VStack spacing={8}>
         <Box w="100%">
           <Heading size="md" mb={4}>
-            JSON Formatter
+            JSON to Go
           </Heading>
           <Textarea
             placeholder="Paste your JSON here"
@@ -80,20 +140,20 @@ const ToolsJSONFormatter = (): ReactElement => {
             mb={4}
             bg={useColorModeValue("gray.100", "gray.900")}
           />
-          <Button colorScheme="teal" onClick={handleFormatJson} leftIcon={<RepeatIcon />} mb={4}>
-            Format JSON
+          <Button colorScheme="teal" onClick={convertJsonToGo} leftIcon={<RepeatIcon />} mb={4}>
+            Convert
           </Button>
         </Box>
 
         <Box w="100%">
           <Text fontWeight="bold" mb={2}>
-            Formatted JSON Output:
+            Generated Go Struct:
           </Text>
           <Box
             position="relative"
           >
             <Textarea
-              value={formattedOutput || 'No output yet'}
+              value={goOutput || 'No output yet'}
               ref={outputTextareaRef}
               isReadOnly
               onChange={(e) => autoResizeTextarea(e.target)}
@@ -104,7 +164,7 @@ const ToolsJSONFormatter = (): ReactElement => {
               whiteSpace="pre-wrap"
               wordBreak="break-all"
             />
-            {formattedOutput && (
+            {goOutput && (
               <IconButton
                 aria-label="Copy formatted JSON"
                 icon={<CopyIcon />}
@@ -112,14 +172,14 @@ const ToolsJSONFormatter = (): ReactElement => {
                 position="absolute"
                 top="8px"
                 right="8px"
-                onClick={() => handleCopy(formattedOutput)}
+                onClick={() => handleCopy(goOutput)}
               />
             )}
           </Box>
         </Box>
       </VStack>
-    </Container>
+    </Container >
   );
 };
 
-export default ToolsJSONFormatter;
+export default ToolsJSONToGo;

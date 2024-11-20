@@ -1,5 +1,5 @@
 import { ajaxService } from '../../../services/AjaxService';
-import { IRequest, IResponse, IUser } from '../interfaces';
+import { IRequest, IResponse, IScore, IUser } from '../interfaces';
 
 export default class ApiCalls {
     public static getMe() {
@@ -31,5 +31,13 @@ export default class ApiCalls {
         return ajaxService.post<IResponse<string>>(`/me/sudo-password`, {
             password: currentPassword
         });
+    }
+    
+    public static getScores() {
+        return ajaxService.get<IResponse<IScore[]>>(`/leaderboard/`);
+    }
+
+    public static submitScore(request: IRequest<Partial<IScore>>) {
+        return ajaxService.post<IResponse<IScore>>(`/leaderboard/`, request.payload);
     }
 }

@@ -34,6 +34,10 @@ export const parseError = (error: any, fallbackErrorMessage = '') => {
             return 'Token could not be verified.'
         case 'TOKEN.040':
             return 'Token could not be deleted.'
+        case 'SCORE.010':
+            return 'Scores could not be fetched.'
+        case 'SCORE.030':
+            return 'Score could not be submitted.'
         default:
             return fallbackErrorMessage;
     }

@@ -1,4 +1,3 @@
-
 import { ReactElement, useState } from "react";
 
 import {
@@ -7,18 +6,15 @@ import {
   Container,
   Heading,
   IconButton,
-  Stack,
   Text,
   Textarea,
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
-import { useNavigate } from "react-router-dom";
+import Navigation from "../../components/landing/tools/Navigation";
 
 const ToolsStringCount = (): ReactElement => {
-  const navigate = useNavigate();
-
   const [textAreas, setTextAreas] = useState<string[]>(['']);
   const bgColor = useColorModeValue('gray.100', 'gray.900');
 
@@ -47,25 +43,7 @@ const ToolsStringCount = (): ReactElement => {
 
   return (
     <Container maxW="3xl" py={10}>
-      <Stack direction={{ base: 'column', md: 'row' }} spacing={4} mb={10}>
-        <Button
-          colorScheme="teal" onClick={() => navigate('/tools/json-formatter')}>
-          JSON Formatter
-        </Button>
-        <Button colorScheme="purple" onClick={() => navigate('/tools/jwt-parser')}>
-          JWT Parser
-        </Button>
-        <Button colorScheme="blue" onClick={() => navigate('/tools/base64')}>
-          Base64
-        </Button>
-        <Button colorScheme="orange" onClick={() => navigate('/tools/stringcount')}>
-          String Counter
-        </Button>
-        <Button colorScheme="green" onClick={() => navigate('/tools/stringdiff')}>
-          String Difference
-        </Button>
-      </Stack>
-
+      <Navigation></Navigation>
       <VStack spacing={8}>
         <Heading size="md">String Character Counter</Heading>
 

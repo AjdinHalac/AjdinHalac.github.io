@@ -6,6 +6,7 @@ const Home = React.lazy(() => import("../../views/landing/Home"));
 const BlogDetails = React.lazy(() => import("../../views/landing/BlogDetails"));
 const Blog = React.lazy(() => import("../../views/landing/Blog"));
 const ToolsJSONFormatter = React.lazy(() => import("../../views/landing/ToolsJSONFormatter"));
+const ToolsJSONToGo = React.lazy(() => import("../../views/landing/ToolsJSONToGo"));
 const ToolsJWTParser = React.lazy(() => import("../../views/landing/ToolsJWTParser"));
 const ToolsBase64 = React.lazy(() => import("../../views/landing/ToolsBase64"));
 const ToolsStringDiff = React.lazy(() => import("../../views/landing/ToolsStringDiff"));
@@ -44,6 +45,7 @@ const LandingContent = () => {
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/tools/json-formatter" element={<ToolsJSONFormatter />} />
+          <Route path="/tools/json-to-go" element={<ToolsJSONToGo />} />
           <Route path="/tools/jwt-parser" element={<ToolsJWTParser />} />
           <Route path="/tools/base64" element={<ToolsBase64 />} />
           <Route path="/tools/stringcount" element={<ToolsStringCount />} />

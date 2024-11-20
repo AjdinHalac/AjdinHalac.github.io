@@ -2,13 +2,11 @@ import { ReactElement, useEffect, useState } from "react";
 
 import {
   Box,
-  Button,
   Container,
   Divider,
   Heading,
   HStack,
   IconButton,
-  Stack,
   Text,
   Textarea,
   useColorModeValue,
@@ -16,11 +14,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { CopyIcon } from "@chakra-ui/icons";
-import { useNavigate } from "react-router-dom";
+import Navigation from "../../components/landing/tools/Navigation";
 
 const ToolsBase64 = (): ReactElement => {
   const toast = useToast();
-  const navigate = useNavigate();
   const [encodeInput, setEncodeInput] = useState('');
   const [encodedOutput, setEncodedOutput] = useState('');
 
@@ -65,24 +62,7 @@ const ToolsBase64 = (): ReactElement => {
 
   return (
     <Container maxW="3xl" py={10}>
-      <Stack direction={{ base: 'column', md: 'row' }} spacing={4} mb={10}>
-        <Button
-          colorScheme="teal" onClick={() => navigate('/tools/json-formatter')}>
-          JSON Formatter
-        </Button>
-        <Button colorScheme="purple" onClick={() => navigate('/tools/jwt-parser')}>
-          JWT Parser
-        </Button>
-        <Button colorScheme="blue" onClick={() => navigate('/tools/base64')}>
-          Base64
-        </Button>
-        <Button colorScheme="orange" onClick={() => navigate('/tools/stringcount')}>
-          String Counter
-        </Button>
-        <Button colorScheme="green" onClick={() => navigate('/tools/stringdiff')}>
-          String Difference
-        </Button>
-      </Stack>
+      <Navigation></Navigation>
       <VStack spacing={8}>
         {/* Encoder Section */}
         <Box w="100%">

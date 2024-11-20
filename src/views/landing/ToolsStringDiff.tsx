@@ -2,23 +2,19 @@ import { ReactElement, useEffect, useState } from "react";
 
 import {
   Box,
-  Button,
   Container,
   Heading,
   HStack,
-  Stack,
   Text,
   Textarea,
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 import { diffWords } from 'diff';
+import Navigation from "../../components/landing/tools/Navigation";
 
 
 const ToolsStringDiff = (): ReactElement => {
-  const navigate = useNavigate();
-
   const [string1, setString1] = useState<string>('');
   const [string2, setString2] = useState<string>('');
   const [diffResult, setDiffResult] = useState<any[]>([]);
@@ -39,24 +35,7 @@ const ToolsStringDiff = (): ReactElement => {
 
   return (
     <Container maxW="3xl" py={10}>
-      <Stack direction={{ base: 'column', md: 'row' }} spacing={4} mb={10}>
-        <Button
-          colorScheme="teal" onClick={() => navigate('/tools/json-formatter')}>
-          JSON Formatter
-        </Button>
-        <Button colorScheme="purple" onClick={() => navigate('/tools/jwt-parser')}>
-          JWT Parser
-        </Button>
-        <Button colorScheme="blue" onClick={() => navigate('/tools/base64')}>
-          Base64
-        </Button>
-        <Button colorScheme="orange" onClick={() => navigate('/tools/stringcount')}>
-          String Counter
-        </Button>
-        <Button colorScheme="green" onClick={() => navigate('/tools/stringdiff')}>
-          String Difference
-        </Button>
-      </Stack>
+      <Navigation></Navigation>
       <VStack spacing={8}>
         <Heading size="md">String Difference Tool</Heading>
 

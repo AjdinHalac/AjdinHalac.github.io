@@ -45,6 +45,7 @@ import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
 import experience from "../../experience";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import Dino from "../../components/landing/dino/Dino";
+import Navigation from "../../components/landing/tools/Navigation";
 
 const Home = (): ReactElement => {
   const toast = useToast();
@@ -417,7 +418,7 @@ const Home = (): ReactElement => {
                   <AbsoluteCenter>
                     <Button onClick={onOpen}>Play the game!</Button>
                   </AbsoluteCenter>
-                  <Modal isOpen={isOpen} onClose={onClose} size={['sm', 'md', 'lg']} isCentered scrollBehavior="inside">
+                  <Modal isOpen={isOpen} onClose={onClose} size={['sm', 'md', 'xl', '4xl']} isCentered scrollBehavior="inside">
                     <ModalOverlay />
                     <ModalContent>
                       <ModalCloseButton />
@@ -486,24 +487,7 @@ const Home = (): ReactElement => {
               I've compiled a list of tools I use (or have used) daily and decided to streamline them into one place, tailored to my preferences. I hope that at least one of these tools can make your daily work a bit easier and more efficient!
             </Text>
             <Center py={4}>
-              <Stack direction={{ base: 'column', md: 'row' }} spacing={4} mb={10}>
-                <Button
-                  colorScheme="teal" onClick={() => navigate('/tools/json-formatter')}>
-                  JSON Formatter
-                </Button>
-                <Button colorScheme="purple" onClick={() => navigate('/tools/jwt-parser')}>
-                  JWT Parser
-                </Button>
-                <Button colorScheme="blue" onClick={() => navigate('/tools/base64')}>
-                  Base64
-                </Button>
-                <Button colorScheme="orange" onClick={() => navigate('/tools/stringcount')}>
-                  String Counter
-                </Button>
-                <Button colorScheme="green" onClick={() => navigate('/tools/stringdiff')}>
-                  String Difference
-                </Button>
-              </Stack>
+              <Navigation></Navigation>
             </Center>
           </Stack>
         </Stack>

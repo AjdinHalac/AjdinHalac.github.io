@@ -85,3 +85,11 @@ export interface ITag {
     updatedAt: string;
     articles: IArticle[];
 }
+
+export interface IScore {
+    id: number;
+    name: string;
+    score: number;
+    createdAt: string;
+    updatedAt: string;
+}
