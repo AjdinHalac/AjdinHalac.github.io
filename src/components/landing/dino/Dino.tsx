@@ -14,7 +14,6 @@ import {
   Td,
   Heading,
   useToast,
-  HStack,
   Input,
   VStack,
   FormControl,
@@ -58,8 +57,8 @@ const DinoGame: React.FC = () => {
 
   const getObjectSpeed = () => {
     const baseSpeed = 2; // Base speed duration in seconds
-    const speedFactor = 0.2; // Speed increase factor
-    const maxSpeed = 0.3; // Minimum duration limit (maximum speed)
+    const speedFactor = 0.1; // Speed increase factor
+    const maxSpeed = 0.05; // Minimum duration limit (maximum speed)
 
     // Calculate the new duration based on the score
     const newSpeed = baseSpeed - score * speedFactor;
@@ -105,7 +104,7 @@ const DinoGame: React.FC = () => {
         repeat: Infinity,
         repeatType: "loop",
         onRepeat: () => {
-          const randomWidths = [30, 40, 50, 20];
+          const randomWidths = [30, 40, 60, 25];
           setObjWidth(randomWidths[Math.floor(Math.random() * randomWidths.length)]);
         },
       },
@@ -158,7 +157,7 @@ const DinoGame: React.FC = () => {
     if (status === "playing" && !isJumping) {
       setIsJumping(true); // Prevent further jumps
       await playerControls.start({ y: -135, transition: { duration: 0.3 } });
-      await playerControls.start({ y: 0, transition: { duration: 0.3 } });
+      await playerControls.start({ y: 0, transition: { duration: 0.25 } });
       setIsJumping(false); // Allow jumping again
     }
   };
@@ -253,7 +252,8 @@ const DinoGame: React.FC = () => {
 
         {status === "playing" && (
           <Box
-            onClick={jump}
+            onMouseDown={jump}
+            onTouchStart={jump}
             position="relative"
             w="90%"
             h="60vh"
