@@ -54,7 +54,7 @@ const Page404 = (): ReactElement => {
                   onChange={(e) => setSearch(e.target.value)}
                 />
                 <InputRightElement width={"4.5em"}>
-                  <Button colorScheme="teal" onClick={() => window.location.replace(`http://www.google.com/search?q=${encodeURIComponent(search)}+site%3Aajdinhalac.github.io`)}>Search</Button>
+                  <Button colorScheme="teal" onClick={() => window.location.replace(`http://www.google.com/search?q=${encodeURIComponent(search)}+site%ajdinhalac.dev`)}>Search</Button>
                 </InputRightElement>
               </InputGroup>
             </Stack>
