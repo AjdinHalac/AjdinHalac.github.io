@@ -9,7 +9,7 @@ export default class AuthService {
         } catch (err) {
         } finally {
             ajaxService.setAuthToken(null, null);
-            window.location.replace('/');
+            window.location.replace('/#/');
         }
     }
 }

@@ -24,7 +24,7 @@ const ForgotPassword = (): ReactElement => {
   const toast = useToast();
 
   if (cookieService.isAuthenticated()) {
-    window.location.replace("/");
+    window.location.replace("/#/");
   }
 
   const [email, setEmail] = useState<string>("");

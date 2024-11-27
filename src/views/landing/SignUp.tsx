@@ -26,7 +26,7 @@ const SignUp = (): ReactElement => {
   const toast = useToast();
 
   if (cookieService.isAuthenticated()) {
-    window.location.replace("/");
+    window.location.replace("/#/");
   }
 
   const [email, setEmail] = useState<string>("");
@@ -42,7 +42,7 @@ const SignUp = (): ReactElement => {
         newCredentials?.data?.accessToken,
         newCredentials?.data?.refreshToken
       );
-      window.location.replace("/");
+      window.location.replace("/#/");
     } catch (err) {
       toast({
         title: parseError(err),

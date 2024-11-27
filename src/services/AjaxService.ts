@@ -32,18 +32,18 @@ export default class AjaxService {
                     const cookieData = cookieService.getCookie();
 
                     try {
-                    const newCredentials = await ApiCalls.refreshToken({
-                        payload: { token: cookieData?.refreshToken },
-                    });
+                        const newCredentials = await ApiCalls.refreshToken({
+                            payload: { token: cookieData?.refreshToken },
+                        });
 
-                    axios.defaults.headers.common['Content-Type'] = 'application/json';
-                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + newCredentials.data.accessToken;
+                        axios.defaults.headers.common['Content-Type'] = 'application/json';
+                        axios.defaults.headers.common['Authorization'] = 'Bearer ' + newCredentials.data.accessToken;
 
-                    originalRequest.headers['Content-Type'] = 'application/json';
-                    originalRequest.headers['Authorization'] = 'Bearer ' + newCredentials.data.accessToken;
+                        originalRequest.headers['Content-Type'] = 'application/json';
+                        originalRequest.headers['Authorization'] = 'Bearer ' + newCredentials.data.accessToken;
 
-                    self.setAuthToken(newCredentials?.data?.accessToken, newCredentials?.data?.refreshToken);
-                    return axios(originalRequest);
+                        self.setAuthToken(newCredentials?.data?.accessToken, newCredentials?.data?.refreshToken);
+                        return axios(originalRequest);
                     } catch (err) {
                         authService.logout();
                     }
@@ -51,7 +51,7 @@ export default class AjaxService {
 
                 if (error?.response?.status === 401) {
                     cookieService.removeCookie();
-                    return window.location.assign(`${config.ADMIN_APP_URL}/auth`);
+                    return window.location.replace("/#/signin");
                 }
 
                 return Promise.reject(error);

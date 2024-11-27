@@ -25,7 +25,7 @@ const ResetPassword = (): ReactElement => {
   const toast = useToast();
 
   if (cookieService.isAuthenticated()) {
-    window.location.replace("/");
+    window.location.replace("/#/");
   }
 
   const [password, setPassword] = useState<string>("");

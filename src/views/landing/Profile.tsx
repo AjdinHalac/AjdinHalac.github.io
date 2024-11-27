@@ -30,7 +30,7 @@ const Profile = (): ReactElement => {
   const toast = useToast();
 
   if (!cookieService.isAuthenticated()) {
-    window.location.replace("/");
+    window.location.replace("/#/");
   }
 
   const [user, setUser] = useState<Partial<IUser>>({

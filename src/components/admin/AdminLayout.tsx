@@ -9,7 +9,7 @@ import { Flex } from "@chakra-ui/react";
 const AdminLayout = () => {
   useLayoutEffect(() => {
     if (!cookieService.isAdmin()) {
-      return window.location.replace("/unauthorized");
+      return window.location.replace("/#/unauthorized");
     }
     //eslint-disable-next-line
   }, []);
