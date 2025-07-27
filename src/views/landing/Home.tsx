@@ -49,9 +49,8 @@ import Navigation from "../../components/landing/tools/Navigation";
 
 const Home = (): ReactElement => {
   const toast = useToast();
-  const navigate = useNavigate();
   const [selected, setSelected] = useState<IExperience>(experience[0]);
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleSelected = (value: IExperience) => {
     setSelected(value);
@@ -105,15 +104,15 @@ const Home = (): ReactElement => {
             color={"gray.500"}
             fontSize={{ base: "lg", sm: "xl", md: "2xl" }}
           >
-            Welcome to my delightful playground website, where imagination
-            knows no bounds and laughter echoes through the air! Step into a
-            world of endless fun and adventure, designed to captivate the hearts
-            of the young and the young at heart. Let your curiosity guide you as
-            you discover a treasure trove of interactive games, captivating
-            stories, and exciting activities. So, come on in and experience the
-            joy of play as you embark on a journey filled with wonder and
-            discovery. Unleash your inner child and immerse yourself in the
-            magic that awaits—explore to your heart's content!
+            Welcome to my delightful playground website, where imagination knows
+            no bounds and laughter echoes through the air! Step into a world of
+            endless fun and adventure, designed to captivate the hearts of the
+            young and the young at heart. Let your curiosity guide you as you
+            discover a treasure trove of interactive games, captivating stories,
+            and exciting activities. So, come on in and experience the joy of
+            play as you embark on a journey filled with wonder and discovery.
+            Unleash your inner child and immerse yourself in the magic that
+            awaits—explore to your heart's content!
           </Text>
           <Stack
             direction={"column"}
@@ -194,11 +193,132 @@ const Home = (): ReactElement => {
             but with specialization, previous experiences, and core focus on
             Backend Development, Microservices, and Domain Driven Design.
             Continuously exploring Optimization and Software Architecture.
-            Previous domains include Gambling, AI, Biotech, Identity, and
-            Marketplace, but open to exploring other options. Currently working
-            with GoLang, JavaScript, and Java. Hobbies include creating Robots using Arduino
-            and Raspberry.
+            Previous domains include Fintech, Gambling, AI, Biotech, Identity,
+            and Marketplace. Currently working with GoLang, JavaScript, and
+            Java. Hobbies include creating Robots using Arduino and Raspberry.
           </Text>
+        </Stack>
+      </Container>
+      <Container maxW={"4xl"} id="product">
+        <Stack
+          as={Box}
+          textAlign={"center"}
+          spacing={{ base: 8, md: 14 }}
+          pb={{ base: 20, md: 36 }}
+        >
+          <Stack align="center" direction="row" p={4}>
+            <HStack mx={4}>
+              <Text color={"teal.400"} fontWeight={800}>
+                02
+              </Text>
+              <Text fontWeight={800}>My Product</Text>
+            </HStack>
+            <Divider orientation="horizontal" />
+          </Stack>
+          <Stack>
+            <Card size="lg">
+              <CardHeader>
+                <Flex justifyContent="space-between" alignItems="center">
+                  <HStack>
+                    <Image
+                      h={"auto"}
+                      w={"50px"}
+                      src={require(`../../images/upti.png`)}
+                      alt="upti.my logo"
+                    />
+                    <Box px={2}>
+                      <Text fontWeight={600} fontSize="xl">
+                        upti.my
+                      </Text>
+                      <Text color={"teal.500"} fontWeight={500}>
+                        Founder & CEO
+                      </Text>
+                    </Box>
+                  </HStack>
+                  <Text px={2} fontWeight={300}>
+                    2024 - Current
+                  </Text>
+                </Flex>
+              </CardHeader>
+              <CardBody pt={0}>
+                <Box>
+                  <Text color={"gray.500"} fontSize={"lg"} mb={4} px={2}>
+                    A comprehensive uptime monitoring and incident management
+                    platform that I've architected and developed end-to-end.
+                    From infrastructure services performing health checks to
+                    client-facing applications with custom status pages, upti.my
+                    provides 24/7 monitoring, automated recovery, and real-time
+                    alerts for websites, APIs, and servers.
+                  </Text>
+                  <Text fontWeight={500} mb={3} color={"teal.500"}>
+                    Platform Features:
+                  </Text>
+                  <Flex wrap="wrap" gap={2}>
+                    {[
+                      "Uptime Monitoring",
+                      "Self-Healing Systems",
+                      "Incident Management",
+                      "Real-time Alerts",
+                      "Custom Status Pages",
+                      "API & Server Monitoring",
+                      "SLA Monitoring",
+                      "Automated Recovery",
+                      "Performance Analytics",
+                      "Custom Domain Support",
+                      "DNS Verification",
+                      "24/7 Health Checks",
+                    ].map((feature, index) => (
+                      <Badge
+                        key={index}
+                        colorScheme="teal"
+                        variant="subtle"
+                        fontSize="sm"
+                        px={3}
+                        py={1}
+                        borderRadius="md"
+                      >
+                        {feature}
+                      </Badge>
+                    ))}
+                  </Flex>
+                  <Box
+                    mt={4}
+                    p={3}
+                    bg="gray.50"
+                    borderRadius="md"
+                    _dark={{ bg: "gray.700" }}
+                  >
+                    <Text
+                      fontSize="sm"
+                      color="gray.600"
+                      _dark={{ color: "gray.300" }}
+                      fontStyle="italic"
+                    >
+                      <strong>Full-Stack Development:</strong> Designed and
+                      built the entire platform including UI/UX, backend
+                      services, infrastructure architecture, monitoring
+                      algorithms, and automated systems.
+                    </Text>
+                  </Box>
+                  <Center pt={6}>
+                    <Button
+                      colorScheme="teal"
+                      variant="outline"
+                      onClick={() => {
+                        window.open(
+                          "https://upti.my",
+                          "_blank",
+                          "noreferrer,noopener"
+                        );
+                      }}
+                    >
+                      Visit upti.my
+                    </Button>
+                  </Center>
+                </Box>
+              </CardBody>
+            </Card>
+          </Stack>
         </Stack>
       </Container>
       <Container maxW={"4xl"} id="experience">
@@ -211,7 +331,7 @@ const Home = (): ReactElement => {
           <Stack align="center" direction="row" p={4}>
             <HStack mx={4}>
               <Text color={"teal.400"} fontWeight={800}>
-                02
+                03
               </Text>
               <Text fontWeight={800}>Experience</Text>
             </HStack>
@@ -221,6 +341,7 @@ const Home = (): ReactElement => {
             <ButtonGroup variant="outline">
               {experience.map((option: IExperience) => (
                 <Button
+                  key={option.value}
                   colorScheme={
                     selected.value === option.value ? "teal" : "gray"
                   }
@@ -253,6 +374,30 @@ const Home = (): ReactElement => {
                     </Text>
                   </Flex>
                 </CardHeader>
+                {selected.products && selected.products.length > 0 && (
+                  <CardBody pt={0}>
+                    <Box>
+                      <Text fontWeight={500} mb={3} color={"teal.500"}>
+                        While working for {selected.company} I've worked on:
+                      </Text>
+                      <Flex wrap="wrap" gap={2}>
+                        {selected.products.map((product, index) => (
+                          <Badge
+                            key={index}
+                            colorScheme="teal"
+                            variant="subtle"
+                            fontSize="sm"
+                            px={3}
+                            py={1}
+                            borderRadius="md"
+                          >
+                            {product}
+                          </Badge>
+                        ))}
+                      </Flex>
+                    </Box>
+                  </CardBody>
+                )}
               </Card>
             </Fade>
           </Stack>
@@ -260,8 +405,17 @@ const Home = (): ReactElement => {
           <Text color={"gray.500"} fontSize={"xl"} px={2}>
             If you wish to know more about my experience you can check out my{" "}
             <Box as="span" color={"teal.500"}>
-              <Link to="https://img-strg.fra1.cdn.digitaloceanspaces.com/ajdinhalac.dev/Ajdin%20Halac%20CV.pdf" download={"https://img-strg.fra1.cdn.digitaloceanspaces.com/ajdinhalac.dev/Ajdin%20Halac%20CV.pdf"} target='_blank'>Resume</Link>
-            </Box>.
+              <Link
+                to="https://img-strg.fra1.cdn.digitaloceanspaces.com/ajdinhalac.dev/Ajdin%20Halac%20CV.pdf"
+                download={
+                  "https://img-strg.fra1.cdn.digitaloceanspaces.com/ajdinhalac.dev/Ajdin%20Halac%20CV.pdf"
+                }
+                target="_blank"
+              >
+                Resume
+              </Link>
+            </Box>
+            .
           </Text>
         </Stack>
       </Container>
@@ -275,74 +429,143 @@ const Home = (): ReactElement => {
           <Stack align="center" direction="row" p={4}>
             <HStack mx={4}>
               <Text color={"teal.400"} fontWeight={800}>
-                03
+                04
               </Text>
               <Text fontWeight={800}>Super&nbsp;Powers</Text>
             </HStack>
             <Divider orientation="horizontal" />
           </Stack>
           <Stack>
-
             <Center px={4}>
               <ButtonGroup variant="outline">
-                <Popover trigger="hover" colorScheme={"gray"} placement={"bottom-start"}>
+                <Popover
+                  trigger="hover"
+                  colorScheme={"gray"}
+                  placement={"bottom-start"}
+                >
                   <PopoverTrigger>
                     <Button colorScheme={"teal"}>Frontend</Button>
                   </PopoverTrigger>
                   <PopoverContent>
                     <PopoverArrow />
                     <PopoverBody>
-                      <Button m="1" colorScheme={"teal"}>HTML</Button>
-                      <Button m="1" colorScheme={"teal"}>CSS</Button>
-                      <Button m="1" colorScheme={"teal"}>Javascript</Button>
-                      <Button m="1" colorScheme={"teal"}>Typescript</Button>
-                      <Button m="1" colorScheme={"teal"}>React</Button>
-                      <Button m="1" colorScheme={"teal"}>Chakra</Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        HTML
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        CSS
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Javascript
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Typescript
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        React
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Chakra
+                      </Button>
                     </PopoverBody>
                   </PopoverContent>
                 </Popover>
 
-                <Popover trigger="hover" colorScheme={"gray"} placement={"bottom"}>
+                <Popover
+                  trigger="hover"
+                  colorScheme={"gray"}
+                  placement={"bottom"}
+                >
                   <PopoverTrigger>
                     <Button colorScheme={"teal"}>Backend</Button>
                   </PopoverTrigger>
                   <PopoverContent>
                     <PopoverArrow />
                     <PopoverBody flex={"left"}>
-                      <Button m="1" colorScheme={"teal"}>Golang</Button>
-                      <Button m="1" colorScheme={"teal"}>Gorm</Button>
-                      <Button m="1" colorScheme={"teal"}>NodeJS</Button>
-                      <Button m="1" colorScheme={"teal"}>Express</Button>
-                      <Button m="1" colorScheme={"teal"}>Java</Button>
-                      <Button m="1" colorScheme={"teal"}>Spring</Button>
-                      <Button m="1" colorScheme={"teal"}>PHP</Button>
-                      <Button m="1" colorScheme={"teal"}>Symfony</Button>
-                      <Button m="1" colorScheme={"teal"}>PostgreSQL</Button>
-                      <Button m="1" colorScheme={"teal"}>MySQL</Button>
-                      <Button m="1" colorScheme={"teal"}>JWT/OAuth</Button>
-                      <Button m="1" colorScheme={"teal"}>Payment Processing</Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Golang
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Gorm
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        NodeJS
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Express
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Java
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Spring
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        PHP
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Symfony
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        PostgreSQL
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        MySQL
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        JWT/OAuth
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Payment Processing
+                      </Button>
                     </PopoverBody>
                   </PopoverContent>
                 </Popover>
 
-                <Popover trigger="hover" colorScheme={"gray"} placement={"bottom-end"}>
+                <Popover
+                  trigger="hover"
+                  colorScheme={"gray"}
+                  placement={"bottom-end"}
+                >
                   <PopoverTrigger>
                     <Button colorScheme={"teal"}>Miscend</Button>
                   </PopoverTrigger>
                   <PopoverContent>
                     <PopoverArrow />
                     <PopoverBody>
-                      <Button m="1" colorScheme={"teal"}>Git</Button>
-                      <Button m="1" colorScheme={"teal"}>Linux</Button>
-                      <Button m="1" colorScheme={"teal"}>Python</Button>
-                      <Button m="1" colorScheme={"teal"}>Digitalocean</Button>
-                      <Button m="1" colorScheme={"teal"}>Namecheap</Button>
-                      <Button m="1" colorScheme={"teal"}>Github Actions</Button>
-                      <Button m="1" colorScheme={"teal"}>Kubernetes</Button>
-                      <Button m="1" colorScheme={"teal"}>Docker</Button>
-                      <Button m="1" colorScheme={"teal"}>Domain Driven Design</Button>
-                      <Button m="1" colorScheme={"teal"}>Test Driven Design</Button>
-                      <Button m="1" colorScheme={"teal"}>Software Architecture</Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Git
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Linux
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Python
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Digitalocean
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Namecheap
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Github Actions
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Kubernetes
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Docker
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Domain Driven Design
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Test Driven Design
+                      </Button>
+                      <Button m="1" colorScheme={"teal"}>
+                        Software Architecture
+                      </Button>
                     </PopoverBody>
                   </PopoverContent>
                 </Popover>
@@ -352,15 +575,11 @@ const Home = (): ReactElement => {
         </Stack>
       </Container>
       <Container maxW={"4xl"} id="blog">
-        <Stack
-          as={Box}
-          spacing={{ base: 8, md: 14 }}
-          pb={{ base: 20, md: 36 }}
-        >
+        <Stack as={Box} spacing={{ base: 8, md: 14 }} pb={{ base: 20, md: 36 }}>
           <Stack align="center" direction="row" p={4}>
             <HStack mx={4}>
               <Text color={"teal.400"} fontWeight={800}>
-                04
+                05
               </Text>
               <Text fontWeight={800}>Blog</Text>
             </HStack>
@@ -369,18 +588,21 @@ const Home = (): ReactElement => {
           <SimpleGrid px={4} spacing={4} columns={{ base: 1, lg: 2 }}>
             {articles.length ? (
               articles.map((article: IArticle) => (
-                <Card
-                  key={article.title}
-                  overflow="hidden"
-                >
+                <Card key={article.title} overflow="hidden">
                   <CardHeader>
-                    <Image objectFit="cover" src={article.image} alt={article.slug} />
+                    <Image
+                      objectFit="cover"
+                      src={article.image}
+                      alt={article.slug}
+                    />
                     <HStack pt={4} spacing={2}>
-                      {article.tags ? article.tags.map((tag: ITag) => (
-                        <Badge key={tag.tag} colorScheme={"teal"}>
-                          {tag.tag}
-                        </Badge>
-                      )) : null}
+                      {article.tags
+                        ? article.tags.map((tag: ITag) => (
+                            <Badge key={tag.tag} colorScheme={"teal"}>
+                              {tag.tag}
+                            </Badge>
+                          ))
+                        : null}
                     </HStack>
                   </CardHeader>
                   <CardBody>
@@ -390,10 +612,14 @@ const Home = (): ReactElement => {
                     </Text>
                   </CardBody>
                   <CardFooter>
-                    <Center width={"100%"}
-                    >
+                    <Center width={"100%"}>
                       <Link to={`/blog/${article.slug}`}>
-                        <Button rightIcon={<ArrowForwardIcon />} color={"teal.400"}>Read more</Button>
+                        <Button
+                          rightIcon={<ArrowForwardIcon />}
+                          color={"teal.400"}
+                        >
+                          Read more
+                        </Button>
                       </Link>
                     </Center>
                   </CardFooter>
@@ -410,15 +636,19 @@ const Home = (): ReactElement => {
                 </Text>
               </Stack>
             )}
-            {articles.length % 2 === 1 ?
-              <Card
-                overflow="hidden"
-              >
+            {articles.length % 2 === 1 ? (
+              <Card overflow="hidden">
                 <CardBody minH={"300px"}>
                   <AbsoluteCenter>
                     <Button onClick={onOpen}>Play the game!</Button>
                   </AbsoluteCenter>
-                  <Modal isOpen={isOpen} onClose={onClose} size={['sm', 'md', 'xl', '4xl']} isCentered scrollBehavior="inside">
+                  <Modal
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    size={["sm", "md", "xl", "4xl"]}
+                    isCentered
+                    scrollBehavior="inside"
+                  >
                     <ModalOverlay />
                     <ModalContent>
                       <ModalCloseButton />
@@ -428,15 +658,16 @@ const Home = (): ReactElement => {
                     </ModalContent>
                   </Modal>
                 </CardBody>
-              </Card> : null}
+              </Card>
+            ) : null}
           </SimpleGrid>
-          {(paginator?.totalPages ? paginator?.totalPages > 1 : false) ?
+          {(paginator?.totalPages ? paginator?.totalPages > 1 : false) ? (
             <Center width={"100%"}>
               <Link to={`/blog`}>
                 <Button colorScheme={"teal"}>See All Posts</Button>
               </Link>
-            </Center> : null
-          }
+            </Center>
+          ) : null}
         </Stack>
       </Container>
       <Container maxW={"4xl"} id="terminal">
@@ -449,7 +680,7 @@ const Home = (): ReactElement => {
           <Stack align="center" direction="row" p={4}>
             <HStack mx={4}>
               <Text color={"teal.400"} fontWeight={800}>
-                05
+                06
               </Text>
               <Text fontWeight={800}>Terminal</Text>
             </HStack>
@@ -457,7 +688,8 @@ const Home = (): ReactElement => {
           </Stack>
           <Stack spacing={4} as={Container} maxW={"4xl"} textAlign={"center"}>
             <Text color={"gray.500"} fontSize={"xl"} px={2}>
-              Explore the interactive Linux terminal... Who knows, you might even {" "}
+              Explore the interactive Linux terminal... Who knows, you might
+              even{" "}
               <Box as="span" color={"teal.500"}>
                 <Link to="/terminal">Capture The Flag</Link>
               </Box>
@@ -476,7 +708,7 @@ const Home = (): ReactElement => {
           <Stack align="center" direction="row" p={4}>
             <HStack mx={4}>
               <Text color={"teal.400"} fontWeight={800}>
-                06
+                07
               </Text>
               <Text fontWeight={800}>Tools</Text>
             </HStack>
@@ -484,7 +716,10 @@ const Home = (): ReactElement => {
           </Stack>
           <Stack spacing={4} as={Container} maxW={"4xl"} textAlign={"center"}>
             <Text color={"gray.500"} fontSize={"xl"} px={4}>
-              I've compiled a list of tools I use (or have used) daily and decided to streamline them into one place, tailored to my preferences. I hope that at least one of these tools can make your daily work a bit easier and more efficient!
+              I've compiled a list of tools I use (or have used) daily and
+              decided to streamline them into one place, tailored to my
+              preferences. I hope that at least one of these tools can make your
+              daily work a bit easier and more efficient!
             </Text>
             <Center py={4}>
               <Navigation></Navigation>
@@ -502,7 +737,7 @@ const Home = (): ReactElement => {
           <Stack align="center" direction="row" p={4}>
             <HStack mx={4}>
               <Text color={"teal.400"} fontWeight={800}>
-                07
+                08
               </Text>
               <Text fontWeight={800}>Contact</Text>
             </HStack>
@@ -558,7 +793,7 @@ const Home = (): ReactElement => {
           </Stack>
         </Stack>
       </Container>
-    </Flex >
+    </Flex>
   );
 };
 
