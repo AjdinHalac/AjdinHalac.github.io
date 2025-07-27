@@ -18,6 +18,7 @@ import {
   VStack,
   FormControl,
   FormLabel,
+  Image,
 } from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
 import ApiCalls from "../../../domain/common/api/ApiCalls";
@@ -29,11 +30,20 @@ const MotionBox = motion(Box);
 const DinoGame: React.FC = () => {
   const toast = useToast();
 
+  const getRandomObject = () => {
+    const objects = ["dev.png", "demo.png", "client.png"];
+    return objects[Math.floor(Math.random() * objects.length)];
+  };
+
   const bgStart = 500;
   const objStart = 500;
-  const [status, setStatus] = useState<"start" | "playing" | "crashed">("start");
+  const [status, setStatus] = useState<"start" | "playing" | "crashed">(
+    "start"
+  );
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
+  const [objImage, setObjImage] = useState(getRandomObject());
+  const [objHeight, setObjHeight] = useState(40);
   const [objWidth, setObjWidth] = useState(40);
   const [trees, setTrees] = useState("🌲 🌴 🌳");
   const [isJumping, setIsJumping] = useState(false);
@@ -53,7 +63,7 @@ const DinoGame: React.FC = () => {
     setIsJumping(false);
     animateObjects();
     animateBackground();
-  }
+  };
 
   const getObjectSpeed = () => {
     const baseSpeed = 2; // Base speed duration in seconds
@@ -68,7 +78,7 @@ const DinoGame: React.FC = () => {
   const getBackgroundSpeed = () => {
     const baseSpeed = 3; // Base speed duration in seconds
     const speedFactor = 0.05; // Speed increase factor
-    const maxSpeed = 1; // Minimum duration limit (maximum speed)
+    const maxSpeed = 0.5; // Minimum duration limit (maximum speed)
 
     // Calculate the new duration based on the score
     const newSpeed = baseSpeed - score * speedFactor;
@@ -87,12 +97,24 @@ const DinoGame: React.FC = () => {
         repeat: Infinity,
         repeatType: "loop",
         onRepeat: () => {
-          const objArray = ['🌲           🌴☁          🌳', '🌲     🌲🌲    ☁    🌳', '🌴', '🌳      🌳🌴  ☁    🌴', '🌹🌹', '☁ ☁'];
+          const objArray = [
+            "🌲           🌴☁          🌳",
+            "🌲     🌲🌲    ☁    🌳",
+            "🌴",
+            "🌳      🌳🌴  ☁    🌴",
+            "🌹🌹",
+            "🚴‍♂️🚴🚴🏼🚴🏼‍♀️🚴🏼‍♀️",
+            "🛸🐄",
+            "4️⃣0️⃣4️⃣",
+            "🌲🌳🌴🌲🌳🌴",
+            "5️⃣0️⃣3️⃣"
+
+          ];
           setTrees(objArray[Math.floor(Math.random() * objArray.length)]);
         },
       },
     });
-  }
+  };
   const animateObjects = () => {
     objControls.set({ x: objStart });
 
@@ -104,8 +126,12 @@ const DinoGame: React.FC = () => {
         repeat: Infinity,
         repeatType: "loop",
         onRepeat: () => {
-          const randomWidths = [30, 40, 60, 25];
-          setObjWidth(randomWidths[Math.floor(Math.random() * randomWidths.length)]);
+          const randomWidths = [30, 40, 50, 55, 60];
+          const size =
+            randomWidths[Math.floor(Math.random() * randomWidths.length)];
+          setObjHeight(size);
+          setObjWidth(size);
+          setObjImage(getRandomObject());
         },
       },
     });
@@ -148,7 +174,9 @@ const DinoGame: React.FC = () => {
 
   useEffect(() => {
     if (status === "crashed") {
-      setHighScore((prevHighScore) => (score > prevHighScore ? score : prevHighScore));
+      setHighScore((prevHighScore) =>
+        score > prevHighScore ? score : prevHighScore
+      );
       submitScore();
     }
   }, [status, score]);
@@ -176,8 +204,7 @@ const DinoGame: React.FC = () => {
     return () => clearInterval(interval);
   }, [status]);
 
-
-  const [name, setName] = useState<string>('Anon');
+  const [name, setName] = useState<string>("Anon");
   const [scores, setScores] = useState<IScore[]>([]);
 
   const submitScore = async () => {
@@ -221,8 +248,8 @@ const DinoGame: React.FC = () => {
   return (
     <Grid
       templateColumns={{
-        base: '1fr', // 1 column on small screens
-        lg: '1fr 2fr', // 2/3 and 1/3 columns on medium screens and above
+        base: "1fr", // 1 column on small screens
+        lg: "1fr 2fr", // 2/3 and 1/3 columns on medium screens and above
       }}
     >
       <Flex
@@ -230,7 +257,7 @@ const DinoGame: React.FC = () => {
         align="center"
         justify="center"
         height="60vh"
-        width={['xs', 'sm', 'lg', 'md']}
+        width={["xs", "sm", "lg", "md"]}
         my={8}
       >
         {status === "start" && (
@@ -269,24 +296,35 @@ const DinoGame: React.FC = () => {
               position="absolute"
               left="10%"
               bottom="2px"
-              bg={dinoColor}
+              bg="transparent"
               h="40px"
               w="40px"
               borderRadius="md"
-            />
+              fontSize="2xl"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              🐛
+            </MotionBox>
 
-            {/* Obstacle */}
             <MotionBox
               ref={objRef}
               animate={objControls}
               initial={{ x: objStart }}
               position="absolute"
               bottom="2px"
-              bg="red.500"
-              h="40px"
+              h={`${objHeight}px`}
               w={`${objWidth}px`}
               borderRadius="md"
-            />
+            >
+              <Image
+                src={require("../../../images/" + objImage)}
+                alt="object"
+                width={`${objWidth}px`}
+                height={`${objHeight}px`}
+              />
+            </MotionBox>
 
             {/* Background Trees */}
             <MotionBox
@@ -320,7 +358,8 @@ const DinoGame: React.FC = () => {
 
         {status === "crashed" && (
           <Flex direction="column" align="center" mt={6}>
-            <Text fontSize="xl">You crashed! Score: {score}</Text>
+            <Text fontSize="xl">Bug got found!</Text>
+            <Text fontSize="xl">Your Score: {score}</Text>
             <Text fontSize="lg">Your High Score: {highScore}</Text>
             <Button onClick={startGame} mt={4} colorScheme="red">
               Retry
@@ -329,7 +368,14 @@ const DinoGame: React.FC = () => {
         )}
       </Flex>
 
-      <Box width={['xs', 'sm', 'lg', 'sm']} my={8} p={4} borderWidth={1} borderRadius="md" boxShadow="lg">
+      <Box
+        width={["xs", "sm", "lg", "sm"]}
+        my={8}
+        p={4}
+        borderWidth={1}
+        borderRadius="md"
+        boxShadow="lg"
+      >
         <Heading mb={4} textAlign="center" size="lg">
           Leaderboard
         </Heading>
