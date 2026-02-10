@@ -61,7 +61,7 @@ const ToolsBase64 = (): ReactElement => {
   }, []);
 
   return (
-    <Container maxW="3xl" py={10}>
+    <Container maxW="6xl" py={10}>
       <Navigation></Navigation>
       <VStack spacing={8}>
         {/* Encoder Section */}
