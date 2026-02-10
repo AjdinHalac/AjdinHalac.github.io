@@ -5,6 +5,8 @@ import {
   Button,
   Container,
   Heading,
+  HStack,
+  Icon,
   Image,
   Text,
   Textarea,
@@ -12,11 +14,16 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
+import { FaImage } from "react-icons/fa";
 import Navigation from "../../components/landing/tools/Navigation";
 
 const ToolsBase64ToImage = (): ReactElement => {
   const toast = useToast();
-  const bgColor = useColorModeValue("gray.100", "gray.900");
+  const cardBg = useColorModeValue("white", "gray.800");
+  const borderColor = useColorModeValue("gray.100", "whiteAlpha.100");
+  const inputBg = useColorModeValue("gray.50", "gray.900");
+  const subtitleColor = useColorModeValue("gray.600", "gray.400");
+
   const [base64Input, setBase64Input] = useState("");
   const [imageSrc, setImageSrc] = useState("");
   const [error, setError] = useState("");
@@ -145,45 +152,101 @@ const ToolsBase64ToImage = (): ReactElement => {
 
   return (
     <Container maxW="6xl" py={10}>
-      <Navigation />
-      <VStack spacing={8}>
-        <Box w="100%">
-          <Heading size="md" mb={4}>
+      <VStack spacing={8} className="animate-fade-in-up">
+        <VStack spacing={3} textAlign="center">
+          <Icon as={FaImage} boxSize={8} color="teal.400" />
+          <Heading size="lg" className="gradient-text">
             Base64 to Image
           </Heading>
-          <Text mb={4} fontSize="sm" color="gray.500">
+          <Text color={subtitleColor} fontSize="sm">
             Paste a Base64-encoded image string below. Supports PNG, JPEG, GIF,
-            WebP, BMP, SVG, and ICO formats. You can include the data URI prefix
-            (e.g. data:image/png;base64,...) or just the raw Base64 string.
+            WebP, BMP, SVG, and ICO formats.
+          </Text>
+        </VStack>
+
+        <Navigation />
+
+        <Box
+          w="100%"
+          bg={cardBg}
+          border="1px solid"
+          borderColor={borderColor}
+          borderRadius="2xl"
+          p={{ base: 5, md: 8 }}
+        >
+          <Heading size="md" mb={4}>
+            Input
+          </Heading>
+          <Text mb={4} fontSize="sm" color={subtitleColor}>
+            You can include the data URI prefix (e.g. data:image/png;base64,...)
+            or just the raw Base64 string.
           </Text>
           <Textarea
             placeholder="Paste Base64 string here..."
             value={base64Input}
-            bg={bgColor}
+            bg={inputBg}
             onChange={handleInputChange}
-            size="md"
+            size="lg"
+            borderRadius="xl"
+            border="1px solid"
+            borderColor={borderColor}
+            _focus={{
+              borderColor: "teal.400",
+              boxShadow: "0 0 0 1px var(--chakra-colors-teal-400)",
+            }}
             mb={4}
             minH="150px"
           />
-          <Button size="sm" colorScheme="red" onClick={handleClear} mr={2}>
-            Clear
-          </Button>
-          {imageSrc && (
-            <Button size="sm" colorScheme="teal" onClick={handleDownload}>
-              Download Image
+          <HStack spacing={3}>
+            <Button
+              size="md"
+              variant="outline"
+              colorScheme="red"
+              borderRadius="xl"
+              onClick={handleClear}
+            >
+              Clear
             </Button>
-          )}
+            {imageSrc && (
+              <Button
+                size="md"
+                colorScheme="teal"
+                borderRadius="xl"
+                onClick={handleDownload}
+              >
+                Download Image
+              </Button>
+            )}
+          </HStack>
         </Box>
 
         {error && (
-          <Box w="100%" p={4} bg="red.50" borderRadius="md">
-            <Text color="red.500">{error}</Text>
+          <Box
+            w="100%"
+            p={4}
+            bg="red.50"
+            border="1px solid"
+            borderColor="red.200"
+            borderRadius="2xl"
+            _dark={{ bg: "red.900", borderColor: "red.600" }}
+          >
+            <Text color="red.500" _dark={{ color: "red.300" }}>
+              {error}
+            </Text>
           </Box>
         )}
 
         {imageSrc && !error && (
-          <Box w="100%" p={4} bg={bgColor} borderRadius="md" textAlign="center">
-            <Heading size="sm" mb={4}>
+          <Box
+            w="100%"
+            bg={cardBg}
+            border="1px solid"
+            borderColor={borderColor}
+            borderRadius="2xl"
+            p={{ base: 5, md: 8 }}
+            textAlign="center"
+          >
+            <Heading size="md" mb={6}>
               Preview
             </Heading>
             <Image
@@ -192,6 +255,7 @@ const ToolsBase64ToImage = (): ReactElement => {
               maxW="100%"
               maxH="500px"
               mx="auto"
+              borderRadius="xl"
               onError={handleImageError}
             />
           </Box>

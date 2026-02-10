@@ -20,6 +20,8 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Text,
+  useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
 import { PasswordField } from "../../components/common/PasswordInput";
@@ -28,6 +30,10 @@ import { IUser } from "../../domain/common/interfaces";
 
 const Profile = (): ReactElement => {
   const toast = useToast();
+
+  const cardBg = useColorModeValue("white", "gray.800");
+  const borderColor = useColorModeValue("gray.100", "whiteAlpha.100");
+  const subtitleColor = useColorModeValue("gray.600", "gray.400");
 
   if (!cookieService.isAuthenticated()) {
     window.location.replace("/#/");
@@ -119,25 +125,17 @@ const Profile = (): ReactElement => {
       const response = await ApiCalls.updateMe({
         payload: {
           receiveNotifications: receiveNotifications,
-        }
+        },
       });
-      if (receiveNotifications) {
-        toast({
-          title: "Notifications enabled",
-          position: "top-right",
-          duration: 5000,
-          isClosable: true,
-          status: "success",
-        });
-      } else {
-        toast({
-          title: "Notifications disabled",
-          position: "top-right",
-          duration: 5000,
-          isClosable: true,
-          status: "success",
-        });
-      }
+      toast({
+        title: receiveNotifications
+          ? "Notifications enabled"
+          : "Notifications disabled",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+        status: "success",
+      });
       setUser(response.data);
     } catch (err) {
       toast({
@@ -156,7 +154,7 @@ const Profile = (): ReactElement => {
         payload: {
           firstName: user.firstName,
           lastName: user.lastName,
-        }
+        },
       });
       setUser(response.data);
       toast({
@@ -178,15 +176,20 @@ const Profile = (): ReactElement => {
   };
 
   const showDeleteAccountAlert = () => {
-    if (window.confirm('Are you sure you want to delete your account?')) {
-      deleteAccount()
+    if (window.confirm("Are you sure you want to delete your account?")) {
+      deleteAccount();
     }
-  }
+  };
 
   useEffect(() => {
     getUser();
     // eslint-disable-next-line
   }, []);
+
+  const displayName =
+    user?.firstName && user?.lastName
+      ? `${user.firstName} ${user.lastName}`
+      : "";
 
   return (
     <Container
@@ -194,79 +197,132 @@ const Profile = (): ReactElement => {
       py={{ base: "8", md: "12" }}
       px={{ base: "0", sm: "8" }}
     >
-      <Stack spacing="8">
+      <Stack spacing="8" className="animate-fade-in-up">
+        {/* Avatar Section */}
         <Center>
-          <Avatar
-            size="2xl"
-            color={"teal.500"}
-            name={(user?.firstName && user?.lastName) ? (user?.firstName + " " + user?.lastName) : ""}
-            cursor="pointer"
-            src={user?.profileImage ? user?.profileImage : 'avatar.jpg'}
-          >
-          </Avatar>
+          <Box position="relative">
+            <Avatar
+              size="2xl"
+              name={displayName}
+              cursor="pointer"
+              src={user?.profileImage || "avatar.jpg"}
+              ring="4px"
+              ringColor="teal.400"
+              ringOffset="4px"
+              ringOffsetColor={cardBg}
+            />
+            <Box
+              position="absolute"
+              bottom={1}
+              right={1}
+              w={5}
+              h={5}
+              borderRadius="full"
+              bg="green.400"
+              border="3px solid"
+              borderColor={cardBg}
+            />
+          </Box>
         </Center>
-        <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
-          <Heading size={{ base: "xs", md: "sm" }}>{(user?.firstName && user?.lastName) ? (user?.firstName + " " + user?.lastName) : "User Profile"}</Heading>
+        <Stack spacing={1} textAlign="center">
+          <Heading size={{ base: "sm", md: "md" }}>
+            {displayName || "User Profile"}
+          </Heading>
+          {user?.email && (
+            <Text color={subtitleColor} fontSize="sm">
+              {user.email}
+            </Text>
+          )}
         </Stack>
       </Stack>
-      <Box
-        py={{ base: "0", sm: "8" }}
-        px={{ base: "4", sm: "10" }}
-        bg={{ base: "transparent", sm: "bg.surface" }}
-      >
-        <Tabs>
-          <Center>
-            <TabList px={5}>
-              <Tab
-                mx={3}
-                px={0}
-                py={3}
-                fontWeight="semibold"
-                color="brand.cadet"
-                borderBottomWidth={1}
-                _active={{ bg: 'transparent' }}
-              >
-                Basic Information
-              </Tab>
-              <Tab
-                mx={3}
-                px={0}
-                py={3}
-                fontWeight="semibold"
-                color="brand.cadet"
-                borderBottomWidth={1}
-                _active={{ bg: 'transparent' }}
-              >
-                Account Management
-              </Tab>
-            </TabList>
-          </Center>
 
-          <TabPanels px={3} mt={2}>
-            <TabPanel>
+      {/* Tabs Section */}
+      <Box
+        mt={8}
+        bg={cardBg}
+        borderRadius="2xl"
+        border="1px solid"
+        borderColor={borderColor}
+        boxShadow="0 20px 60px -15px rgba(0,0,0,0.1)"
+        overflow="hidden"
+        className="animate-fade-in-up"
+        style={{ animationDelay: "0.15s" }}
+      >
+        <Tabs colorScheme="teal" isFitted>
+          <TabList borderBottom="1px solid" borderColor={borderColor}>
+            <Tab
+              py={4}
+              fontWeight="600"
+              fontSize="sm"
+              _selected={{
+                color: "teal.400",
+                borderColor: "teal.400",
+                borderBottomWidth: "3px",
+              }}
+            >
+              Basic Information
+            </Tab>
+            <Tab
+              py={4}
+              fontWeight="600"
+              fontSize="sm"
+              _selected={{
+                color: "teal.400",
+                borderColor: "teal.400",
+                borderBottomWidth: "3px",
+              }}
+            >
+              Account Management
+            </Tab>
+          </TabList>
+
+          <TabPanels>
+            <TabPanel p={{ base: 4, md: 8 }}>
               <Stack spacing="6">
                 <FormControl id="firstName">
-                  <FormLabel>First Name</FormLabel>
-                  <Input type="text" value={user?.firstName}
+                  <FormLabel fontSize="sm" fontWeight="600">
+                    First Name
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    borderRadius="xl"
+                    value={user?.firstName}
                     onChange={(e: any) =>
                       setUser({ ...user, firstName: e.currentTarget.value })
                     }
+                    _focus={{
+                      borderColor: "teal.400",
+                      boxShadow: "0 0 0 1px var(--chakra-colors-teal-400)",
+                    }}
                   />
                 </FormControl>
                 <FormControl id="lastName">
-                  <FormLabel>Last Name</FormLabel>
-                  <Input type="text" value={user?.lastName}
+                  <FormLabel fontSize="sm" fontWeight="600">
+                    Last Name
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    borderRadius="xl"
+                    value={user?.lastName}
                     onChange={(e: any) =>
                       setUser({ ...user, lastName: e.currentTarget.value })
                     }
+                    _focus={{
+                      borderColor: "teal.400",
+                      boxShadow: "0 0 0 1px var(--chakra-colors-teal-400)",
+                    }}
                   />
                 </FormControl>
                 <FormControl id="emailAddress">
-                  <FormLabel>Email Address</FormLabel>
+                  <FormLabel fontSize="sm" fontWeight="600">
+                    Email Address
+                  </FormLabel>
                   <Input
                     type="email"
                     disabled
+                    borderRadius="xl"
                     value={user?.email}
+                    opacity={0.6}
                     onChange={(e: any) =>
                       setUser({ ...user, email: e.currentTarget.value })
                     }
@@ -276,75 +332,118 @@ const Profile = (): ReactElement => {
                   display="flex"
                   alignItems="center"
                   justifyContent="space-between"
+                  p={4}
+                  borderRadius="xl"
+                  border="1px solid"
+                  borderColor={borderColor}
                 >
                   <FormLabel
                     htmlFor="notificationEmails"
                     mb={0}
                     cursor="pointer"
                     userSelect="none"
+                    fontSize="sm"
+                    fontWeight="600"
                   >
                     Receive notification emails
                   </FormLabel>
-                  <Switch id="notificationEmails" checked={user.receiveNotifications} onChange={(e: any) => changeNotifications(e.currentTarget.checked)} />
+                  <Switch
+                    id="notificationEmails"
+                    colorScheme="teal"
+                    checked={user.receiveNotifications}
+                    onChange={(e: any) =>
+                      changeNotifications(e.currentTarget.checked)
+                    }
+                  />
                 </FormControl>
-                <Stack spacing="6">
-                  <Button colorScheme="teal" onClick={updateUser}>
-                    Save Changes
-                  </Button>
-                </Stack>
+                <Button
+                  colorScheme="teal"
+                  size="lg"
+                  borderRadius="xl"
+                  fontWeight="700"
+                  onClick={updateUser}
+                  _hover={{
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 10px 40px -10px rgba(49, 151, 149, 0.5)",
+                  }}
+                >
+                  Save Changes
+                </Button>
               </Stack>
             </TabPanel>
-            <TabPanel>
+
+            <TabPanel p={{ base: 4, md: 8 }}>
               <Stack hidden={!!token} spacing="6">
-                <Heading size={{ base: "xs", md: "sm" }}>
-                  We need to confirm your identity before you proceed.
-                </Heading>
-                <FormControl
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="space-between"
+                <Box textAlign="center" py={4}>
+                  <Heading size="sm" mb={2}>
+                    Verify your identity
+                  </Heading>
+                  <Text fontSize="sm" color={subtitleColor}>
+                    We need to confirm your identity before you proceed.
+                  </Text>
+                </Box>
+                <PasswordField
+                  label="Current Password"
+                  value={currentPassword}
+                  onChange={(e: any) =>
+                    setCurrentPassword(e.currentTarget.value)
+                  }
+                />
+                <Button
+                  colorScheme="teal"
+                  size="lg"
+                  borderRadius="xl"
+                  fontWeight="700"
+                  onClick={sudoPassword}
+                  _hover={{
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 10px 40px -10px rgba(49, 151, 149, 0.5)",
+                  }}
                 >
-                  <PasswordField
-                    label="Current Password"
-                    value={currentPassword}
-                    onChange={(e: any) => setCurrentPassword(e.currentTarget.value)}
-                  />
-                </FormControl>
-                <Stack spacing="6">
-                  <Button colorScheme="teal" onClick={sudoPassword}>
-                    Continue
-                  </Button>
-                </Stack>
+                  Continue
+                </Button>
               </Stack>
+
               <Stack hidden={!token} spacing="6">
-                <FormControl
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="space-between"
+                <PasswordField
+                  label="New Password"
+                  value={password}
+                  onChange={(e: any) => setPassword(e.currentTarget.value)}
+                />
+                <Button
+                  colorScheme="teal"
+                  size="lg"
+                  borderRadius="xl"
+                  fontWeight="700"
+                  onClick={changePassword}
+                  _hover={{
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 10px 40px -10px rgba(49, 151, 149, 0.5)",
+                  }}
                 >
-                  <PasswordField
-                    label="New Password"
-                    value={password}
-                    onChange={(e: any) => setPassword(e.currentTarget.value)}
-                  />
-                </FormControl>
-                <Stack spacing="6">
-                  <Button colorScheme="teal" onClick={changePassword}>
-                    Change Password
-                  </Button>
-                </Stack>
-                <Divider orientation="horizontal" />
-                <Stack spacing="6">
-                  <Button colorScheme="red" onClick={showDeleteAccountAlert}>
-                    Delete Account
-                  </Button>
-                </Stack>
+                  Change Password
+                </Button>
+                <Divider borderColor={borderColor} />
+                <Button
+                  colorScheme="red"
+                  variant="outline"
+                  size="lg"
+                  borderRadius="xl"
+                  fontWeight="700"
+                  onClick={showDeleteAccountAlert}
+                  _hover={{
+                    bg: "red.50",
+                    transform: "translateY(-2px)",
+                  }}
+                >
+                  Delete Account
+                </Button>
               </Stack>
             </TabPanel>
           </TabPanels>
         </Tabs>
       </Box>
-    </Container >
+    </Container>
   );
 };
 

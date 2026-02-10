@@ -5,7 +5,6 @@ import {
   Card,
   CardBody,
   Container,
-  Divider,
   Flex,
   Heading,
   Image,
@@ -13,7 +12,6 @@ import {
   Text,
   useToast,
   useColorModeValue,
-  createIcon,
   Icon,
   HStack,
   Center,
@@ -22,11 +20,6 @@ import {
   Fade,
   CardFooter,
   SimpleGrid,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
-  PopoverBody,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -34,18 +27,102 @@ import {
   ModalBody,
   useDisclosure,
   AbsoluteCenter,
+  VStack,
+  Wrap,
+  WrapItem,
+  IconButton,
+  Tooltip,
 } from "@chakra-ui/react";
 import { ReactElement, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ApiCalls from "../../domain/landing/api/ApiCalls";
 import { IExperience } from "../../domain/landing/interfaces";
 import { IArticle, IPaginator, ITag } from "../../domain/common/interfaces";
 import { parseError, scrollToContact, truncate } from "../../utils/helpers";
-import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
+import {
+  FaEnvelope,
+  FaGithub,
+  FaLinkedin,
+  FaTerminal,
+  FaCode,
+  FaArrowRight,
+} from "react-icons/fa";
 import experience from "../../experience";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import Dino from "../../components/landing/dino/Dino";
 import Navigation from "../../components/landing/tools/Navigation";
+
+/* ========== Reusable Section Header ========== */
+const SectionHeader = ({
+  number,
+  title,
+}: {
+  number: string;
+  title: string;
+}) => {
+  const lineColor = useColorModeValue("gray.200", "whiteAlpha.200");
+  return (
+    <Flex align="center" gap={4} px={4} className="animate-fade-in-up">
+      <HStack spacing={2} flexShrink={0}>
+        <Text
+          className="gradient-text"
+          fontWeight={800}
+          fontSize="lg"
+          fontFamily="mono"
+        >
+          {number}
+        </Text>
+        <Heading size="md" fontWeight={800} letterSpacing="-0.02em">
+          {title}
+        </Heading>
+      </HStack>
+      <Box flex={1} h="1px" bg={lineColor} />
+    </Flex>
+  );
+};
+
+/* ========== Skill Category ========== */
+const skillCategories = [
+  {
+    name: "Frontend",
+    color: "teal",
+    skills: ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Chakra UI"],
+  },
+  {
+    name: "Backend",
+    color: "blue",
+    skills: [
+      "Golang",
+      "Gorm",
+      "Node.js",
+      "Express",
+      "Java",
+      "Spring",
+      "PHP",
+      "Symfony",
+      "PostgreSQL",
+      "MySQL",
+      "JWT/OAuth",
+      "Payment Processing",
+    ],
+  },
+  {
+    name: "DevOps & More",
+    color: "purple",
+    skills: [
+      "Git",
+      "Linux",
+      "Python",
+      "DigitalOcean",
+      "GitHub Actions",
+      "Kubernetes",
+      "Docker",
+      "DDD",
+      "TDD",
+      "Software Architecture",
+    ],
+  },
+];
 
 const Home = (): ReactElement => {
   const toast = useToast();
@@ -80,169 +157,259 @@ const Home = (): ReactElement => {
     // eslint-disable-next-line
   }, []);
 
+  const cardBg = useColorModeValue("white", "gray.800");
+  const cardBorder = useColorModeValue("gray.100", "whiteAlpha.100");
+  const subtleBg = useColorModeValue("gray.50", "gray.800");
+  const mutedText = useColorModeValue("gray.600", "gray.400");
+  const bodyText = useColorModeValue("gray.700", "gray.300");
+  const colorMode = useColorModeValue("light", "dark");
+
   return (
     <Flex direction={"column"}>
+      {/* ===== HERO SECTION ===== */}
       <Container maxW={"4xl"} id="hero">
         <Stack
           as={Box}
           textAlign={"center"}
-          spacing={{ base: 8, md: 14 }}
+          spacing={{ base: 8, md: 12 }}
           pb={{ base: 20, md: 36 }}
-          pt={{ base: 8, md: 52 }}
+          pt={{ base: 12, md: 52 }}
+          className="animate-fade-in-up"
         >
-          <Heading
-            fontWeight={600}
-            fontSize={{ base: "2xl", sm: "4xl" }}
-            lineHeight={"110%"}
-          >
-            Hi, my name is Ajdin. <br />
-            <Text as={"span"} color={"teal.400"}>
-              I'm a Software Developer.
-            </Text>
-          </Heading>
+          <VStack spacing={4}>
+            <Badge
+              colorScheme="teal"
+              variant="subtle"
+              px={4}
+              py={1.5}
+              borderRadius="full"
+              fontSize="sm"
+              fontWeight={600}
+              textTransform="none"
+            >
+              Available for opportunities
+            </Badge>
+            <Heading
+              fontWeight={800}
+              fontSize={{ base: "3xl", sm: "5xl", md: "6xl" }}
+              lineHeight={"110%"}
+              letterSpacing="-0.03em"
+            >
+              Hi, my name is Ajdin. <br />
+              <Text
+                as={"span"}
+                className="gradient-text"
+                fontSize={{ base: "3xl", sm: "5xl", md: "6xl" }}
+              >
+                Backend-first.
+                <br />
+                Production-minded.
+              </Text>
+            </Heading>
+          </VStack>
           <Text
-            color={"gray.500"}
-            fontSize={{ base: "lg", sm: "xl", md: "2xl" }}
+            color={mutedText}
+            fontSize={{ base: "lg", md: "xl" }}
+            maxW="2xl"
+            mx="auto"
+            lineHeight="tall"
           >
-            Welcome to my delightful playground website, where imagination knows
-            no bounds and laughter echoes through the air! Step into a world of
-            endless fun and adventure, designed to captivate the hearts of the
-            young and the young at heart. Let your curiosity guide you as you
-            discover a treasure trove of interactive games, captivating stories,
-            and exciting activities. So, come on in and experience the joy of
-            play as you embark on a journey filled with wonder and discovery.
-            Unleash your inner child and immerse yourself in the magic that
-            awaits—explore to your heart's content!
+            I design and ship high performance backend services using Go,
+            Node.js, and distributed systems. Focused on uptime, observability,
+            and clean architecture.
           </Text>
           <Stack
-            direction={"column"}
-            spacing={3}
+            direction={{ base: "column", sm: "row" }}
+            spacing={4}
             align={"center"}
             alignSelf={"center"}
-            position={"relative"}
+            pt={4}
           >
             <Button
-              colorScheme="teal"
-              bg={"teal.400"}
+              size="lg"
+              bg="linear-gradient(135deg, #319795 0%, #38b2ac 50%, #4fd1c5 100%)"
+              color="white"
               rounded={"full"}
-              px={6}
+              px={8}
+              fontWeight={700}
               _hover={{
-                bg: `teal.500`,
+                bg: "linear-gradient(135deg, #2c7a7b 0%, #319795 50%, #38b2ac 100%)",
+                transform: "translateY(-2px)",
+                boxShadow: "0 10px 40px -10px rgba(49, 151, 149, 0.5)",
               }}
+              _active={{ transform: "translateY(0)" }}
+              transition="all 0.3s ease"
               onClick={() => {
                 window.open(
                   "https://www.linkedin.com/in/ajdin-halac/",
                   "_blank",
-                  "noreferrer,noopener"
+                  "noreferrer,noopener",
                 );
               }}
+              rightIcon={<FaArrowRight />}
             >
-              Let's connect!
+              Let's connect
             </Button>
             <Button
-              variant={"link"}
-              colorScheme={"blue"}
-              size={"sm"}
+              size="lg"
+              variant="outline"
+              colorScheme="teal"
+              rounded="full"
+              px={8}
+              fontWeight={600}
               onClick={scrollToContact}
             >
-              Contact Me
+              Contact me
             </Button>
-            <Box>
-              <Icon
-                as={Arrow}
-                color={useColorModeValue("gray.800", "gray.300")}
-                w={71}
-                position={"absolute"}
-                right={-71}
-                top={"10px"}
-              />
-              <Text
-                fontSize={"lg"}
-                fontFamily={"Caveat"}
-                position={"absolute"}
-                right={"-85px"}
-                top={"-15px"}
-                transform={"rotate(10deg)"}
-              >
-                Click me!
-              </Text>
-            </Box>
           </Stack>
         </Stack>
       </Container>
+
+      {/* ===== ABOUT SECTION ===== */}
       <Container maxW={"4xl"} id="about">
         <Stack
           as={Box}
           textAlign={"center"}
-          spacing={{ base: 8, md: 14 }}
+          spacing={{ base: 8, md: 12 }}
           pb={{ base: 20, md: 36 }}
         >
-          <Stack align="center" direction="row" p={4}>
-            <HStack mx={4}>
-              <Text color={"teal.400"} fontWeight={800}>
-                01
+          <SectionHeader number="01" title="About" />
+          <VStack
+            spacing={5}
+            color={bodyText}
+            fontSize={{ base: "lg", md: "xl" }}
+            px={4}
+            lineHeight="tall"
+            maxW="3xl"
+            mx="auto"
+            textAlign="left"
+          >
+            <Text>
+              I'm a backend-focused software engineer with experience building
+              and scaling production systems across startups, scaleups, and
+              enterprise teams. My work centers on{" "}
+              <Text as="span" color="teal.400" fontWeight={600}>
+                backend architecture
               </Text>
-              <Text fontWeight={800}>About</Text>
-            </HStack>
-            <Divider orientation="horizontal" />
-          </Stack>
-          <Text color={"gray.500"} fontSize={"xl"} px={4}>
-            A product-focused Software Developer with experience in Startups,
-            Scaleups, and Enterprise. Looking for constant improvement with
-            anything related to code, able to contribute to Frontend and DevOps
-            but with specialization, previous experiences, and core focus on
-            Backend Development, Microservices, and Domain Driven Design.
-            Continuously exploring Optimization and Software Architecture.
-            Previous domains include Fintech, Gambling, AI, Biotech, Identity,
-            and Marketplace. Currently working with GoLang, JavaScript, and
-            Java. Hobbies include creating Robots using Arduino and Raspberry.
-          </Text>
+              ,{" "}
+              <Text as="span" color="teal.400" fontWeight={600}>
+                microservices
+              </Text>
+              , and{" "}
+              <Text as="span" color="teal.400" fontWeight={600}>
+                Domain-Driven Design
+              </Text>
+              , with a strong emphasis on reliability, performance, and
+              maintainability.
+            </Text>
+            <Text>
+              I regularly work close to infrastructure and DevOps concerns and
+              can contribute to frontend development when needed, but my primary
+              focus remains backend systems and software architecture.
+            </Text>
+            <Text>
+              I've delivered solutions across fintech, identity, marketplaces,
+              AI, biotech, and gambling domains. My current toolset includes{" "}
+              <Text as="span" color="teal.400" fontWeight={600}>
+                Go
+              </Text>
+              ,{" "}
+              <Text as="span" color="teal.400" fontWeight={600}>
+                JavaScript
+              </Text>
+              , and{" "}
+              <Text as="span" color="teal.400" fontWeight={600}>
+                Java
+              </Text>
+              .
+            </Text>
+            <Text>
+              Outside of software, I experiment with hardware projects using
+              Arduino and Raspberry Pi.
+            </Text>
+          </VStack>
         </Stack>
       </Container>
+
+      {/* ===== MY PRODUCT SECTION ===== */}
       <Container maxW={"4xl"} id="product">
         <Stack
           as={Box}
           textAlign={"center"}
-          spacing={{ base: 8, md: 14 }}
+          spacing={{ base: 8, md: 12 }}
           pb={{ base: 20, md: 36 }}
         >
-          <Stack align="center" direction="row" p={4}>
-            <HStack mx={4}>
-              <Text color={"teal.400"} fontWeight={800}>
-                02
-              </Text>
-              <Text fontWeight={800}>My Product</Text>
-            </HStack>
-            <Divider orientation="horizontal" />
-          </Stack>
-          <Stack>
-            <Card size="lg">
+          <SectionHeader number="02" title="My Product" />
+          <Stack px={4}>
+            <Card
+              size="lg"
+              bg={cardBg}
+              border="1px solid"
+              borderColor={cardBorder}
+              borderRadius="2xl"
+              overflow="hidden"
+              position="relative"
+              _before={{
+                content: '""',
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                height: "3px",
+                bg: "linear-gradient(90deg, #319795, #38b2ac, #4fd1c5, #81e6d9)",
+                backgroundSize: "200% 100%",
+                animation: "gradient-shift 3s ease infinite",
+              }}
+            >
               <CardHeader>
-                <Flex justifyContent="space-between" alignItems="center">
+                <Flex
+                  justifyContent="space-between"
+                  alignItems="center"
+                  flexWrap="wrap"
+                  gap={3}
+                >
                   <HStack>
                     <Image
                       h={"auto"}
                       w={"50px"}
                       src={require(`../../images/upti.png`)}
                       alt="upti.my logo"
+                      borderRadius="lg"
                     />
-                    <Box px={2}>
-                      <Text fontWeight={600} fontSize="xl">
+                    <Box px={2} textAlign="left">
+                      <Text fontWeight={700} fontSize="xl">
                         upti.my
                       </Text>
-                      <Text color={"teal.500"} fontWeight={500}>
+                      <Text
+                        className="gradient-text"
+                        fontWeight={600}
+                        fontSize="sm"
+                      >
                         Founder & CEO
                       </Text>
                     </Box>
                   </HStack>
-                  <Text px={2} fontWeight={300}>
-                    2024 - Current
-                  </Text>
+                  <Badge
+                    colorScheme="teal"
+                    variant="subtle"
+                    px={3}
+                    py={1}
+                    borderRadius="full"
+                    fontSize="xs"
+                  >
+                    2024 — Current
+                  </Badge>
                 </Flex>
               </CardHeader>
               <CardBody pt={0}>
                 <Box>
-                  <Text color={"gray.500"} fontSize={"lg"} mb={4} px={2}>
+                  <Text
+                    color={bodyText}
+                    fontSize={"md"}
+                    mb={5}
+                    px={2}
+                    lineHeight="tall"
+                  >
                     A comprehensive uptime monitoring and incident management
                     platform that I've architected and developed end-to-end.
                     From infrastructure services performing health checks to
@@ -250,10 +417,7 @@ const Home = (): ReactElement => {
                     provides 24/7 monitoring, automated recovery, and real-time
                     alerts for websites, APIs, and servers.
                   </Text>
-                  <Text fontWeight={500} mb={3} color={"teal.500"}>
-                    Platform Features:
-                  </Text>
-                  <Flex wrap="wrap" gap={2}>
+                  <Wrap spacing={2} px={2}>
                     {[
                       "Uptime Monitoring",
                       "Self-Healing Systems",
@@ -268,35 +432,27 @@ const Home = (): ReactElement => {
                       "DNS Verification",
                       "24/7 Health Checks",
                     ].map((feature, index) => (
-                      <Badge
-                        key={index}
-                        colorScheme="teal"
-                        variant="subtle"
-                        fontSize="sm"
-                        px={3}
-                        py={1}
-                        borderRadius="md"
-                      >
-                        {feature}
-                      </Badge>
+                      <WrapItem key={index}>
+                        <Badge
+                          colorScheme="teal"
+                          variant="subtle"
+                          fontSize="xs"
+                          px={3}
+                          py={1}
+                          borderRadius="full"
+                        >
+                          {feature}
+                        </Badge>
+                      </WrapItem>
                     ))}
-                  </Flex>
-                  <Box
-                    mt={4}
-                    p={3}
-                    bg="gray.50"
-                    borderRadius="md"
-                    _dark={{ bg: "gray.700" }}
-                  >
-                    <Text
-                      fontSize="sm"
-                      color="gray.600"
-                      _dark={{ color: "gray.300" }}
-                      fontStyle="italic"
-                    >
-                      <strong>Full-Stack Development:</strong> Designed and
-                      built the entire platform including UI/UX, backend
-                      services, infrastructure architecture, monitoring
+                  </Wrap>
+                  <Box mt={5} p={4} bg={subtleBg} borderRadius="xl">
+                    <Text fontSize="sm" color={mutedText} fontStyle="italic">
+                      <Text as="span" fontWeight={700} color="teal.400">
+                        Full-Stack Development:
+                      </Text>{" "}
+                      Designed and built the entire platform including UI/UX,
+                      backend services, infrastructure architecture, monitoring
                       algorithms, and automated systems.
                     </Text>
                   </Box>
@@ -304,11 +460,14 @@ const Home = (): ReactElement => {
                     <Button
                       colorScheme="teal"
                       variant="outline"
+                      borderRadius="full"
+                      px={6}
+                      rightIcon={<ArrowForwardIcon />}
                       onClick={() => {
                         window.open(
                           "https://upti.my",
                           "_blank",
-                          "noreferrer,noopener"
+                          "noreferrer,noopener",
                         );
                       }}
                     >
@@ -321,80 +480,114 @@ const Home = (): ReactElement => {
           </Stack>
         </Stack>
       </Container>
+
+      {/* ===== EXPERIENCE SECTION ===== */}
       <Container maxW={"4xl"} id="experience">
         <Stack
           as={Box}
           textAlign={"center"}
-          spacing={{ base: 8, md: 14 }}
+          spacing={{ base: 8, md: 12 }}
           pb={{ base: 20, md: 36 }}
         >
-          <Stack align="center" direction="row" p={4}>
-            <HStack mx={4}>
-              <Text color={"teal.400"} fontWeight={800}>
-                03
-              </Text>
-              <Text fontWeight={800}>Experience</Text>
-            </HStack>
-            <Divider orientation="horizontal" />
-          </Stack>
+          <SectionHeader number="03" title="Experience" />
           <Center px={4}>
-            <ButtonGroup variant="outline">
+            <ButtonGroup
+              variant="outline"
+              flexWrap="wrap"
+              justifyContent="center"
+              gap={2}
+            >
               {experience.map((option: IExperience) => (
                 <Button
                   key={option.value}
                   colorScheme={
                     selected.value === option.value ? "teal" : "gray"
                   }
+                  variant={
+                    selected.value === option.value ? "solid" : "outline"
+                  }
+                  borderRadius="full"
+                  size="sm"
+                  px={5}
                   onClick={() => handleSelected(option)}
+                  transition="all 0.2s"
                 >
                   {option.value}
                 </Button>
               ))}
             </ButtonGroup>
           </Center>
-          <Stack>
+          <Stack px={4}>
             <Fade in={!!selected}>
-              <Card key={selected.company} size="lg">
+              <Card
+                key={selected.company}
+                size="lg"
+                bg={cardBg}
+                border="1px solid"
+                borderColor={cardBorder}
+                borderRadius="2xl"
+              >
                 <CardHeader>
-                  <Flex justifyContent="space-between">
+                  <Flex
+                    justifyContent="space-between"
+                    alignItems="center"
+                    flexWrap="wrap"
+                    gap={3}
+                  >
                     <HStack>
                       <Image
                         h={"auto"}
                         w={"50px"}
                         src={require(`../../images/${selected.image}`)}
                         alt={selected.image}
+                        borderRadius="lg"
                       />
-                      <Box px={2}>
-                        <Text fontWeight={600}>{selected.company}</Text>
-                        <Text>{selected.position}</Text>
+                      <Box px={2} textAlign="left">
+                        <Text fontWeight={700}>{selected.company}</Text>
+                        <Text color={mutedText} fontSize="sm">
+                          {selected.position}
+                        </Text>
                       </Box>
                     </HStack>
-                    <Text px={2} fontWeight={300}>
+                    <Badge
+                      variant="subtle"
+                      colorScheme="gray"
+                      px={3}
+                      py={1}
+                      borderRadius="full"
+                      fontSize="xs"
+                    >
                       {selected.duration}
-                    </Text>
+                    </Badge>
                   </Flex>
                 </CardHeader>
                 {selected.products && selected.products.length > 0 && (
                   <CardBody pt={0}>
                     <Box>
-                      <Text fontWeight={500} mb={3} color={"teal.500"}>
-                        While working for {selected.company} I've worked on:
+                      <Text
+                        fontWeight={600}
+                        mb={3}
+                        color="teal.400"
+                        fontSize="sm"
+                      >
+                        Projects & Products:
                       </Text>
-                      <Flex wrap="wrap" gap={2}>
+                      <Wrap spacing={2}>
                         {selected.products.map((product, index) => (
-                          <Badge
-                            key={index}
-                            colorScheme="teal"
-                            variant="subtle"
-                            fontSize="sm"
-                            px={3}
-                            py={1}
-                            borderRadius="md"
-                          >
-                            {product}
-                          </Badge>
+                          <WrapItem key={index}>
+                            <Badge
+                              colorScheme="teal"
+                              variant="subtle"
+                              fontSize="xs"
+                              px={3}
+                              py={1}
+                              borderRadius="full"
+                            >
+                              {product}
+                            </Badge>
+                          </WrapItem>
                         ))}
-                      </Flex>
+                      </Wrap>
                     </Box>
                   </CardBody>
                 )}
@@ -402,221 +595,137 @@ const Home = (): ReactElement => {
             </Fade>
           </Stack>
 
-          <Text color={"gray.500"} fontSize={"xl"} px={2}>
-            If you wish to know more about my experience you can check out my{" "}
-            <Box as="span" color={"teal.500"}>
-              <Link
-                to="https://img-strg.fra1.cdn.digitaloceanspaces.com/ajdinhalac.dev/Ajdin%20Halac%20CV.pdf"
-                download={
-                  "https://img-strg.fra1.cdn.digitaloceanspaces.com/ajdinhalac.dev/Ajdin%20Halac%20CV.pdf"
-                }
-                target="_blank"
-              >
-                Resume
-              </Link>
-            </Box>
-            .
+          <Text color={mutedText} fontSize={"lg"} px={2}>
+            Want to know more? Check out my{" "}
+            <Text
+              as="a"
+              href="https://img-strg.fra1.cdn.digitaloceanspaces.com/ajdinhalac.dev/Ajdin%20Halac%20CV.pdf"
+              target="_blank"
+              rel="noreferrer noopener"
+              color="teal.400"
+              fontWeight={600}
+              _hover={{ textDecoration: "underline" }}
+            >
+              Resume ↗
+            </Text>
           </Text>
         </Stack>
       </Container>
+
+      {/* ===== SKILLS SECTION ===== */}
       <Container maxW={"4xl"} id="skills">
         <Stack
           as={Box}
           textAlign={"center"}
-          spacing={{ base: 8, md: 14 }}
+          spacing={{ base: 8, md: 12 }}
           pb={{ base: 20, md: 36 }}
         >
-          <Stack align="center" direction="row" p={4}>
-            <HStack mx={4}>
-              <Text color={"teal.400"} fontWeight={800}>
-                04
-              </Text>
-              <Text fontWeight={800}>Super&nbsp;Powers</Text>
-            </HStack>
-            <Divider orientation="horizontal" />
-          </Stack>
-          <Stack>
-            <Center px={4}>
-              <ButtonGroup variant="outline">
-                <Popover
-                  trigger="hover"
-                  colorScheme={"gray"}
-                  placement={"bottom-start"}
+          <SectionHeader number="04" title="Super Powers" />
+          <VStack spacing={8} px={4}>
+            {skillCategories.map((category) => (
+              <Box key={category.name} w="100%">
+                <Text
+                  fontWeight={700}
+                  fontSize="sm"
+                  color={`${category.color}.400`}
+                  mb={3}
+                  textTransform="uppercase"
+                  letterSpacing="wider"
                 >
-                  <PopoverTrigger>
-                    <Button colorScheme={"teal"}>Frontend</Button>
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <PopoverArrow />
-                    <PopoverBody>
-                      <Button m="1" colorScheme={"teal"}>
-                        HTML
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        CSS
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Javascript
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Typescript
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        React
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Chakra
-                      </Button>
-                    </PopoverBody>
-                  </PopoverContent>
-                </Popover>
-
-                <Popover
-                  trigger="hover"
-                  colorScheme={"gray"}
-                  placement={"bottom"}
-                >
-                  <PopoverTrigger>
-                    <Button colorScheme={"teal"}>Backend</Button>
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <PopoverArrow />
-                    <PopoverBody flex={"left"}>
-                      <Button m="1" colorScheme={"teal"}>
-                        Golang
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Gorm
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        NodeJS
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Express
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Java
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Spring
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        PHP
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Symfony
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        PostgreSQL
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        MySQL
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        JWT/OAuth
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Payment Processing
-                      </Button>
-                    </PopoverBody>
-                  </PopoverContent>
-                </Popover>
-
-                <Popover
-                  trigger="hover"
-                  colorScheme={"gray"}
-                  placement={"bottom-end"}
-                >
-                  <PopoverTrigger>
-                    <Button colorScheme={"teal"}>Miscend</Button>
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <PopoverArrow />
-                    <PopoverBody>
-                      <Button m="1" colorScheme={"teal"}>
-                        Git
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Linux
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Python
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Digitalocean
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Namecheap
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Github Actions
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Kubernetes
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Docker
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Domain Driven Design
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Test Driven Design
-                      </Button>
-                      <Button m="1" colorScheme={"teal"}>
-                        Software Architecture
-                      </Button>
-                    </PopoverBody>
-                  </PopoverContent>
-                </Popover>
-              </ButtonGroup>
-            </Center>
-          </Stack>
+                  {category.name}
+                </Text>
+                <Wrap spacing={2} justify="center">
+                  {category.skills.map((skill) => (
+                    <WrapItem key={skill}>
+                      <Box
+                        className="skill-tag"
+                        bg={
+                          colorMode === "light"
+                            ? `${category.color}.50`
+                            : `rgba(49, 151, 149, 0.1)`
+                        }
+                        color={
+                          colorMode === "light"
+                            ? `${category.color}.700`
+                            : `${category.color}.300`
+                        }
+                        borderColor={`${category.color}.200`}
+                        _dark={{ borderColor: `${category.color}.700` }}
+                      >
+                        {skill}
+                      </Box>
+                    </WrapItem>
+                  ))}
+                </Wrap>
+              </Box>
+            ))}
+          </VStack>
         </Stack>
       </Container>
+
+      {/* ===== BLOG SECTION ===== */}
       <Container maxW={"4xl"} id="blog">
-        <Stack as={Box} spacing={{ base: 8, md: 14 }} pb={{ base: 20, md: 36 }}>
-          <Stack align="center" direction="row" p={4}>
-            <HStack mx={4}>
-              <Text color={"teal.400"} fontWeight={800}>
-                05
-              </Text>
-              <Text fontWeight={800}>Blog</Text>
-            </HStack>
-            <Divider orientation="horizontal" />
-          </Stack>
-          <SimpleGrid px={4} spacing={4} columns={{ base: 1, lg: 2 }}>
+        <Stack as={Box} spacing={{ base: 8, md: 12 }} pb={{ base: 20, md: 36 }}>
+          <SectionHeader number="05" title="Blog" />
+          <SimpleGrid px={4} spacing={5} columns={{ base: 1, lg: 2 }}>
             {articles.length ? (
               articles.map((article: IArticle) => (
-                <Card key={article.title} overflow="hidden">
-                  <CardHeader>
+                <Card
+                  key={article.title}
+                  overflow="hidden"
+                  bg={cardBg}
+                  border="1px solid"
+                  borderColor={cardBorder}
+                  borderRadius="2xl"
+                  transition="all 0.3s ease"
+                  _hover={{
+                    transform: "translateY(-4px)",
+                    boxShadow: "xl",
+                    borderColor: "teal.400",
+                  }}
+                >
+                  <CardHeader pb={2}>
                     <Image
                       objectFit="cover"
                       src={article.image}
                       alt={article.slug}
+                      borderRadius="xl"
                     />
-                    <HStack pt={4} spacing={2}>
+                    <Wrap pt={3} spacing={2}>
                       {article.tags
                         ? article.tags.map((tag: ITag) => (
-                            <Badge key={tag.tag} colorScheme={"teal"}>
-                              {tag.tag}
-                            </Badge>
+                            <WrapItem key={tag.tag}>
+                              <Badge
+                                colorScheme="teal"
+                                variant="subtle"
+                                borderRadius="full"
+                                px={2}
+                                fontSize="xs"
+                              >
+                                {tag.tag}
+                              </Badge>
+                            </WrapItem>
                           ))
                         : null}
-                    </HStack>
+                    </Wrap>
                   </CardHeader>
-                  <CardBody>
-                    <Heading size="md">{article.title}</Heading>
-                    <Text py={2}>
+                  <CardBody pt={1}>
+                    <Heading size="md" lineHeight="short" mb={2}>
+                      {article.title}
+                    </Heading>
+                    <Text color={mutedText} fontSize="sm" lineHeight="tall">
                       {truncate(article.description, 200, "...")}
                     </Text>
                   </CardBody>
-                  <CardFooter>
+                  <CardFooter pt={0}>
                     <Center width={"100%"}>
                       <Link to={`/blog/${article.slug}`}>
                         <Button
                           rightIcon={<ArrowForwardIcon />}
-                          color={"teal.400"}
+                          variant="ghost"
+                          colorScheme="teal"
+                          size="sm"
+                          borderRadius="full"
                         >
                           Read more
                         </Button>
@@ -626,21 +735,44 @@ const Home = (): ReactElement => {
                 </Card>
               ))
             ) : (
-              <Stack justifyContent="center" alignItems="center">
+              <Stack justifyContent="center" alignItems="center" py={8}>
                 <Heading size="lg">No articles yet</Heading>
-                <Text>
-                  <Box as="span" color={"teal.500"}>
+                <Text color={mutedText}>
+                  <Text as="span" color="teal.400" fontWeight={600}>
                     <Link to="/terminal">Try</Link>{" "}
-                  </Box>
+                  </Text>
                   the terminal instead.
                 </Text>
               </Stack>
             )}
             {articles.length % 2 === 1 ? (
-              <Card overflow="hidden">
+              <Card
+                overflow="hidden"
+                bg={cardBg}
+                border="1px solid"
+                borderColor={cardBorder}
+                borderRadius="2xl"
+                transition="all 0.3s ease"
+                _hover={{
+                  transform: "translateY(-4px)",
+                  boxShadow: "xl",
+                  borderColor: "teal.400",
+                }}
+              >
                 <CardBody minH={"300px"}>
                   <AbsoluteCenter>
-                    <Button onClick={onOpen}>Play the game!</Button>
+                    <VStack spacing={3}>
+                      <Text fontSize="4xl">🦕</Text>
+                      <Button
+                        onClick={onOpen}
+                        colorScheme="teal"
+                        variant="outline"
+                        borderRadius="full"
+                        size="md"
+                      >
+                        Play the Dino Game!
+                      </Button>
+                    </VStack>
                   </AbsoluteCenter>
                   <Modal
                     isOpen={isOpen}
@@ -649,8 +781,11 @@ const Home = (): ReactElement => {
                     isCentered
                     scrollBehavior="inside"
                   >
-                    <ModalOverlay />
-                    <ModalContent>
+                    <ModalOverlay
+                      bg="blackAlpha.600"
+                      backdropFilter="blur(10px)"
+                    />
+                    <ModalContent borderRadius="2xl">
                       <ModalCloseButton />
                       <ModalBody>
                         <Dino />
@@ -664,150 +799,187 @@ const Home = (): ReactElement => {
           {(paginator?.totalPages ? paginator?.totalPages > 1 : false) ? (
             <Center width={"100%"}>
               <Link to={`/blog`}>
-                <Button colorScheme={"teal"}>See All Posts</Button>
+                <Button
+                  colorScheme="teal"
+                  borderRadius="full"
+                  px={8}
+                  rightIcon={<ArrowForwardIcon />}
+                >
+                  See All Posts
+                </Button>
               </Link>
             </Center>
           ) : null}
         </Stack>
       </Container>
+
+      {/* ===== TERMINAL SECTION ===== */}
       <Container maxW={"4xl"} id="terminal">
         <Stack
           as={Box}
           textAlign={"center"}
-          spacing={{ base: 8, md: 14 }}
+          spacing={{ base: 8, md: 12 }}
           pb={{ base: 20, md: 36 }}
         >
-          <Stack align="center" direction="row" p={4}>
-            <HStack mx={4}>
-              <Text color={"teal.400"} fontWeight={800}>
-                06
-              </Text>
-              <Text fontWeight={800}>Terminal</Text>
-            </HStack>
-            <Divider orientation="horizontal" />
-          </Stack>
-          <Stack spacing={4} as={Container} maxW={"4xl"} textAlign={"center"}>
-            <Text color={"gray.500"} fontSize={"xl"} px={2}>
-              Explore the interactive Linux terminal... Who knows, you might
-              even{" "}
-              <Box as="span" color={"teal.500"}>
-                <Link to="/terminal">Capture The Flag</Link>
-              </Box>
-              .
-            </Text>
-          </Stack>
+          <SectionHeader number="06" title="Terminal" />
+          <VStack spacing={6} px={4}>
+            <Box
+              p={8}
+              borderRadius="2xl"
+              bg={subtleBg}
+              border="1px solid"
+              borderColor={cardBorder}
+              w="100%"
+              position="relative"
+              overflow="hidden"
+              _before={{
+                content: '""',
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                height: "3px",
+                bg: "linear-gradient(90deg, #319795, #4fd1c5, #81e6d9)",
+              }}
+            >
+              <VStack spacing={4}>
+                <Icon as={FaTerminal} boxSize={8} color="teal.400" />
+                <Text color={bodyText} fontSize={"lg"}>
+                  Explore the interactive Linux terminal... Who knows, you might
+                  even{" "}
+                  <Text as="span" color="teal.400" fontWeight={700}>
+                    Capture The Flag
+                  </Text>
+                  .
+                </Text>
+                <Link to="/terminal">
+                  <Button
+                    colorScheme="teal"
+                    variant="outline"
+                    borderRadius="full"
+                    px={6}
+                    leftIcon={<FaCode />}
+                  >
+                    Launch Terminal
+                  </Button>
+                </Link>
+              </VStack>
+            </Box>
+          </VStack>
         </Stack>
       </Container>
+
+      {/* ===== TOOLS SECTION ===== */}
       <Container maxW={"4xl"} id="tools">
         <Stack
           as={Box}
           textAlign={"center"}
-          spacing={{ base: 8, md: 14 }}
+          spacing={{ base: 8, md: 12 }}
           pb={{ base: 20, md: 36 }}
         >
-          <Stack align="center" direction="row" p={4}>
-            <HStack mx={4}>
-              <Text color={"teal.400"} fontWeight={800}>
-                07
-              </Text>
-              <Text fontWeight={800}>Tools</Text>
-            </HStack>
-            <Divider orientation="horizontal" />
-          </Stack>
-          <Stack spacing={4} as={Container} maxW={"4xl"} textAlign={"center"}>
-            <Text color={"gray.500"} fontSize={"xl"} px={4}>
-              I've compiled a list of tools I use (or have used) daily and
-              decided to streamline them into one place, tailored to my
-              preferences. I hope that at least one of these tools can make your
-              daily work a bit easier and more efficient!
+          <SectionHeader number="07" title="Tools" />
+          <VStack spacing={6} px={4}>
+            <Text color={bodyText} fontSize={"lg"} maxW="2xl">
+              A curated collection of developer tools I use daily, streamlined
+              into one place. Hopefully at least one makes your workflow easier!
             </Text>
-            <Center py={4}>
-              <Navigation></Navigation>
-            </Center>
-          </Stack>
+            <Navigation />
+          </VStack>
         </Stack>
       </Container>
+
+      {/* ===== CONTACT SECTION ===== */}
       <Container maxW={"4xl"} id="contact">
         <Stack
           as={Box}
           textAlign={"center"}
-          spacing={{ base: 8, md: 14 }}
+          spacing={{ base: 8, md: 12 }}
           pb={{ base: 20, md: 36 }}
         >
-          <Stack align="center" direction="row" p={4}>
-            <HStack mx={4}>
-              <Text color={"teal.400"} fontWeight={800}>
-                08
-              </Text>
-              <Text fontWeight={800}>Contact</Text>
-            </HStack>
-            <Divider orientation="horizontal" />
-          </Stack>
-          <Stack spacing={4} as={Container} maxW={"4xl"} textAlign={"center"}>
-            <Heading fontSize={"4xl"}>Let's stay in touch!</Heading>
-            <Text color={"gray.500"} fontSize={"xl"} px={4}>
+          <SectionHeader number="08" title="Contact" />
+          <VStack spacing={6} px={4}>
+            <Heading
+              fontSize={{ base: "3xl", md: "4xl" }}
+              letterSpacing="-0.03em"
+            >
+              Let's stay in touch!
+            </Heading>
+            <Text color={bodyText} fontSize={"lg"} maxW="2xl" lineHeight="tall">
               I'd love to hear from you! Whether you have questions about my
               products and services, want to discuss a collaboration, or simply
-              want to say hello, don't hesitate to reach out. I am eager to
-              assist and will get back to you as soon as possible. Your feedback
-              and inquiries are important to me, and I look forward to
-              connecting with you!
+              want to say hello, don't hesitate to reach out.
             </Text>
-            <Text color={"teal.500"} fontWeight={600} fontSize={"lg"} px={4}>
+            <Button
+              as="a"
+              href="mailto:ajdin.halac@hotmail.com"
+              variant="outline"
+              colorScheme="teal"
+              borderRadius="full"
+              px={8}
+              size="lg"
+              fontWeight={600}
+              leftIcon={<FaEnvelope />}
+            >
               ajdin.halac@hotmail.com
-            </Text>
-            <Center>
-              <HStack pt={4} spacing={4}>
-                <FaLinkedin
+            </Button>
+            <HStack pt={2} spacing={3}>
+              <Tooltip label="LinkedIn" hasArrow>
+                <IconButton
+                  aria-label="LinkedIn"
+                  icon={<FaLinkedin size={20} />}
+                  variant="ghost"
+                  borderRadius="full"
+                  size="lg"
+                  className="social-icon"
                   onClick={() => {
                     window.open(
                       "https://www.linkedin.com/in/ajdin-halac/",
                       "_blank",
-                      "noreferrer,noopener"
+                      "noreferrer,noopener",
                     );
                   }}
-                  size={28}
                 />
-                <FaGithub
+              </Tooltip>
+              <Tooltip label="GitHub" hasArrow>
+                <IconButton
+                  aria-label="GitHub"
+                  icon={<FaGithub size={20} />}
+                  variant="ghost"
+                  borderRadius="full"
+                  size="lg"
+                  className="social-icon"
                   onClick={() => {
                     window.open(
                       "https://github.com/AjdinHalac",
                       "_blank",
-                      "noreferrer,noopener"
+                      "noreferrer,noopener",
                     );
                   }}
-                  size={28}
                 />
-                <FaEnvelope
+              </Tooltip>
+              <Tooltip label="Email" hasArrow>
+                <IconButton
+                  aria-label="Email"
+                  icon={<FaEnvelope size={20} />}
+                  variant="ghost"
+                  borderRadius="full"
+                  size="lg"
+                  className="social-icon"
                   onClick={() => {
                     window.open(
                       "mailto:ajdin.halac@hotmail.com",
                       "_blank",
-                      "noreferrer,noopener"
+                      "noreferrer,noopener",
                     );
                   }}
-                  size={28}
                 />
-              </HStack>
-            </Center>
-          </Stack>
+              </Tooltip>
+            </HStack>
+          </VStack>
         </Stack>
       </Container>
     </Flex>
   );
 };
-
-const Arrow = createIcon({
-  displayName: "Arrow",
-  viewBox: "0 0 72 24",
-  path: (
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M0.600904 7.08166C0.764293 6.8879 1.01492 6.79004 1.26654 6.82177C2.83216 7.01918 5.20326 7.24581 7.54543 7.23964C9.92491 7.23338 12.1351 6.98464 13.4704 6.32142C13.84 6.13785 14.2885 6.28805 14.4722 6.65692C14.6559 7.02578 14.5052 7.47362 14.1356 7.6572C12.4625 8.48822 9.94063 8.72541 7.54852 8.7317C5.67514 8.73663 3.79547 8.5985 2.29921 8.44247C2.80955 9.59638 3.50943 10.6396 4.24665 11.7384C4.39435 11.9585 4.54354 12.1809 4.69301 12.4068C5.79543 14.0733 6.88128 15.8995 7.1179 18.2636C7.15893 18.6735 6.85928 19.0393 6.4486 19.0805C6.03792 19.1217 5.67174 18.8227 5.6307 18.4128C5.43271 16.4346 4.52957 14.868 3.4457 13.2296C3.3058 13.0181 3.16221 12.8046 3.01684 12.5885C2.05899 11.1646 1.02372 9.62564 0.457909 7.78069C0.383671 7.53862 0.437515 7.27541 0.600904 7.08166ZM5.52039 10.2248C5.77662 9.90161 6.24663 9.84687 6.57018 10.1025C16.4834 17.9344 29.9158 22.4064 42.0781 21.4773C54.1988 20.5514 65.0339 14.2748 69.9746 0.584299C70.1145 0.196597 70.5427 -0.0046455 70.931 0.134813C71.3193 0.274276 71.5206 0.70162 71.3807 1.08932C66.2105 15.4159 54.8056 22.0014 42.1913 22.965C29.6185 23.9254 15.8207 19.3142 5.64226 11.2727C5.31871 11.0171 5.26415 10.5479 5.52039 10.2248Z"
-      fill="currentColor"
-    />
-  ),
-});
 
 export default Home;

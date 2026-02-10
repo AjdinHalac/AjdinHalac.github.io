@@ -16,6 +16,7 @@ import {
   Input,
   Stack,
   Text,
+  useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
 import { PasswordField } from "../../components/common/PasswordInput";
@@ -25,6 +26,9 @@ import { cookieService } from "../../services/CookieService";
 const SignIn = (): ReactElement => {
   const navigate = useNavigate();
   const toast = useToast();
+
+  const cardBg = useColorModeValue("white", "gray.800");
+  const borderColor = useColorModeValue("gray.100", "whiteAlpha.100");
 
   if (cookieService.isAuthenticated()) {
     window.location.replace("/#/");
@@ -41,7 +45,7 @@ const SignIn = (): ReactElement => {
       });
       ajaxService.setAuthToken(
         newCredentials?.data?.accessToken,
-        remmemberMe ? newCredentials?.data?.refreshToken : null
+        remmemberMe ? newCredentials?.data?.refreshToken : null,
       );
       window.location.replace("/#/");
     } catch (err) {
@@ -61,19 +65,17 @@ const SignIn = (): ReactElement => {
       py={{ base: "12", md: "24" }}
       px={{ base: "0", sm: "8" }}
     >
-      <Stack spacing="8">
+      <Stack spacing="8" className="animate-fade-in-up">
         <Stack spacing="6">
-          <Logo color={"teal.500"} />
+          <Logo color="teal.500" />
           <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
-            <Heading size={{ base: "xs", md: "sm" }}>
-              Sign in to your account
+            <Heading size={{ base: "sm", md: "md" }} className="gradient-text">
+              Welcome back
             </Heading>
-            <Text color="fg.muted">
+            <Text color="gray.500">
               Don't have an account?{" "}
-              <Box as="span" color={"teal.500"}>
-                <Link to="/signup">
-                  Sign up
-                </Link>
+              <Box as="span" color="teal.400" fontWeight="600">
+                <Link to="/signup">Sign up</Link>
               </Box>
             </Text>
           </Stack>
@@ -81,19 +83,29 @@ const SignIn = (): ReactElement => {
         <Box
           py={{ base: "0", sm: "8" }}
           px={{ base: "4", sm: "10" }}
-          bg={{ base: "transparent", sm: "bg.surface" }}
-          boxShadow={{ base: "none", sm: "md" }}
-          borderRadius={{ base: "none", sm: "xl" }}
+          bg={cardBg}
+          boxShadow={{ base: "none", sm: "0 20px 60px -15px rgba(0,0,0,0.15)" }}
+          borderRadius={{ base: "none", sm: "2xl" }}
+          border={{ base: "none", sm: "1px solid" }}
+          borderColor={borderColor}
         >
           <Stack spacing="6">
             <Stack spacing="5">
               <FormControl>
-                <FormLabel htmlFor="email">Email</FormLabel>
+                <FormLabel htmlFor="email" fontSize="sm" fontWeight="600">
+                  Email
+                </FormLabel>
                 <Input
                   id="email"
                   type="email"
                   value={email}
+                  borderRadius="xl"
+                  size="lg"
                   onChange={(e: any) => setEmail(e.currentTarget.value)}
+                  _focus={{
+                    borderColor: "teal.400",
+                    boxShadow: "0 0 0 1px var(--chakra-colors-teal-400)",
+                  }}
                 />
               </FormControl>
               <PasswordField
@@ -104,30 +116,37 @@ const SignIn = (): ReactElement => {
             </Stack>
             <HStack justify="space-between">
               <Checkbox
-                colorScheme={"teal"}
+                colorScheme="teal"
                 isChecked={remmemberMe}
                 onChange={(e: any) => setRemmemberMe(e.currentTarget.checked)}
                 my={2}
               >
-                Remember me
+                <Text fontSize="sm">Remember me</Text>
               </Checkbox>
               <Button
-                color={"teal.500"}
-                variant="text"
+                color="teal.400"
+                variant="ghost"
                 size="sm"
+                borderRadius="xl"
                 onClick={() => navigate("/forgot-password")}
               >
                 Forgot password?
               </Button>
             </HStack>
-            <Stack spacing="6">
-              <Button colorScheme="teal" onClick={onLoginClick}>
+            <Stack spacing="4">
+              <Button
+                colorScheme="teal"
+                size="lg"
+                borderRadius="xl"
+                fontWeight="700"
+                onClick={onLoginClick}
+                _hover={{
+                  transform: "translateY(-2px)",
+                  boxShadow: "0 10px 40px -10px rgba(49, 151, 149, 0.5)",
+                }}
+              >
                 Sign in
               </Button>
-              {/*<Divider />
-                <Button flexGrow={1}>
-                  <GoogleIcon /> Continue with Google{" "}
-                </Button>*/}
             </Stack>
           </Stack>
         </Box>

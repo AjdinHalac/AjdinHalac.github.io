@@ -38,7 +38,7 @@ export class UnixFileSystem {
     let currentDir = this.root;
     for (const dir of directories) {
       const foundDir = currentDir.subdirectories.find(
-        (subdir) => subdir.name === dir
+        (subdir) => subdir.name === dir,
       );
       if (foundDir) {
         currentDir = foundDir;
@@ -68,25 +68,33 @@ export class UnixFileSystem {
   }
 
   public cd(path: string): string {
+    // Handle empty, undefined, or ~ → go to root
+    if (!path || path === "" || path === "~") {
+      this.currentDirectory = this.root;
+      return "";
+    }
+
     if (path === "..") {
       if (this.currentDirectory === this.root) {
         return "Error: Already at the root directory";
       }
       this.currentDirectory = this.findDirectory("..") || this.root;
+      return "";
+    }
+
+    let targetDir: Directory | undefined | null;
+    if (path.startsWith("/")) {
+      targetDir = this.findDirectory(path);
     } else {
-      let targetDir: Directory | undefined | null;
-      if (path.startsWith("/")) {
-        targetDir = this.findDirectory(path);
-      } else {
-        targetDir = this.currentDirectory.subdirectories.find(
-          (subdir) => subdir.name === path
-        );
-      }
-      if (targetDir) {
-        this.currentDirectory = targetDir;
-      } else {
-        return `Error: Directory "${path}" not found`;
-      }
+      targetDir = this.currentDirectory.subdirectories.find(
+        (subdir) => subdir.name === path,
+      );
+    }
+
+    if (targetDir) {
+      this.currentDirectory = targetDir;
+    } else {
+      return `Error: Directory "${path}" not found`;
     }
 
     return "";
@@ -104,7 +112,9 @@ export class UnixFileSystem {
       if (path.startsWith("/") || path.startsWith("..")) {
         targetDir = this.findDirectory(path);
       } else {
-        targetDir = this.currentDirectory.subdirectories.find((dir) => dir.name === path)
+        targetDir = this.currentDirectory.subdirectories.find(
+          (dir) => dir.name === path,
+        );
       }
     }
 
@@ -226,7 +236,7 @@ export class UnixFileSystem {
     const file = this.findUnixFile(path);
     if (file) {
       this.currentDirectory.files = this.currentDirectory.files.filter(
-        (f) => f.name !== file.name
+        (f) => f.name !== file.name,
       );
       return "";
     }
@@ -235,7 +245,7 @@ export class UnixFileSystem {
     if (directory) {
       this.currentDirectory.subdirectories =
         this.currentDirectory.subdirectories.filter(
-          (dir) => dir.name !== directory.name
+          (dir) => dir.name !== directory.name,
         );
       return "";
     }
@@ -258,7 +268,7 @@ export class UnixFileSystem {
       if (targetDir) {
         targetDir.files.push(file);
         this.currentDirectory.files = this.currentDirectory.files.filter(
-          (f) => f.name !== file.name
+          (f) => f.name !== file.name,
         );
       } else {
         return `Error: Directory "${newPath}" not found`;
@@ -275,7 +285,7 @@ export class UnixFileSystem {
         targetDir.subdirectories.push(directory);
         this.currentDirectory.subdirectories =
           this.currentDirectory.subdirectories.filter(
-            (dir) => dir.name !== directory.name
+            (dir) => dir.name !== directory.name,
           );
       } else {
         return `Error: Directory "${newPath}" not found`;

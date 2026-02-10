@@ -5,6 +5,7 @@ import {
   Button,
   Container,
   Heading,
+  Icon,
   IconButton,
   Text,
   Textarea,
@@ -13,19 +14,24 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { CopyIcon, RepeatIcon } from "@chakra-ui/icons";
+import { FaKey } from "react-icons/fa";
 import Navigation from "../../components/landing/tools/Navigation";
 
 const ToolsJWTParser = (): ReactElement => {
-  const [jwtInput, setJwtInput] = useState('');
-  const [decodedPayload, setDecodedPayload] = useState('');
+  const [jwtInput, setJwtInput] = useState("");
+  const [decodedPayload, setDecodedPayload] = useState("");
   const toast = useToast();
   const outputTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const cardBg = useColorModeValue("white", "gray.800");
+  const borderColor = useColorModeValue("gray.100", "whiteAlpha.100");
+  const inputBg = useColorModeValue("gray.50", "gray.900");
+  const subtitleColor = useColorModeValue("gray.600", "gray.400");
 
   // Decode JWT
   const decodeJWT = (jwt: string) => {
-    const parts = jwt.split('.');
+    const parts = jwt.split(".");
     if (parts.length !== 3) {
-      throw new Error('Invalid JWT format');
+      throw new Error("Invalid JWT format");
     }
 
     try {
@@ -33,7 +39,7 @@ const ToolsJWTParser = (): ReactElement => {
       const decoded = atob(payload); // Decode Base64Url
       return JSON.parse(decoded); // Parse JSON payload
     } catch (error) {
-      throw new Error('Failed to decode JWT payload');
+      throw new Error("Failed to decode JWT payload");
     }
   };
 
@@ -43,11 +49,11 @@ const ToolsJWTParser = (): ReactElement => {
       const parsedPayload = decodeJWT(jwtInput);
       setDecodedPayload(JSON.stringify(parsedPayload, null, 2));
     } catch (err) {
-      setDecodedPayload('');
+      setDecodedPayload("");
       toast({
-        title: 'Invalid JWT',
-        description: 'The JWT you entered is invalid or malformed.',
-        status: 'error',
+        title: "Invalid JWT",
+        description: "The JWT you entered is invalid or malformed.",
+        status: "error",
         duration: 3000,
         isClosable: true,
       });
@@ -63,8 +69,8 @@ const ToolsJWTParser = (): ReactElement => {
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
     toast({
-      title: 'Copied to clipboard!',
-      status: 'success',
+      title: "Copied to clipboard!",
+      status: "success",
       duration: 2000,
       isClosable: true,
     });
@@ -73,8 +79,8 @@ const ToolsJWTParser = (): ReactElement => {
   // Auto-resize output textarea
   const autoResizeTextarea = (textarea: HTMLTextAreaElement | null) => {
     if (textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = textarea.scrollHeight + 'px';
+      textarea.style.height = "auto";
+      textarea.style.height = textarea.scrollHeight + "px";
     }
   };
 
@@ -84,40 +90,81 @@ const ToolsJWTParser = (): ReactElement => {
 
   return (
     <Container maxW="6xl" py={10}>
-      <Navigation></Navigation>
-      <VStack spacing={8}>
-        {/* JWT Input Section */}
-        <Box w="100%">
-          <Heading size="md" mb={4}>
+      <VStack spacing={8} className="animate-fade-in-up">
+        <VStack spacing={3} textAlign="center">
+          <Icon as={FaKey} boxSize={8} color="teal.400" />
+          <Heading size="lg" className="gradient-text">
             JWT Parser
           </Heading>
+          <Text color={subtitleColor} fontSize="sm">
+            Decode and inspect JSON Web Tokens
+          </Text>
+        </VStack>
+
+        <Navigation />
+
+        <Box
+          w="100%"
+          bg={cardBg}
+          border="1px solid"
+          borderColor={borderColor}
+          borderRadius="2xl"
+          p={{ base: 5, md: 8 }}
+        >
+          <Heading size="md" mb={4}>
+            Token
+          </Heading>
           <Textarea
-            placeholder="Paste your JWT here"
+            placeholder="Paste your JWT here..."
             value={jwtInput}
             onChange={handleInputChange}
-            size="md"
+            size="lg"
             mb={4}
-            bg={useColorModeValue("gray.100", "gray.900")}
+            bg={inputBg}
+            borderRadius="xl"
+            border="1px solid"
+            borderColor={borderColor}
+            _focus={{
+              borderColor: "teal.400",
+              boxShadow: "0 0 0 1px var(--chakra-colors-teal-400)",
+            }}
           />
-          <Button colorScheme="teal" onClick={handleParseJWT} leftIcon={<RepeatIcon />} mb={4}>
+          <Button
+            colorScheme="teal"
+            onClick={handleParseJWT}
+            leftIcon={<RepeatIcon />}
+            borderRadius="xl"
+            size="md"
+          >
             Parse JWT
           </Button>
         </Box>
 
-        <Box w="100%">
-          <Text fontWeight="bold" mb={2}>
-            Decoded JWT Payload:
+        <Box
+          w="100%"
+          bg={cardBg}
+          border="1px solid"
+          borderColor={borderColor}
+          borderRadius="2xl"
+          p={{ base: 5, md: 8 }}
+        >
+          <Text fontWeight="600" mb={3} fontSize="sm" color={subtitleColor}>
+            Decoded Payload
           </Text>
           <Box position="relative">
             <Textarea
               ref={outputTextareaRef}
-              value={decodedPayload || 'No output yet'}
+              value={decodedPayload || "No output yet"}
               isReadOnly
-              fontFamily="monospace"
+              fontFamily="mono"
               whiteSpace="pre-wrap"
               wordBreak="break-all"
-              bg={useColorModeValue("gray.100", "gray.900")}
-              resize="none" // Disable manual resize
+              fontSize="sm"
+              bg={inputBg}
+              borderRadius="xl"
+              border="1px solid"
+              borderColor={borderColor}
+              resize="none"
               overflow="hidden"
               minH="150px"
               onChange={(e) => autoResizeTextarea(e.target)}
@@ -127,6 +174,8 @@ const ToolsJWTParser = (): ReactElement => {
                 aria-label="Copy decoded payload"
                 icon={<CopyIcon />}
                 size="sm"
+                variant="ghost"
+                colorScheme="teal"
                 position="absolute"
                 top="8px"
                 right="8px"
